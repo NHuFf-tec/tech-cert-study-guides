@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Tech Career Roadmap — Non-Technical to Manager in 12 Months</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --surface2: #21262d;
+    --border: #30363d;
+    --blue: #1f6feb;
+    --azure: #0078d4;
+    --aws: #ff9900;
+    --ai: #8b5cf6;
+    --green: #238636;
+    --text: #c9d1d9;
+    --text-muted: #8b949e;
+    --gold: #f0c040;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;min-height:100vh;}
+  .hero{background:linear-gradient(135deg,#0d1117 0%,#1a1f3a 40%,#0d2137 70%,#0d1117 100%);padding:4rem 1rem 3rem;text-align:center;border-bottom:2px solid var(--blue);}
+  .hero h1{font-size:clamp(1.8rem,4vw,2.8rem);background:linear-gradient(135deg,var(--azure),var(--ai),var(--aws));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:800;letter-spacing:-1px;}
+  .hero .tagline{color:var(--text-muted);margin-top:0.75rem;font-size:1.05rem;max-width:600px;margin-left:auto;margin-right:auto;}
+  .hero-badges{display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap;margin-top:1.5rem;}
+  .hero-badge{padding:0.35rem 1rem;border-radius:20px;font-size:0.78rem;font-weight:600;letter-spacing:0.5px;}
+  .badge-azure{background:rgba(0,120,212,0.2);border:1px solid var(--azure);color:var(--azure);}
+  .badge-aws{background:rgba(255,153,0,0.15);border:1px solid var(--aws);color:var(--aws);}
+  .badge-ai{background:rgba(139,92,246,0.15);border:1px solid var(--ai);color:var(--ai);}
+  .badge-comptia{background:rgba(35,134,54,0.15);border:1px solid var(--green);color:var(--green);}
+  .container{max-width:1100px;margin:0 auto;padding:2rem 1rem;}
+  .section{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.75rem;margin-bottom:1.5rem;}
+  .section h2{font-size:1.25rem;margin-bottom:1rem;padding-bottom:0.75rem;border-bottom:1px solid var(--border);}
+  .section h3{font-size:1rem;color:var(--text-muted);margin:1rem 0 0.5rem;}
+  .section p,.section li{line-height:1.7;color:var(--text);margin-bottom:0.4rem;}
+  .section ul{padding-left:1.5rem;}
+  h2.azure{color:var(--azure);}h2.aws{color:var(--aws);}h2.ai{color:var(--ai);}h2.green{color:var(--green);}h2.gold{color:var(--gold);}
+
+  /* Timeline */
+  .timeline{position:relative;padding-left:2rem;}
+  .timeline::before{content:'';position:absolute;left:0.6rem;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--azure),var(--ai),var(--aws),var(--green));}
+  .tl-item{position:relative;margin-bottom:1.5rem;}
+  .tl-dot{position:absolute;left:-1.6rem;top:0.2rem;width:14px;height:14px;border-radius:50%;border:2px solid var(--border);}
+  .tl-dot.azure{background:var(--azure);border-color:var(--azure);}
+  .tl-dot.aws{background:var(--aws);border-color:var(--aws);}
+  .tl-dot.ai{background:var(--ai);border-color:var(--ai);}
+  .tl-dot.green{background:var(--green);border-color:var(--green);}
+  .tl-dot.gold{background:var(--gold);border-color:var(--gold);}
+  .tl-dot.gray{background:var(--text-muted);border-color:var(--text-muted);}
+  .tl-label{font-size:0.72rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:0.2rem;}
+  .tl-title{font-weight:600;font-size:0.95rem;color:var(--text);margin-bottom:0.25rem;}
+  .tl-desc{font-size:0.82rem;color:var(--text-muted);line-height:1.5;}
+
+  /* Week grid */
+  .week-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:0.6rem;margin-top:0.75rem;}
+  .week-card{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:0.75rem;font-size:0.78rem;}
+  .week-card .wk-num{font-size:0.65rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;}
+  .week-card .wk-title{font-weight:600;color:var(--text);margin:0.2rem 0;}
+  .week-card .wk-cert{font-size:0.7rem;padding:0.15rem 0.4rem;border-radius:4px;display:inline-block;margin-top:0.2rem;}
+  .wk-azure{background:rgba(0,120,212,0.15);color:var(--azure);}
+  .wk-aws{background:rgba(255,153,0,0.15);color:var(--aws);}
+  .wk-ai{background:rgba(139,92,246,0.15);color:var(--ai);}
+  .wk-comptia{background:rgba(35,134,54,0.15);color:var(--green);}
+  .wk-exam{background:rgba(240,192,64,0.2);color:var(--gold);font-weight:700;}
+  .wk-career{background:rgba(255,255,255,0.08);color:var(--text-muted);}
+
+  /* Cert cards */
+  .cert-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1rem;margin-top:0.75rem;}
+  .cert-card{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:1.1rem;}
+  .cert-card .cert-badge{font-size:1.8rem;margin-bottom:0.5rem;}
+  .cert-card h4{font-size:0.92rem;color:var(--text);margin-bottom:0.25rem;}
+  .cert-card .cert-meta{font-size:0.75rem;color:var(--text-muted);margin-bottom:0.5rem;}
+  .cert-card .cert-detail{font-size:0.78rem;color:var(--text-muted);line-height:1.5;}
+  .cert-card.azure-card{border-left:3px solid var(--azure);}
+  .cert-card.aws-card{border-left:3px solid var(--aws);}
+  .cert-card.ai-card{border-left:3px solid var(--ai);}
+  .cert-card.comptia-card{border-left:3px solid var(--green);}
+
+  /* Schedule table */
+  .table-wrap{overflow-x:auto;margin-top:0.75rem;}
+  table{width:100%;border-collapse:collapse;font-size:0.85rem;}
+  th{background:var(--surface2);color:var(--text);padding:0.6rem 0.8rem;text-align:left;border-bottom:2px solid var(--border);}
+  td{padding:0.55rem 0.8rem;border-bottom:1px solid var(--border);vertical-align:top;color:var(--text);}
+  tr:nth-child(even) td{background:rgba(255,255,255,0.02);}
+
+  /* Progress tracker */
+  .milestone-row{display:flex;gap:1rem;flex-wrap:wrap;margin-top:0.75rem;}
+  .milestone{flex:1;min-width:160px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:1rem;text-align:center;}
+  .milestone .m-icon{font-size:1.8rem;margin-bottom:0.4rem;}
+  .milestone .m-label{font-size:0.7rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;}
+  .milestone .m-title{font-size:0.88rem;font-weight:600;color:var(--text);margin:0.2rem 0;}
+  .milestone .m-date{font-size:0.75rem;color:var(--text-muted);}
+
+  /* Info boxes */
+  .info-box{border-radius:8px;padding:1rem 1.2rem;margin:0.75rem 0;font-size:0.88rem;line-height:1.6;}
+  .info-box.tip{background:rgba(0,120,212,0.08);border-left:3px solid var(--azure);}
+  .info-box.warn{background:rgba(255,153,0,0.08);border-left:3px solid var(--aws);}
+  .info-box.success{background:rgba(35,134,54,0.08);border-left:3px solid var(--green);}
+  .info-box h4{font-size:0.85rem;margin-bottom:0.35rem;}
+  .info-box.tip h4{color:var(--azure);}
+  .info-box.warn h4{color:var(--aws);}
+  .info-box.success h4{color:var(--green);}
+
+  /* Links to files */
+  .guide-links{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:1rem;margin-top:1rem;}
+  .guide-link{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:1.2rem;text-decoration:none;color:var(--text);display:block;transition:all 0.2s;}
+  .guide-link:hover{border-color:var(--blue);transform:translateY(-2px);}
+  .guide-link .gl-icon{font-size:2rem;margin-bottom:0.5rem;}
+  .guide-link h4{font-size:0.92rem;margin-bottom:0.25rem;}
+  .guide-link p{font-size:0.75rem;color:var(--text-muted);}
+  .guide-link.azure-link{border-top:3px solid var(--azure);}
+  .guide-link.aws-link{border-top:3px solid var(--aws);}
+  .guide-link.ai-link{border-top:3px solid var(--ai);}
+  .guide-link.foundation-link{border-top:3px solid var(--green);}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>Zero to Tech Manager in 12 Months</h1>
+  <p class="tagline">A structured, part-time learning roadmap for full-time professionals moving from a non-technical role into technology management — with real certifications along the way.</p>
+  <div class="hero-badges">
+    <span class="hero-badge badge-azure">Azure AZ-900</span>
+    <span class="hero-badge badge-azure">Azure AI-900</span>
+    <span class="hero-badge badge-aws">AWS Cloud Practitioner</span>
+    <span class="hero-badge badge-aws">AWS AI Practitioner</span>
+    <span class="hero-badge badge-ai">AI Fundamentals</span>
+    <span class="hero-badge badge-comptia">CompTIA ITF+</span>
+    <span class="hero-badge badge-comptia">CompTIA Network+</span>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- OVERVIEW -->
+  <div class="section">
+    <h2 class="azure">📋 Your Learning Journey at a Glance</h2>
+    <p>This roadmap is designed for a person working a full-time job who wants to <strong>transition from a non-technical role into a technology management position within 12 months</strong>. It requires approximately <strong>8–10 hours per week</strong> of study — roughly 1 hour on weekdays and 3–4 hours over the weekend.</p>
+    <div class="info-box tip" style="margin-top:1rem;">
+      <h4>💡 The 8-Hour Week Formula</h4>
+      <p><strong>Weekdays</strong>: 45–60 min/day (commute listening, lunch break reading, or after dinner). <strong>Weekend</strong>: One 2-hour session Saturday + one 2-hour session Sunday. This is sustainable long-term and achieves certification-level results within the timelines below.</p>
+    </div>
+    <div class="milestone-row" style="margin-top:1.25rem;">
+      <div class="milestone"><div class="m-icon">🖥️</div><div class="m-label">Month 1–2</div><div class="m-title">IT Foundations</div><div class="m-date">CompTIA ITF+</div></div>
+      <div class="milestone"><div class="m-icon">☁️</div><div class="m-label">Month 3</div><div class="m-title">Azure Fundamentals</div><div class="m-date">AZ-900 Exam</div></div>
+      <div class="milestone"><div class="m-icon">🤖</div><div class="m-label">Month 4</div><div class="m-title">AI Fundamentals</div><div class="m-date">AI-900 Exam</div></div>
+      <div class="milestone"><div class="m-icon">🟠</div><div class="m-label">Month 5–6</div><div class="m-title">AWS Cloud</div><div class="m-date">CLF-C02 Exam</div></div>
+      <div class="milestone"><div class="m-icon">🌐</div><div class="m-label">Month 7–8</div><div class="m-title">Networking</div><div class="m-date">CompTIA Net+</div></div>
+      <div class="milestone"><div class="m-icon">🧠</div><div class="m-label">Month 9–10</div><div class="m-title">AWS AI</div><div class="m-date">AIF-C01 Exam</div></div>
+      <div class="milestone"><div class="m-icon">👔</div><div class="m-label">Month 11–12</div><div class="m-title">Manager Skills</div><div class="m-date">Career Launch</div></div>
+    </div>
+  </div>
+
+  <!-- CERTIFICATIONS -->
+  <div class="section">
+    <h2 class="gold">🏅 Certifications You'll Earn</h2>
+    <p style="margin-bottom:0.5rem;">Each certification is industry-recognized and adds to your professional profile on LinkedIn and your resume. These are real credentials — not just course completions.</p>
+    <div class="cert-grid">
+      <div class="cert-card comptia-card">
+        <div class="cert-badge">🖥️</div>
+        <h4>CompTIA ITF+</h4>
+        <div class="cert-meta">Month 2 · ~$130 · 75 questions · 60 min</div>
+        <div class="cert-detail">IT Fundamentals+ — the industry's entry point. Proves you understand how computers, networks, and software work at a baseline level. Often waived if you proceed directly to A+.</div>
+      </div>
+      <div class="cert-card azure-card">
+        <div class="cert-badge">☁️</div>
+        <h4>Microsoft AZ-900</h4>
+        <div class="cert-meta">Month 3 · ~$165 · 40–60 questions · 60 min</div>
+        <div class="cert-detail">Azure Fundamentals — validates cloud concepts, Azure services, pricing, SLA, and governance. No technical experience required. Hugely valuable in enterprise environments.</div>
+      </div>
+      <div class="cert-card ai-card">
+        <div class="cert-badge">🤖</div>
+        <h4>Microsoft AI-900</h4>
+        <div class="cert-meta">Month 4 · ~$165 · 40–60 questions · 60 min</div>
+        <div class="cert-detail">Azure AI Fundamentals — covers AI/ML concepts, Azure AI services, responsible AI. One of the fastest-growing credentials as AI adoption explodes across every industry.</div>
+      </div>
+      <div class="cert-card aws-card">
+        <div class="cert-badge">🟠</div>
+        <h4>AWS Cloud Practitioner</h4>
+        <div class="cert-meta">Month 6 · ~$100 · 65 questions · 90 min</div>
+        <div class="cert-detail">CLF-C02 — the AWS foundation credential. Covers AWS global infrastructure, core services, billing, security, and architecture. The most widely held cloud certification globally.</div>
+      </div>
+      <div class="cert-card comptia-card">
+        <div class="cert-badge">🌐</div>
+        <h4>CompTIA Network+</h4>
+        <div class="cert-meta">Month 8 · ~$370 · 90 questions · 90 min</div>
+        <div class="cert-detail">Validates networking fundamentals: TCP/IP, DNS, DHCP, VPNs, switching, routing. Essential for any technical management role. Vendor-neutral and globally recognized.</div>
+      </div>
+      <div class="cert-card aws-card">
+        <div class="cert-badge">🧠</div>
+        <h4>AWS AI Practitioner</h4>
+        <div class="cert-meta">Month 10 · ~$100 · 65 questions · 90 min</div>
+        <div class="cert-detail">AIF-C01 — covers AI/ML concepts on AWS: SageMaker, Bedrock, Rekognition, Comprehend, responsible AI. Positions you as an AI-aware manager in a rapidly evolving market.</div>
+      </div>
+    </div>
+    <div class="info-box success" style="margin-top:1rem;">
+      <h4>✅ Microsoft Learn Free Paths</h4>
+      <p>All AZ-900 and AI-900 prep materials are completely free on <strong>Microsoft Learn</strong> (learn.microsoft.com). AWS offers free digital training at <strong>aws.training</strong>. CompTIA materials require purchase, but the Professor Messer free YouTube courses are excellent substitutes.</p>
+    </div>
+  </div>
+
+  <!-- 52-WEEK PLAN -->
+  <div class="section">
+    <h2 class="azure">📅 Week-by-Week Study Plan</h2>
+    <p style="margin-bottom:1rem;">Each block below represents one week of study. <span style="color:var(--gold)">Gold = exam week.</span> Click your study guide links below to follow along.</p>
+
+    <h3>📘 Phase 1: IT Foundations (Weeks 1–8)</h3>
+    <div class="week-grid">
+      <div class="week-card"><div class="wk-num">Week 1</div><div class="wk-title">How Computers Work</div><span class="wk-cert wk-comptia">ITF+</span></div>
+      <div class="week-card"><div class="wk-num">Week 2</div><div class="wk-title">Operating Systems</div><span class="wk-cert wk-comptia">ITF+</span></div>
+      <div class="week-card"><div class="wk-num">Week 3</div><div class="wk-title">Networking Basics</div><span class="wk-cert wk-comptia">ITF+</span></div>
+      <div class="week-card"><div class="wk-num">Week 4</div><div class="wk-title">Security Concepts</div><span class="wk-cert wk-comptia">ITF+</span></div>
+      <div class="week-card"><div class="wk-num">Week 5</div><div class="wk-title">Software & Databases</div><span class="wk-cert wk-comptia">ITF+</span></div>
+      <div class="week-card"><div class="wk-num">Week 6</div><div class="wk-title">Cloud Concepts Intro</div><span class="wk-cert wk-comptia">ITF+</span></div>
+      <div class="week-card"><div class="wk-num">Week 7</div><div class="wk-title">Review & Practice Tests</div><span class="wk-cert wk-comptia">ITF+</span></div>
+      <div class="week-card"><div class="wk-num">Week 8</div><div class="wk-title" style="color:var(--gold)">🏅 ITF+ Exam</div><span class="wk-cert wk-exam">EXAM WEEK</span></div>
+    </div>
+
+    <h3 style="margin-top:1.5rem;">☁️ Phase 2: Azure Fundamentals — AZ-900 (Weeks 9–12)</h3>
+    <div class="week-grid">
+      <div class="week-card"><div class="wk-num">Week 9</div><div class="wk-title">Cloud Models & Azure Intro</div><span class="wk-cert wk-azure">AZ-900</span></div>
+      <div class="week-card"><div class="wk-num">Week 10</div><div class="wk-title">Core Azure Services</div><span class="wk-cert wk-azure">AZ-900</span></div>
+      <div class="week-card"><div class="wk-num">Week 11</div><div class="wk-title">Security, Privacy & Pricing</div><span class="wk-cert wk-azure">AZ-900</span></div>
+      <div class="week-card"><div class="wk-num">Week 12</div><div class="wk-title" style="color:var(--gold)">🏅 AZ-900 Exam</div><span class="wk-cert wk-exam">EXAM WEEK</span></div>
+    </div>
+
+    <h3 style="margin-top:1.5rem;">🤖 Phase 3: Azure AI Fundamentals — AI-900 (Weeks 13–16)</h3>
+    <div class="week-grid">
+      <div class="week-card"><div class="wk-num">Week 13</div><div class="wk-title">What is AI & ML?</div><span class="wk-cert wk-ai">AI-900</span></div>
+      <div class="week-card"><div class="wk-num">Week 14</div><div class="wk-title">Azure AI Services</div><span class="wk-cert wk-ai">AI-900</span></div>
+      <div class="week-card"><div class="wk-num">Week 15</div><div class="wk-title">Responsible AI & GenAI</div><span class="wk-cert wk-ai">AI-900</span></div>
+      <div class="week-card"><div class="wk-num">Week 16</div><div class="wk-title" style="color:var(--gold)">🏅 AI-900 Exam</div><span class="wk-cert wk-exam">EXAM WEEK</span></div>
+    </div>
+
+    <h3 style="margin-top:1.5rem;">🟠 Phase 4: AWS Cloud Practitioner (Weeks 17–24)</h3>
+    <div class="week-grid">
+      <div class="week-card"><div class="wk-num">Week 17</div><div class="wk-title">AWS Global Infrastructure</div><span class="wk-cert wk-aws">CLF-C02</span></div>
+      <div class="week-card"><div class="wk-num">Week 18</div><div class="wk-title">Core AWS Services</div><span class="wk-cert wk-aws">CLF-C02</span></div>
+      <div class="week-card"><div class="wk-num">Week 19</div><div class="wk-title">AWS Security & IAM</div><span class="wk-cert wk-aws">CLF-C02</span></div>
+      <div class="week-card"><div class="wk-num">Week 20</div><div class="wk-title">AWS Networking & Billing</div><span class="wk-cert wk-aws">CLF-C02</span></div>
+      <div class="week-card"><div class="wk-num">Week 21</div><div class="wk-title">AWS Architecture</div><span class="wk-cert wk-aws">CLF-C02</span></div>
+      <div class="week-card"><div class="wk-num">Week 22</div><div class="wk-title">AWS AI Services Overview</div><span class="wk-cert wk-aws">CLF-C02</span></div>
+      <div class="week-card"><div class="wk-num">Week 23</div><div class="wk-title">Review & Practice Tests</div><span class="wk-cert wk-aws">CLF-C02</span></div>
+      <div class="week-card"><div class="wk-num">Week 24</div><div class="wk-title" style="color:var(--gold)">🏅 AWS CPP Exam</div><span class="wk-cert wk-exam">EXAM WEEK</span></div>
+    </div>
+
+    <h3 style="margin-top:1.5rem;">🌐 Phase 5: CompTIA Network+ (Weeks 25–32)</h3>
+    <div class="week-grid">
+      <div class="week-card"><div class="wk-num">Week 25</div><div class="wk-title">OSI Model & TCP/IP</div><span class="wk-cert wk-comptia">Net+</span></div>
+      <div class="week-card"><div class="wk-num">Week 26</div><div class="wk-title">IP Addressing & Subnetting</div><span class="wk-cert wk-comptia">Net+</span></div>
+      <div class="week-card"><div class="wk-num">Week 27</div><div class="wk-title">Switching & Routing</div><span class="wk-cert wk-comptia">Net+</span></div>
+      <div class="week-card"><div class="wk-num">Week 28</div><div class="wk-title">Wireless & VPNs</div><span class="wk-cert wk-comptia">Net+</span></div>
+      <div class="week-card"><div class="wk-num">Week 29</div><div class="wk-title">Network Security</div><span class="wk-cert wk-comptia">Net+</span></div>
+      <div class="week-card"><div class="wk-num">Week 30</div><div class="wk-title">Troubleshooting</div><span class="wk-cert wk-comptia">Net+</span></div>
+      <div class="week-card"><div class="wk-num">Week 31</div><div class="wk-title">Review & Practice Tests</div><span class="wk-cert wk-comptia">Net+</span></div>
+      <div class="week-card"><div class="wk-num">Week 32</div><div class="wk-title" style="color:var(--gold)">🏅 Net+ Exam</div><span class="wk-cert wk-exam">EXAM WEEK</span></div>
+    </div>
+
+    <h3 style="margin-top:1.5rem;">🧠 Phase 6: AWS AI Practitioner (Weeks 33–40)</h3>
+    <div class="week-grid">
+      <div class="week-card"><div class="wk-num">Week 33</div><div class="wk-title">ML Concepts & Pipeline</div><span class="wk-cert wk-ai">AIF-C01</span></div>
+      <div class="week-card"><div class="wk-num">Week 34</div><div class="wk-title">AWS AI/ML Services</div><span class="wk-cert wk-ai">AIF-C01</span></div>
+      <div class="week-card"><div class="wk-num">Week 35</div><div class="wk-title">Generative AI on AWS</div><span class="wk-cert wk-ai">AIF-C01</span></div>
+      <div class="week-card"><div class="wk-num">Week 36</div><div class="wk-title">Responsible AI & Security</div><span class="wk-cert wk-ai">AIF-C01</span></div>
+      <div class="week-card"><div class="wk-num">Week 37</div><div class="wk-title">Applying AI at Work</div><span class="wk-cert wk-ai">AIF-C01</span></div>
+      <div class="week-card"><div class="wk-num">Week 38</div><div class="wk-title">AI Business Cases</div><span class="wk-cert wk-ai">AIF-C01</span></div>
+      <div class="week-card"><div class="wk-num">Week 39</div><div class="wk-title">Review & Practice Tests</div><span class="wk-cert wk-ai">AIF-C01</span></div>
+      <div class="week-card"><div class="wk-num">Week 40</div><div class="wk-title" style="color:var(--gold)">🏅 AWS AI Exam</div><span class="wk-cert wk-exam">EXAM WEEK</span></div>
+    </div>
+
+    <h3 style="margin-top:1.5rem;">👔 Phase 7: Manager-Ready Skills (Weeks 41–52)</h3>
+    <div class="week-grid">
+      <div class="week-card"><div class="wk-num">Week 41</div><div class="wk-title">Tech Project Management</div><span class="wk-cert wk-career">Leadership</span></div>
+      <div class="week-card"><div class="wk-num">Week 42</div><div class="wk-title">Agile & Scrum Basics</div><span class="wk-cert wk-career">Leadership</span></div>
+      <div class="week-card"><div class="wk-num">Week 43</div><div class="wk-title">Communicating Tech to Execs</div><span class="wk-cert wk-career">Leadership</span></div>
+      <div class="week-card"><div class="wk-num">Week 44</div><div class="wk-title">Cloud Cost Management</div><span class="wk-cert wk-career">Leadership</span></div>
+      <div class="week-card"><div class="wk-num">Week 45</div><div class="wk-title">Vendor Management</div><span class="wk-cert wk-career">Leadership</span></div>
+      <div class="week-card"><div class="wk-num">Week 46</div><div class="wk-title">Building a Tech Team</div><span class="wk-cert wk-career">Leadership</span></div>
+      <div class="week-card"><div class="wk-num">Week 47</div><div class="wk-title">IT Budgeting Basics</div><span class="wk-cert wk-career">Leadership</span></div>
+      <div class="week-card"><div class="wk-num">Week 48</div><div class="wk-title">Security & Compliance</div><span class="wk-cert wk-career">Leadership</span></div>
+      <div class="week-card"><div class="wk-num">Week 49</div><div class="wk-title">AI Strategy for Leaders</div><span class="wk-cert wk-career">Leadership</span></div>
+      <div class="week-card"><div class="wk-num">Week 50</div><div class="wk-title">Resume & LinkedIn Update</div><span class="wk-cert wk-career">Career</span></div>
+      <div class="week-card"><div class="wk-num">Week 51</div><div class="wk-title">Interview Preparation</div><span class="wk-cert wk-career">Career</span></div>
+      <div class="week-card"><div class="wk-num">Week 52</div><div class="wk-title">🎯 Apply for Manager Roles</div><span class="wk-cert wk-exam">LAUNCH</span></div>
+    </div>
+  </div>
+
+  <!-- MONTHLY MILESTONES -->
+  <div class="section">
+    <h2 class="gold">📆 Monthly Milestone Tracker</h2>
+    <div class="table-wrap"><table>
+      <tr><th>Month</th><th>Focus</th><th>Study Hours</th><th>Milestone / Exam</th><th>Credential Earned</th></tr>
+      <tr><td><strong>Month 1</strong></td><td>IT Fundamentals: hardware, OS, networks</td><td>~36 hrs</td><td>Complete Foundations Module 1–3</td><td>—</td></tr>
+      <tr><td><strong>Month 2</strong></td><td>IT Fundamentals: security, cloud intro, review</td><td>~36 hrs</td><td>🏅 CompTIA ITF+ Exam</td><td>CompTIA ITF+ Badge</td></tr>
+      <tr><td><strong>Month 3</strong></td><td>Azure: cloud models, core services, pricing</td><td>~36 hrs</td><td>🏅 AZ-900 Exam</td><td>Microsoft Azure Fundamentals</td></tr>
+      <tr><td><strong>Month 4</strong></td><td>AI Fundamentals: ML concepts, Azure AI services</td><td>~36 hrs</td><td>🏅 AI-900 Exam</td><td>Microsoft Azure AI Fundamentals</td></tr>
+      <tr><td><strong>Month 5</strong></td><td>AWS: global infra, core services, IAM, billing</td><td>~36 hrs</td><td>Complete AWS Modules 1–4</td><td>—</td></tr>
+      <tr><td><strong>Month 6</strong></td><td>AWS: architecture, AI overview, review</td><td>~36 hrs</td><td>🏅 AWS Cloud Practitioner Exam</td><td>AWS Certified Cloud Practitioner</td></tr>
+      <tr><td><strong>Month 7</strong></td><td>Networking: OSI, TCP/IP, addressing</td><td>~36 hrs</td><td>Complete Networking Modules 1–3</td><td>—</td></tr>
+      <tr><td><strong>Month 8</strong></td><td>Networking: security, troubleshooting, review</td><td>~36 hrs</td><td>🏅 CompTIA Network+ Exam</td><td>CompTIA Network+</td></tr>
+      <tr><td><strong>Month 9</strong></td><td>AWS AI: ML pipeline, SageMaker, Bedrock</td><td>~36 hrs</td><td>Complete AWS AI Modules 1–4</td><td>—</td></tr>
+      <tr><td><strong>Month 10</strong></td><td>AWS AI: GenAI, responsible AI, review</td><td>~36 hrs</td><td>🏅 AWS AI Practitioner Exam</td><td>AWS Certified AI Practitioner</td></tr>
+      <tr><td><strong>Month 11</strong></td><td>Leadership: agile, communication, budgets, teams</td><td>~36 hrs</td><td>Update LinkedIn; begin networking</td><td>—</td></tr>
+      <tr><td><strong>Month 12</strong></td><td>Career launch: resume, interviews, applications</td><td>~36 hrs</td><td>🎯 Apply for tech manager roles</td><td>6 Certifications + Manager Ready</td></tr>
+    </table></div>
+  </div>
+
+  <!-- DAILY SCHEDULE -->
+  <div class="section">
+    <h2 class="azure">⏰ Sustainable Study Schedule — Full-Time Worker</h2>
+    <div class="table-wrap"><table>
+      <tr><th>Day</th><th>Activity</th><th>Duration</th><th>When to Do It</th></tr>
+      <tr><td><strong>Monday</strong></td><td>Read new concept / watch video lesson</td><td>45–60 min</td><td>Commute audio + 30 min after work</td></tr>
+      <tr><td><strong>Tuesday</strong></td><td>Flashcard review + reinforce concepts</td><td>30–45 min</td><td>Lunch break or evening</td></tr>
+      <tr><td><strong>Wednesday</strong></td><td>Practice quiz questions (10–15 questions)</td><td>45 min</td><td>After dinner or commute</td></tr>
+      <tr><td><strong>Thursday</strong></td><td>Deep-read current week's topic</td><td>45–60 min</td><td>Evening focused session</td></tr>
+      <tr><td><strong>Friday</strong></td><td>Light review; prep weekend study plan</td><td>20–30 min</td><td>Commute or lunch</td></tr>
+      <tr><td><strong>Saturday</strong></td><td>Deep study session: new content + notes</td><td>2 hours</td><td>Morning (before social commitments)</td></tr>
+      <tr><td><strong>Sunday</strong></td><td>Practice test + review wrong answers</td><td>2 hours</td><td>Morning or afternoon</td></tr>
+    </table></div>
+    <div class="info-box warn" style="margin-top:1rem;">
+      <h4>⚠️ Life Happens — Buffer Weeks</h4>
+      <p>Build in <strong>one buffer week per phase</strong> if possible. If you fall behind, skip to the next phase's review week rather than abandoning the schedule. Missing one week is recoverable. Consistency over perfection.</p>
+    </div>
+  </div>
+
+  <!-- CAREER PATH -->
+  <div class="section">
+    <h2 class="ai">🚀 Career Progression: From Non-Technical to Tech Manager</h2>
+    <div class="timeline">
+      <div class="tl-item"><div class="tl-dot gray"></div><div class="tl-label">Starting Point</div><div class="tl-title">Non-Technical Professional</div><div class="tl-desc">You are here. You understand your business domain deeply but lack formal technology credentials. Your advantage: business context that pure technologists often lack.</div></div>
+      <div class="tl-item"><div class="tl-dot green"></div><div class="tl-label">Month 2 · First Credential</div><div class="tl-title">CompTIA ITF+ — Technology Literate</div><div class="tl-desc">You can now speak confidently about hardware, software, networks, and basic security. Update LinkedIn. You are now a credentialed technology professional.</div></div>
+      <div class="tl-item"><div class="tl-dot azure"></div><div class="tl-label">Month 3–4 · Cloud Certified</div><div class="tl-title">Azure AZ-900 + AI-900 — Cloud & AI Aware</div><div class="tl-desc">Two Microsoft badges in 90 days. You understand cloud computing and AI at a professional level. Now visible to Microsoft-stack employers and hiring managers.</div></div>
+      <div class="tl-item"><div class="tl-dot aws"></div><div class="tl-label">Month 6 · Multi-Cloud</div><div class="tl-title">AWS Cloud Practitioner — Industry's Most Recognized Cloud Cert</div><div class="tl-desc">The AWS Cloud Practitioner is held by over 1 million professionals. Adding it to your profile dramatically increases recruiter attention. You are now multi-cloud certified.</div></div>
+      <div class="tl-item"><div class="tl-dot green"></div><div class="tl-label">Month 8 · Technical Depth</div><div class="tl-title">CompTIA Network+ — Networking Fundamentals</div><div class="tl-desc">This separates you from most business-side certificate-chasers. Network+ shows technical depth. Opens doors to infrastructure management, IT operations, and network-adjacent roles.</div></div>
+      <div class="tl-item"><div class="tl-dot ai"></div><div class="tl-label">Month 10 · AI Specialist</div><div class="tl-title">AWS AI Practitioner — The Differentiator</div><div class="tl-desc">With two AI certifications (AI-900 + AIF-C01) and cloud foundation credentials, you are positioned as an AI-aware technology manager. This is rare and highly sought-after in 2025–2026.</div></div>
+      <div class="tl-item"><div class="tl-dot gold"></div><div class="tl-label">Month 12 · Career Launch</div><div class="tl-title">Technology Manager / IT Manager / Cloud Operations Manager</div><div class="tl-desc">You now have 5–6 industry certifications, a demonstrable learning trajectory, and business domain knowledge. Target roles: IT Manager, Cloud Operations Manager, AI Program Manager, Technology Lead, Digital Transformation Manager.</div></div>
+    </div>
+
+    <div class="info-box success" style="margin-top:1rem;">
+      <h4>✅ Your Competitive Edge as a Career-Changer</h4>
+      <p>Technical hiring managers are often looking for leaders who can <em>bridge</em> business and technology. Your non-technical background is an asset — you understand how business decisions get made, how to communicate with stakeholders, and how to manage people. Add technical credentials on top of that combination and you become a very unusual and valuable candidate.</p>
+    </div>
+  </div>
+
+  <!-- SALARY CONTEXT -->
+  <div class="section">
+    <h2 class="green">💰 What This Leads To — Role Expectations</h2>
+    <div class="table-wrap"><table>
+      <tr><th>Target Role</th><th>Key Certs Needed</th><th>US Salary Range</th><th>Tech Stack</th></tr>
+      <tr><td>IT Manager</td><td>CompTIA Net+, AZ-900</td><td>$80K–$130K</td><td>Microsoft 365, Azure, networking</td></tr>
+      <tr><td>Cloud Operations Manager</td><td>AWS CPP, AZ-900</td><td>$100K–$160K</td><td>AWS, Azure, IaC tools</td></tr>
+      <tr><td>AI Program Manager</td><td>AI-900, AIF-C01</td><td>$110K–$175K</td><td>Azure AI, AWS AI, LLMs</td></tr>
+      <tr><td>Digital Transformation Lead</td><td>AZ-900, AWS CPP, AI-900</td><td>$100K–$155K</td><td>Full Microsoft/AWS stack</td></tr>
+      <tr><td>Technology Project Manager</td><td>Any cloud + PMP/PMI (next step)</td><td>$90K–$140K</td><td>Agile, Jira, cloud tools</td></tr>
+    </table></div>
+    <div class="info-box tip" style="margin-top:1rem;">
+      <h4>💡 Next Steps After Month 12</h4>
+      <p>After earning these six credentials, consider pursuing: <strong>PMP (Project Management Professional)</strong> for leadership validation, <strong>AWS Solutions Architect Associate</strong> for deeper cloud architecture, <strong>AZ-104 Azure Administrator</strong> for hands-on Azure operations, or <strong>Microsoft MS-900</strong> (Microsoft 365 Fundamentals) if working in an enterprise Microsoft environment.</p>
+    </div>
+  </div>
+
+  <!-- LINKS TO STUDY GUIDES -->
+  <div class="section">
+    <h2 class="azure">📚 Your Study Guides</h2>
+    <p style="margin-bottom:0.5rem;">Each guide follows the same structure: concepts → memory aids → module quizzes → final exam. Work through them in order.</p>
+    <div class="guide-links">
+      <a class="guide-link foundation-link" href="tech_foundations.html">
+        <div class="gl-icon">🖥️</div>
+        <h4>IT Foundations Guide</h4>
+        <p>CompTIA ITF+ · Network+ prep · Hardware, OS, networking, security basics · Weeks 1–8 &amp; 25–32</p>
+      </a>
+      <a class="guide-link azure-link" href="tech_azure_microsoft.html">
+        <div class="gl-icon">☁️</div>
+        <h4>Azure &amp; Microsoft Guide</h4>
+        <p>AZ-900 · AI-900 · Microsoft 365 · Azure services, AI, governance · Weeks 9–16</p>
+      </a>
+      <a class="guide-link aws-link" href="tech_aws_ai.html">
+        <div class="gl-icon">🟠</div>
+        <h4>AWS &amp; AI Guide</h4>
+        <p>AWS Cloud Practitioner · AWS AI Practitioner · Core services, GenAI, ML · Weeks 17–24 &amp; 33–40</p>
+      </a>
+    </div>
+  </div>
+
+</div><!-- .container -->
+</body>
+</html>

@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Azure & Microsoft — AZ-900 & AI-900 Study Guide</title>
+<style>
+  :root{--bg:#0d1117;--surface:#161b22;--surface2:#21262d;--border:#30363d;--azure:#0078d4;--azure2:#50e6ff;--ai:#8b5cf6;--text:#c9d1d9;--text-muted:#8b949e;--gold:#f0c040;--success:#238636;--danger:#da3633;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;}
+  .hero{background:linear-gradient(135deg,#0d1117 0%,#001d3d 50%,#0d1117 100%);padding:3rem 1rem;text-align:center;border-bottom:2px solid var(--azure);}
+  .hero h1{font-size:clamp(1.6rem,3.5vw,2.5rem);background:linear-gradient(135deg,var(--azure),var(--azure2),var(--ai));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:800;}
+  .hero .sub{color:var(--text-muted);margin-top:0.5rem;}
+  .hero-tags{display:flex;gap:0.6rem;justify-content:center;flex-wrap:wrap;margin-top:1rem;}
+  .htag-azure{padding:0.3rem 0.9rem;border-radius:20px;font-size:0.75rem;font-weight:600;background:rgba(0,120,212,0.15);border:1px solid var(--azure);color:var(--azure);}
+  .htag-ai{padding:0.3rem 0.9rem;border-radius:20px;font-size:0.75rem;font-weight:600;background:rgba(139,92,246,0.15);border:1px solid var(--ai);color:var(--ai);}
+  .progress-wrap{background:var(--surface);padding:0.75rem 1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:1rem;}
+  .progress-bar-bg{flex:1;background:var(--surface2);border-radius:10px;height:10px;overflow:hidden;}
+  .progress-bar{height:100%;background:linear-gradient(90deg,var(--azure),var(--ai));border-radius:10px;width:0%;transition:width 0.5s;}
+  #progress-text{color:var(--text-muted);font-size:0.82rem;white-space:nowrap;}
+  .container{max-width:960px;margin:0 auto;padding:2rem 1rem;}
+  .module{display:none;animation:fadeIn 0.3s ease;}.module.active{display:block;}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+  .module-header{background:linear-gradient(135deg,var(--surface),var(--surface2));border:1px solid var(--border);border-left:4px solid var(--azure);border-radius:10px;padding:1.5rem;margin-bottom:1.5rem;}
+  .module-header.ai-mod{border-left-color:var(--ai);}
+  .module-header h2{color:var(--azure);font-size:1.4rem;}
+  .module-header.ai-mod h2{color:var(--ai);}
+  .section{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.5rem;margin-bottom:1.5rem;}
+  .section h3{color:var(--azure);font-size:1.05rem;margin-bottom:0.75rem;border-bottom:1px solid var(--border);padding-bottom:0.4rem;}
+  .section.ai-section h3{color:var(--ai);}
+  .section h4{color:var(--azure2);font-size:0.95rem;margin:1rem 0 0.4rem;}
+  .section p,.section li{line-height:1.7;color:var(--text);margin-bottom:0.4rem;}
+  .section ul,.section ol{padding-left:1.5rem;}
+  .table-wrap{overflow-x:auto;margin-top:0.75rem;}
+  table{width:100%;border-collapse:collapse;font-size:0.84rem;}
+  th{background:var(--surface2);color:var(--azure);padding:0.6rem 0.8rem;text-align:left;border-bottom:2px solid var(--border);}
+  td{padding:0.55rem 0.8rem;border-bottom:1px solid var(--border);vertical-align:top;}
+  tr:nth-child(even) td{background:rgba(255,255,255,0.02);}
+  .info-box{border-radius:8px;padding:1rem 1.2rem;margin:0.75rem 0;font-size:0.88rem;line-height:1.6;}
+  .info-box.azure{background:rgba(0,120,212,0.08);border-left:3px solid var(--azure);}
+  .info-box.ai{background:rgba(139,92,246,0.08);border-left:3px solid var(--ai);}
+  .info-box.azure h4{color:var(--azure);margin-bottom:0.3rem;}
+  .info-box.ai h4{color:var(--ai);margin-bottom:0.3rem;}
+  .exam-tip{background:rgba(240,192,64,0.06);border:1px solid var(--gold);border-radius:8px;padding:1rem;margin:0.75rem 0;font-size:0.85rem;}
+  .exam-tip h4{color:var(--gold);margin-bottom:0.3rem;}
+  .mnemonic{background:rgba(0,120,212,0.06);border:1px dashed var(--azure);border-radius:8px;padding:1rem;margin:0.75rem 0;font-size:0.88rem;}
+  .mnemonic strong{color:var(--azure);}
+  .service-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:0.75rem;margin-top:0.75rem;}
+  .service-card{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:1rem;}
+  .service-card h5{color:var(--azure);font-size:0.88rem;margin-bottom:0.35rem;}
+  .service-card p{font-size:0.78rem;color:var(--text-muted);line-height:1.5;}
+  .service-card.ai-card h5{color:var(--ai);}
+  .nav-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:0.75rem;margin-top:1.5rem;}
+  .nav-card{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:1rem;cursor:pointer;text-align:center;transition:all 0.2s;}
+  .nav-card:hover{border-color:var(--azure);transform:translateY(-2px);}
+  .nav-card.ai-nav:hover{border-color:var(--ai);}
+  .nav-card .icon{font-size:1.8rem;margin-bottom:0.4rem;}
+  .nav-card h4{color:var(--azure);font-size:0.88rem;}
+  .nav-card.ai-nav h4{color:var(--ai);}
+  .nav-card p{color:var(--text-muted);font-size:0.72rem;margin-top:0.2rem;}
+  .quiz-section{background:var(--surface);border:2px solid var(--azure);border-radius:12px;padding:1.5rem;margin-top:2rem;}
+  .quiz-section.ai-quiz{border-color:var(--ai);}
+  .quiz-section h3{color:var(--azure);margin-bottom:1rem;}
+  .quiz-section.ai-quiz h3{color:var(--ai);}
+  .question-block{margin-bottom:1.5rem;padding:1rem;background:var(--surface2);border-radius:8px;border:1px solid var(--border);}
+  .q-text{font-weight:600;margin-bottom:0.7rem;}
+  .q-number{display:inline-block;background:var(--azure);color:#fff;font-weight:700;font-size:0.72rem;padding:0.1rem 0.4rem;border-radius:4px;margin-right:0.4rem;}
+  .q-number.ai{background:var(--ai);}
+  .options{display:flex;flex-direction:column;gap:0.4rem;}
+  .option-btn{background:var(--surface);border:1px solid var(--border);color:var(--text);padding:0.55rem 0.9rem;border-radius:6px;cursor:pointer;text-align:left;font-size:0.85rem;transition:all 0.15s;}
+  .option-btn:hover:not(:disabled){border-color:var(--azure);}
+  .option-btn.selected{border-color:var(--azure);background:rgba(0,120,212,0.1);color:var(--azure);}
+  .option-btn.correct{background:rgba(35,134,54,0.2)!important;border-color:var(--success)!important;color:var(--success)!important;}
+  .option-btn.wrong{background:rgba(218,54,51,0.2)!important;border-color:var(--danger)!important;color:var(--danger)!important;}
+  .feedback{display:none;background:rgba(255,255,255,0.03);border-left:3px solid var(--azure);padding:0.7rem 1rem;border-radius:0 6px 6px 0;margin-top:0.7rem;font-size:0.83rem;line-height:1.6;color:var(--text-muted);}
+  .submit-quiz-btn{display:block;width:100%;padding:0.8rem;background:var(--azure);color:#fff;font-weight:700;border:none;border-radius:8px;cursor:pointer;margin-top:1rem;font-size:0.95rem;transition:opacity 0.2s;}
+  .submit-quiz-btn.ai-btn{background:var(--ai);}
+  .submit-quiz-btn:hover:not(:disabled){opacity:0.85;}
+  .submit-quiz-btn:disabled{opacity:0.45;cursor:default;}
+  .quiz-score{display:none;text-align:center;padding:1.25rem;background:var(--surface2);border-radius:8px;margin-top:1rem;}
+  .score-num{font-size:2.2rem;font-weight:700;color:var(--gold);}
+  .module-nav{display:flex;justify-content:space-between;margin-top:2rem;flex-wrap:wrap;gap:0.75rem;}
+  .nav-btn{background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:0.55rem 1.2rem;border-radius:8px;cursor:pointer;font-size:0.88rem;transition:all 0.2s;}
+  .nav-btn:hover{border-color:var(--azure);color:var(--azure);}
+  .domain-bar{background:rgba(0,120,212,0.08);border:1px solid var(--azure);border-radius:8px;padding:1rem;margin:0.75rem 0;}
+  .domain-bar h4{color:var(--azure);font-size:0.85rem;margin-bottom:0.4rem;}
+  .domain-bar.ai-domain{background:rgba(139,92,246,0.08);border-color:var(--ai);}
+  .domain-bar.ai-domain h4{color:var(--ai);}
+</style>
+</head>
+<body>
+<div class="hero">
+  <h1>☁️ Azure & Microsoft Study Guide</h1>
+  <p class="sub">AZ-900 Azure Fundamentals · AI-900 Azure AI Fundamentals · Microsoft 365</p>
+  <div class="hero-tags">
+    <span class="htag-azure">AZ-900</span><span class="htag-ai">AI-900</span>
+    <span class="htag-azure">Azure Services</span><span class="htag-azure">Cloud Concepts</span>
+    <span class="htag-ai">AI & ML</span><span class="htag-ai">Responsible AI</span>
+  </div>
+</div>
+<div class="progress-wrap">
+  <span style="color:var(--text-muted);font-size:0.82rem;">Progress:</span>
+  <div class="progress-bar-bg"><div class="progress-bar" id="progress-bar"></div></div>
+  <span id="progress-text">0 / 6 modules complete</span>
+</div>
+<div class="container">
+
+  <!-- LANDING -->
+  <div class="module active" id="landing">
+    <div class="module-header">
+      <h2>☁️ Azure & Microsoft — Your Cloud Journey</h2>
+      <p style="color:var(--text-muted);margin-top:0.4rem;">AZ-900 in Month 3. AI-900 in Month 4. Two Microsoft badges in 8 weeks.</p>
+    </div>
+    <div class="section">
+      <h3>Exam Domains & Weightings</h3>
+      <div class="domain-bar"><h4>AZ-900 Azure Fundamentals — Exam Domains</h4>
+        <p>Cloud Concepts (25–30%) · Azure Architecture &amp; Services (35–40%) · Azure Management &amp; Governance (30–35%)</p></div>
+      <div class="domain-bar ai-domain"><h4>AI-900 Azure AI Fundamentals — Exam Domains</h4>
+        <p>AI Workloads &amp; Considerations (15–20%) · ML Principles (20–25%) · Azure AI Vision (15–20%) · Azure NLP (15–20%) · Azure GenAI (15–20%) · AI Knowledge Mining (5–10%)</p></div>
+      <div class="info-box azure"><h4>💡 Free Prep Resources</h4><p><strong>Microsoft Learn</strong> (learn.microsoft.com) has free, official learning paths for both AZ-900 and AI-900. Each path takes about 6–10 hours and includes hands-on labs in a free Azure sandbox. Use this guide for concepts + quizzes, Microsoft Learn for interactive labs.</p></div>
+    </div>
+    <div class="nav-grid">
+      <div class="nav-card" onclick="showModule('mod1')"><div class="icon">🌤️</div><h4>Module 1</h4><p>Cloud Concepts</p></div>
+      <div class="nav-card" onclick="showModule('mod2')"><div class="icon">🔧</div><h4>Module 2</h4><p>Core Azure Services</p></div>
+      <div class="nav-card" onclick="showModule('mod3')"><div class="icon">🔐</div><h4>Module 3</h4><p>Security, Pricing &amp; Governance</p></div>
+      <div class="nav-card ai-nav" onclick="showModule('mod4')"><div class="icon">🤖</div><h4>Module 4</h4><p>What Is AI &amp; ML?</p></div>
+      <div class="nav-card ai-nav" onclick="showModule('mod5')"><div class="icon">🧠</div><h4>Module 5</h4><p>Azure AI Services</p></div>
+      <div class="nav-card ai-nav" onclick="showModule('mod6')"><div class="icon">💬</div><h4>Module 6</h4><p>GenAI &amp; Responsible AI</p></div>
+      <div class="nav-card" onclick="showModule('final')" style="border-color:var(--gold);"><div class="icon">🏅</div><h4>Final Exam</h4><p>AZ-900 + AI-900 combined</p></div>
+    </div>
+  </div>
+
+  <!-- MODULE 1: Cloud Concepts -->
+  <div class="module" id="mod1">
+    <div class="module-header"><h2>🌤️ Module 1: Cloud Concepts</h2><p style="color:var(--text-muted);margin-top:0.4rem;">The foundation of AZ-900 — what the cloud is, why it exists, and how it's organized.</p></div>
+    <div class="section">
+      <h3>What Is Cloud Computing?</h3>
+      <p>Cloud computing is the delivery of computing services — servers, storage, databases, networking, software, analytics, and AI — over the internet ("the cloud"). Instead of owning hardware, you <strong>rent</strong> computing resources from a provider like Microsoft Azure, AWS, or Google Cloud, paying only for what you use.</p>
+      <div class="info-box azure"><h4>The Five Characteristics of Cloud (NIST Definition)</h4>
+        <p><strong>1. On-demand self-service</strong>: Provision resources without human interaction from the provider.<br>
+        <strong>2. Broad network access</strong>: Available from anywhere over the internet.<br>
+        <strong>3. Resource pooling</strong>: Provider serves multiple customers from shared infrastructure.<br>
+        <strong>4. Rapid elasticity</strong>: Scale up or down quickly, automatically.<br>
+        <strong>5. Measured service</strong>: Pay only for what you use (metered).</p>
+      </div>
+    </div>
+    <div class="section">
+      <h3>Cloud Deployment Models</h3>
+      <div class="table-wrap"><table>
+        <tr><th>Model</th><th>Description</th><th>Who Uses It</th><th>Azure Example</th></tr>
+        <tr><td><strong>Public Cloud</strong></td><td>Resources owned/operated by a third-party provider, shared across customers</td><td>Startups, SaaS companies, most businesses</td><td>Azure's standard services (App Service, Azure SQL)</td></tr>
+        <tr><td><strong>Private Cloud</strong></td><td>Cloud infrastructure operated solely for one organization; on-premises or hosted</td><td>Banks, government, regulated industries</td><td>Azure Stack Hub (run Azure in your data center)</td></tr>
+        <tr><td><strong>Hybrid Cloud</strong></td><td>Combination of public + private — workloads move between them</td><td>Large enterprises with legacy systems</td><td>Azure Arc, Azure ExpressRoute</td></tr>
+        <tr><td><strong>Multi-Cloud</strong></td><td>Using multiple public cloud providers simultaneously</td><td>Risk-averse enterprises</td><td>Azure + AWS + Google Cloud simultaneously</td></tr>
+      </table></div>
+    </div>
+    <div class="section">
+      <h3>Cloud Service Models — IaaS, PaaS, SaaS</h3>
+      <p>The three service models define <strong>how much you manage vs. the provider manages</strong>. Think of it as renting vs. owning vs. subscribing.</p>
+      <div class="table-wrap"><table>
+        <tr><th>Model</th><th>You Manage</th><th>Provider Manages</th><th>Azure Example</th><th>Real World</th></tr>
+        <tr><td><strong>IaaS</strong> — Infrastructure as a Service</td><td>OS, middleware, applications, data</td><td>Physical servers, networking, storage</td><td>Azure Virtual Machines</td><td>Renting a bare apartment — you furnish everything</td></tr>
+        <tr><td><strong>PaaS</strong> — Platform as a Service</td><td>Applications and data only</td><td>OS, runtime, middleware, servers</td><td>Azure App Service, Azure SQL Database</td><td>Renting a furnished apartment — you bring your stuff</td></tr>
+        <tr><td><strong>SaaS</strong> — Software as a Service</td><td>Your data and configuration only</td><td>Everything else</td><td>Microsoft 365, Dynamics 365</td><td>Living in a hotel — everything is provided</td></tr>
+      </table></div>
+      <div class="exam-tip"><h4>🏅 AZ-900 Exam Tip — Shared Responsibility</h4><p>The <strong>Shared Responsibility Model</strong> is heavily tested. Know what the customer is ALWAYS responsible for regardless of service type: <strong>data, user accounts, and access management</strong>. The provider is always responsible for physical infrastructure. The split in the middle (OS, networking, etc.) shifts depending on IaaS/PaaS/SaaS.</p></div>
+    </div>
+    <div class="section">
+      <h3>Benefits of Cloud: CapEx vs. OpEx</h3>
+      <div class="table-wrap"><table>
+        <tr><th></th><th>Traditional IT (CapEx)</th><th>Cloud (OpEx)</th></tr>
+        <tr><td><strong>Payment model</strong></td><td>Large upfront capital investment</td><td>Pay-as-you-go, monthly subscription</td></tr>
+        <tr><td><strong>Scaling</strong></td><td>Must buy new hardware; slow</td><td>Scale in minutes, automatically</td></tr>
+        <tr><td><strong>Risk</strong></td><td>Capacity mismatch; over/under-provision</td><td>Elasticity matches actual demand</td></tr>
+        <tr><td><strong>Maintenance</strong></td><td>Your team manages hardware</td><td>Provider manages infrastructure</td></tr>
+      </table></div>
+      <div class="mnemonic"><strong>CapEx vs. OpEx Mnemonic: "Buy a car vs. Uber"</strong><br>Buying a car = CapEx (large upfront, you maintain it, might sit idle). Uber = OpEx (pay per use, no maintenance, scales to demand). Cloud computing is the "Uber" of IT infrastructure.</div>
+    </div>
+    <div class="quiz-section" id="quiz1">
+      <h3>📝 Module 1 Quiz — Cloud Concepts</h3>
+      <div class="question-block" data-correct="c"><div class="q-text"><span class="q-number">1</span>A company uses Microsoft 365 for email and Office apps, Azure Virtual Machines for their web servers, and Azure SQL Database for their application. Which service model correctly describes Azure SQL Database?</div><div class="options"><button class="option-btn" data-val="a">A) IaaS — the company manages the SQL Server operating system</button><button class="option-btn" data-val="b">B) SaaS — Microsoft manages everything including the company's data</button><button class="option-btn" data-val="c">C) PaaS — Microsoft manages the OS and SQL Server engine; the company only manages the database schema and data</button><button class="option-btn" data-val="d">D) On-premises — the database runs on the company's own servers</button></div><div class="feedback"><strong>Azure SQL Database is PaaS</strong>: Microsoft manages the underlying infrastructure, OS patching, SQL Server engine updates, and HA/DR. The customer only manages their databases, schemas, users, and data. Compare: Azure Virtual Machines (IaaS — you manage the OS), Microsoft 365 (SaaS — Microsoft manages everything). PaaS lets you focus on your application without worrying about server maintenance.</div></div>
+      <div class="question-block" data-correct="b"><div class="q-text"><span class="q-number">2</span>A retail company expects a massive traffic spike every December for holiday sales. The rest of the year traffic is low. Which cloud benefit BEST addresses this scenario?</div><div class="options"><button class="option-btn" data-val="a">A) High availability</button><button class="option-btn" data-val="b">B) Elasticity — scale up resources in December, scale back down in January, paying only for peak capacity when needed</button><button class="option-btn" data-val="c">C) Geo-redundancy</button><button class="option-btn" data-val="d">D) Capital expenditure reduction</button></div><div class="feedback"><strong>Elasticity</strong> is the ability to scale resources up and down dynamically based on demand. In traditional IT, the company would need to buy enough servers to handle the December peak — then those servers sit idle 11 months a year (wasted CapEx). With cloud elasticity, they scale up for December, scale down in January, and pay only for what they use. This is one of the most powerful and commonly cited cloud benefits.</div></div>
+      <div class="question-block" data-correct="d"><div class="q-text"><span class="q-number">3</span>Under the Shared Responsibility Model for a SaaS application, which item is the customer ALWAYS responsible for?</div><div class="options"><button class="option-btn" data-val="a">A) Physical data center security</button><button class="option-btn" data-val="b">B) Operating system patching</button><button class="option-btn" data-val="c">C) Network infrastructure</button><button class="option-btn" data-val="d">D) User identity and access management — who has access to the application and what they can do</button></div><div class="feedback">Regardless of IaaS, PaaS, or SaaS, the customer is <strong>always</strong> responsible for: (1) their data, (2) user accounts and access permissions, (3) end user devices. In SaaS, Microsoft manages everything technical — but they cannot control who you give access to. If an admin gives a contractor excessive permissions and data is stolen, that's the customer's responsibility. Physical infrastructure is always the provider's responsibility.</div></div>
+      <button class="submit-quiz-btn" onclick="submitQuiz('quiz1',1)">Submit</button>
+      <div class="quiz-score" id="quiz1-score"><div class="score-num" id="quiz1-num"></div><p id="quiz1-msg"></p></div>
+    </div>
+    <div class="module-nav"><button class="nav-btn" onclick="showModule('landing')">← Overview</button><button class="nav-btn" onclick="showModule('mod2')">Module 2 →</button></div>
+  </div>
+
+  <!-- MODULE 2: Core Azure Services -->
+  <div class="module" id="mod2">
+    <div class="module-header"><h2>🔧 Module 2: Core Azure Services</h2><p style="color:var(--text-muted);margin-top:0.4rem;">Azure's building blocks — compute, storage, networking, and databases.</p></div>
+    <div class="section">
+      <h3>Azure Global Infrastructure</h3>
+      <p>Azure operates the largest global cloud network. Understanding its structure is essential for AZ-900.</p>
+      <div class="table-wrap"><table>
+        <tr><th>Concept</th><th>What It Is</th><th>Why It Matters</th></tr>
+        <tr><td><strong>Region</strong></td><td>A geographic area containing one or more data centers (e.g., East US, UK South, Australia East)</td><td>You choose regions close to users to reduce latency; some regions have data sovereignty restrictions</td></tr>
+        <tr><td><strong>Availability Zone</strong></td><td>Physically separate data centers within a region, connected by high-speed fiber</td><td>Deploy across multiple zones = survives a single data center failure; 99.99% SLA</td></tr>
+        <tr><td><strong>Region Pair</strong></td><td>Two regions paired for disaster recovery (e.g., East US + West US)</td><td>Azure replicates to the pair during large outages; updates rolled out to only one at a time</td></tr>
+        <tr><td><strong>Azure Geography</strong></td><td>Market area containing two or more regions (e.g., United States, Europe)</td><td>Data residency and compliance — some regulations require data stays in a geography</td></tr>
+      </table></div>
+    </div>
+    <div class="section">
+      <h3>Core Compute Services</h3>
+      <div class="service-grid">
+        <div class="service-card"><h5>Azure Virtual Machines</h5><p>IaaS — full control of Windows/Linux VMs. You manage the OS. Migrating existing on-prem apps.</p></div>
+        <div class="service-card"><h5>Azure App Service</h5><p>PaaS — host web apps, APIs, mobile backends. No server management. Supports .NET, Java, Python, Node.</p></div>
+        <div class="service-card"><h5>Azure Kubernetes Service (AKS)</h5><p>Managed Kubernetes for containerized apps. Microsoft manages the control plane.</p></div>
+        <div class="service-card"><h5>Azure Functions</h5><p>Serverless — run small code snippets triggered by events. Pay only when code runs. No servers to manage.</p></div>
+        <div class="service-card"><h5>Azure Container Instances</h5><p>Run containers on-demand without managing a cluster. Fastest way to run a container in Azure.</p></div>
+        <div class="service-card"><h5>Azure Virtual Desktop</h5><p>Cloud-hosted Windows desktops and apps. Stream a full Windows experience from any device.</p></div>
+      </div>
+    </div>
+    <div class="section">
+      <h3>Core Storage & Database Services</h3>
+      <div class="table-wrap"><table>
+        <tr><th>Service</th><th>Type</th><th>Use Case</th></tr>
+        <tr><td>Azure Blob Storage</td><td>Object storage (unstructured)</td><td>Files, images, videos, backups, log files — any unstructured data</td></tr>
+        <tr><td>Azure Files</td><td>Managed file share (SMB/NFS)</td><td>Replace on-premises file servers; mount as a network drive</td></tr>
+        <tr><td>Azure SQL Database</td><td>Relational (SQL) — PaaS</td><td>Structured data; traditional database workloads; Microsoft SQL Server compatible</td></tr>
+        <tr><td>Azure Cosmos DB</td><td>NoSQL — globally distributed</td><td>Low-latency apps needing global scale; JSON documents, key-value, graph</td></tr>
+        <tr><td>Azure Table Storage</td><td>NoSQL — key-value pairs</td><td>Simple, cheap storage for structured non-relational data</td></tr>
+        <tr><td>Azure Disk Storage</td><td>Block storage for VMs</td><td>The hard drive attached to an Azure VM</td></tr>
+      </table></div>
+    </div>
+    <div class="section">
+      <h3>Core Networking Services</h3>
+      <div class="table-wrap"><table>
+        <tr><th>Service</th><th>What It Does</th></tr>
+        <tr><td>Azure Virtual Network (VNet)</td><td>Private network in Azure — your isolated network space, like a corporate LAN in the cloud</td></tr>
+        <tr><td>Azure VPN Gateway</td><td>Encrypted VPN connection between Azure VNet and on-premises network</td></tr>
+        <tr><td>Azure ExpressRoute</td><td>Private, dedicated fiber connection from your office directly to Azure — bypasses the internet</td></tr>
+        <tr><td>Azure Load Balancer</td><td>Distributes inbound traffic across multiple VMs for high availability</td></tr>
+        <tr><td>Azure DNS</td><td>Host your DNS domains in Azure; ultra-fast resolution worldwide</td></tr>
+        <tr><td>Azure CDN</td><td>Content Delivery Network — caches content at edge locations globally for faster delivery</td></tr>
+      </table></div>
+    </div>
+    <div class="quiz-section" id="quiz2">
+      <h3>📝 Module 2 Quiz — Azure Services</h3>
+      <div class="question-block" data-correct="b"><div class="q-text"><span class="q-number">2</span>A developer wants to host a web application in Azure without managing any operating system or servers. They just want to deploy their code. Which service is BEST?</div><div class="options"><button class="option-btn" data-val="a">A) Azure Virtual Machines (IaaS)</button><button class="option-btn" data-val="b">B) Azure App Service (PaaS) — deploy code directly; Microsoft manages everything else</button><button class="option-btn" data-val="c">C) Azure Blob Storage</button><button class="option-btn" data-val="d">D) Azure ExpressRoute</button></div><div class="feedback"><strong>Azure App Service</strong> is PaaS for web applications. You deploy code (ZIP, container, or Git push) and App Service handles OS, patching, scaling, load balancing, and certificates. Azure Virtual Machines (IaaS) requires you to manage the OS — more control but more work. App Service is the right answer when "no server management" is a stated requirement — a very common exam pattern.</div></div>
+      <div class="question-block" data-correct="c"><div class="q-text"><span class="q-number">2</span>An organization wants a private, dedicated network connection from their corporate office to Azure that does NOT go over the public internet. Which service provides this?</div><div class="options"><button class="option-btn" data-val="a">A) Azure VPN Gateway</button><button class="option-btn" data-val="b">B) Azure Virtual Network</button><button class="option-btn" data-val="c">C) Azure ExpressRoute — a private, dedicated fiber connection that bypasses the internet entirely</button><button class="option-btn" data-val="d">D) Azure CDN</button></div><div class="feedback"><strong>Azure ExpressRoute</strong> provides a dedicated, private connection from your data center to Azure through a connectivity partner (like AT&T or Equinix). It does NOT traverse the public internet — providing lower latency, higher bandwidth, and stronger security guarantees than VPN. Azure VPN Gateway also connects on-prem to Azure, but uses encrypted VPN <em>over</em> the public internet. ExpressRoute is the premium option for high-security/high-bandwidth requirements.</div></div>
+      <div class="question-block" data-correct="a"><div class="q-text"><span class="q-number">3</span>A company needs to store 50TB of unstructured files (images, documents, backups) in Azure cost-effectively. Which service is most appropriate?</div><div class="options"><button class="option-btn" data-val="a">A) Azure Blob Storage — designed for massive amounts of unstructured data at very low cost</button><button class="option-btn" data-val="b">B) Azure SQL Database</button><button class="option-btn" data-val="c">C) Azure Virtual Machines</button><button class="option-btn" data-val="d">D) Azure Cosmos DB</button></div><div class="feedback"><strong>Azure Blob Storage</strong> (Binary Large Object) is object storage built for unstructured data at massive scale — images, videos, documents, backups, log files. It has tiered pricing: Hot (frequently accessed), Cool (infrequent access, cheaper), and Archive (rare access, very cheap). For 50TB of mixed files, Blob Storage is the cost-effective default choice. Azure SQL is for structured relational data. Cosmos DB is for NoSQL application data. VMs are for compute workloads.</div></div>
+      <button class="submit-quiz-btn" onclick="submitQuiz('quiz2',2)">Submit</button>
+      <div class="quiz-score" id="quiz2-score"><div class="score-num" id="quiz2-num"></div><p id="quiz2-msg"></p></div>
+    </div>
+    <div class="module-nav"><button class="nav-btn" onclick="showModule('mod1')">← Module 1</button><button class="nav-btn" onclick="showModule('mod3')">Module 3 →</button></div>
+  </div>
+
+  <!-- MODULE 3 -->
+  <div class="module" id="mod3">
+    <div class="module-header"><h2>🔐 Module 3: Security, Pricing & Governance</h2><p style="color:var(--text-muted);margin-top:0.4rem;">The third AZ-900 domain — protecting Azure resources, managing costs, and staying compliant.</p></div>
+    <div class="section">
+      <h3>Azure Identity & Security</h3>
+      <div class="table-wrap"><table>
+        <tr><th>Service/Concept</th><th>What It Does</th></tr>
+        <tr><td><strong>Microsoft Entra ID</strong> (formerly Azure AD)</td><td>Cloud-based identity provider; manages users, groups, and access to Azure and Microsoft 365</td></tr>
+        <tr><td><strong>Multi-Factor Authentication (MFA)</strong></td><td>Requires a second verification beyond password; free with Entra ID</td></tr>
+        <tr><td><strong>Conditional Access</strong></td><td>Block or require MFA based on conditions (location, device, risk level)</td></tr>
+        <tr><td><strong>Role-Based Access Control (RBAC)</strong></td><td>Assign roles (Owner, Contributor, Reader) to users for specific resources — principle of least privilege</td></tr>
+        <tr><td><strong>Azure Key Vault</strong></td><td>Securely store secrets, certificates, and encryption keys; never hardcode passwords in applications</td></tr>
+        <tr><td><strong>Microsoft Defender for Cloud</strong></td><td>Security posture management; scans Azure resources for misconfigurations and threats</td></tr>
+        <tr><td><strong>Azure DDoS Protection</strong></td><td>Automatically detects and mitigates volumetric DDoS attacks against Azure resources</td></tr>
+        <tr><td><strong>Zero Trust</strong></td><td>Security model: "never trust, always verify" — authenticate every user/device on every access attempt</td></tr>
+      </table></div>
+    </div>
+    <div class="section">
+      <h3>Azure Pricing & Cost Management</h3>
+      <p>AZ-900 tests your understanding of how Azure pricing works — not specific prices, but the models and tools.</p>
+      <div class="table-wrap"><table>
+        <tr><th>Pricing Concept</th><th>Explanation</th></tr>
+        <tr><td><strong>Pay-as-you-go</strong></td><td>Pay for exactly what you use per second/minute/hour. No commitment. Highest per-unit price.</td></tr>
+        <tr><td><strong>Reserved Instances (1 or 3 year)</strong></td><td>Commit to 1 or 3 years for 40–72% discount vs pay-as-you-go. Best for predictable workloads.</td></tr>
+        <tr><td><strong>Spot Pricing</strong></td><td>Use spare Azure capacity at 60–90% discount. Can be evicted at any time. Good for batch jobs.</td></tr>
+        <tr><td><strong>Azure Hybrid Benefit</strong></td><td>Use existing Windows Server / SQL Server licenses in Azure for significant savings</td></tr>
+        <tr><td><strong>Azure Pricing Calculator</strong></td><td>Estimate costs before deploying. Configure services and see projected monthly bill.</td></tr>
+        <tr><td><strong>Total Cost of Ownership (TCO) Calculator</strong></td><td>Compare on-premises infrastructure cost vs. Azure equivalent — helps justify cloud migration</td></tr>
+        <tr><td><strong>Azure Cost Management</strong></td><td>Monitor actual spending; set budgets and alerts; analyze where money is being spent</td></tr>
+      </table></div>
+    </div>
+    <div class="section">
+      <h3>Azure Governance & Compliance</h3>
+      <div class="table-wrap"><table>
+        <tr><th>Tool</th><th>Purpose</th></tr>
+        <tr><td><strong>Azure Policy</strong></td><td>Enforce organizational standards — e.g., "all VMs must be in Europe" or "storage must have encryption enabled"</td></tr>
+        <tr><td><strong>Management Groups</strong></td><td>Organize multiple Azure subscriptions into a hierarchy; apply policies at scale</td></tr>
+        <tr><td><strong>Resource Groups</strong></td><td>Logical container for related Azure resources (e.g., all resources for "Project X" in one group)</td></tr>
+        <tr><td><strong>Azure Blueprints</strong></td><td>Package of policies, RBAC, and Resource Manager templates for consistent environment deployment</td></tr>
+        <tr><td><strong>Microsoft Purview</strong></td><td>Data governance, compliance, and risk management — data catalog and lineage tracking</td></tr>
+        <tr><td><strong>Service Trust Portal</strong></td><td>Microsoft's compliance documentation — audit reports, certifications (ISO 27001, SOC 2, HIPAA)</td></tr>
+      </table></div>
+      <div class="exam-tip"><h4>🏅 AZ-900 SLA Facts</h4><p>Key Azure SLAs to know: <strong>99.99% for Azure services using Availability Zones</strong> (two or more instances). <strong>99.9% for single-instance VMs on Premium SSD</strong>. Free tier = no SLA. Understanding that adding redundancy (multiple VMs, multiple zones) increases SLA is a testable concept.</p></div>
+    </div>
+    <div class="quiz-section" id="quiz3">
+      <h3>📝 Module 3 Quiz — Security & Governance</h3>
+      <div class="question-block" data-correct="b"><div class="q-text"><span class="q-number">1</span>A company wants to ensure no one can deploy Azure resources outside the European Union region. Which Azure feature enforces this?</div><div class="options"><button class="option-btn" data-val="a">A) Azure Cost Management budgets</button><button class="option-btn" data-val="b">B) Azure Policy — enforce rules that allow/deny specific resource configurations across subscriptions</button><button class="option-btn" data-val="c">C) Azure RBAC roles</button><button class="option-btn" data-val="d">D) Conditional Access</button></div><div class="feedback"><strong>Azure Policy</strong> is used to define and enforce organizational standards and compliance rules. A policy denying resource creation outside EU regions will automatically block any deployment attempt outside those regions — regardless of who tries. RBAC controls what actions users can perform, not WHERE. Cost Management handles billing. Conditional Access handles authentication conditions. Policy is the governance tool for infrastructure compliance.</div></div>
+      <div class="question-block" data-correct="c"><div class="q-text"><span class="q-number">2</span>A company plans to run a predictable workload 24/7 for the next 3 years. Which Azure pricing option offers the best discount?</div><div class="options"><button class="option-btn" data-val="a">A) Spot pricing</button><button class="option-btn" data-val="b">B) Pay-as-you-go</button><button class="option-btn" data-val="c">C) 3-year Reserved Instances — commit to 3 years upfront for up to 72% savings vs. pay-as-you-go</button><button class="option-btn" data-val="d">D) Free tier</button></div><div class="feedback"><strong>Reserved Instances (1 or 3-year)</strong> provide the best discount for predictable workloads. 3-year = up to 72% off pay-as-you-go pricing. 1-year = up to 40% off. The trade-off: you're committing — if requirements change, you're locked in (though you can sometimes modify or cancel with a fee). Spot pricing offers larger discounts (80%+) but can be evicted — only suitable for non-critical, interruptible workloads.</div></div>
+      <div class="question-block" data-correct="d"><div class="q-text"><span class="q-number">3</span>An IT manager wants to understand the full cost comparison between their current on-premises data center and moving to Azure. Which Azure tool is designed for this?</div><div class="options"><button class="option-btn" data-val="a">A) Azure Pricing Calculator</button><button class="option-btn" data-val="b">B) Azure Cost Management</button><button class="option-btn" data-val="c">C) Azure Policy</button><button class="option-btn" data-val="d">D) TCO (Total Cost of Ownership) Calculator — compares on-premises infrastructure total cost (hardware, power, staff, facility) vs. Azure equivalent to build a business case for migration</button></div><div class="feedback">The <strong>TCO Calculator</strong> is specifically designed for "should we move to cloud?" business case analysis. It models: on-premises hardware, power, cooling, facilities, IT staff, maintenance — vs. equivalent Azure services. The <em>Pricing Calculator</em> estimates the cost of specific Azure resources. <em>Cost Management</em> tracks actual current spending. Knowing which tool to use for which scenario is an AZ-900 exam staple.</div></div>
+      <button class="submit-quiz-btn" onclick="submitQuiz('quiz3',3)">Submit</button>
+      <div class="quiz-score" id="quiz3-score"><div class="score-num" id="quiz3-num"></div><p id="quiz3-msg"></p></div>
+    </div>
+    <div class="module-nav"><button class="nav-btn" onclick="showModule('mod2')">← Module 2</button><button class="nav-btn" onclick="showModule('mod4')">Module 4: AI →</button></div>
+  </div>
+
+  <!-- MODULE 4: AI Intro -->
+  <div class="module" id="mod4">
+    <div class="module-header ai-mod"><h2>🤖 Module 4: What Is AI & Machine Learning?</h2><p style="color:var(--text-muted);margin-top:0.4rem;">AI-900 begins here — core concepts explained from scratch.</p></div>
+    <div class="section ai-section">
+      <h3>AI, ML, and Deep Learning — Decoded</h3>
+      <div class="table-wrap"><table>
+        <tr><th>Term</th><th>What It Is</th><th>Example</th></tr>
+        <tr><td><strong>Artificial Intelligence (AI)</strong></td><td>The broad field of making computers perform tasks that normally require human intelligence</td><td>Chess programs, voice assistants, spam filters</td></tr>
+        <tr><td><strong>Machine Learning (ML)</strong></td><td>A subset of AI where systems learn from data and improve over time without being explicitly programmed</td><td>Netflix recommendations, credit card fraud detection</td></tr>
+        <tr><td><strong>Deep Learning</strong></td><td>ML using neural networks with many layers — excels at unstructured data (images, audio, text)</td><td>Face recognition, speech-to-text, image classification</td></tr>
+        <tr><td><strong>Generative AI (GenAI)</strong></td><td>AI that creates new content (text, images, code, audio) by learning patterns from training data</td><td>ChatGPT, DALL-E, GitHub Copilot</td></tr>
+        <tr><td><strong>Large Language Model (LLM)</strong></td><td>A deep learning model trained on vast text data to understand and generate human language</td><td>GPT-4, Azure OpenAI Service, Claude</td></tr>
+      </table></div>
+    </div>
+    <div class="section ai-section">
+      <h3>Types of ML — How Machines Learn</h3>
+      <div class="table-wrap"><table>
+        <tr><th>Type</th><th>How It Works</th><th>Example Use Case</th></tr>
+        <tr><td><strong>Supervised Learning</strong></td><td>Trained on labeled data (input + correct answer). Learns to map inputs to known outputs.</td><td>Email spam detection (labeled spam/not spam), image classification, price prediction</td></tr>
+        <tr><td><strong>Unsupervised Learning</strong></td><td>Trained on unlabeled data. Finds hidden patterns and groupings on its own.</td><td>Customer segmentation, anomaly detection, topic clustering</td></tr>
+        <tr><td><strong>Reinforcement Learning</strong></td><td>Agent learns by trial and error; receives rewards for good actions, penalties for bad.</td><td>Game playing (AlphaGo), robot control, recommendation optimization</td></tr>
+      </table></div>
+    </div>
+    <div class="section ai-section">
+      <h3>The ML Workflow — How a Model is Built</h3>
+      <ol style="padding-left:1.5rem;">
+        <li><strong>Define the problem</strong> — What question are we trying to answer? What does success look like?</li>
+        <li><strong>Collect and prepare data</strong> — Gather training data; clean, transform, and label it</li>
+        <li><strong>Choose and train a model</strong> — Select an algorithm; train on the prepared data</li>
+        <li><strong>Evaluate the model</strong> — Test on held-out data; measure accuracy, precision, recall</li>
+        <li><strong>Deploy the model</strong> — Make it available as an API or service for real-world use</li>
+        <li><strong>Monitor and retrain</strong> — Track performance over time; retrain when data shifts</li>
+      </ol>
+      <div class="info-box ai"><h4>Key ML Terms for AI-900</h4>
+        <p><strong>Features</strong>: Input variables used to make predictions (e.g., age, income, location).<br>
+        <strong>Labels/Targets</strong>: The output you want to predict (e.g., "will this customer churn?" Yes/No).<br>
+        <strong>Training data</strong>: Historical data used to teach the model.<br>
+        <strong>Validation data</strong>: Held-out data to tune the model during training.<br>
+        <strong>Test data</strong>: Completely unseen data used to measure final model performance.<br>
+        <strong>Overfitting</strong>: Model performs well on training data but poorly on new data — memorized rather than learned.</p>
+      </div>
+    </div>
+    <div class="quiz-section ai-quiz" id="quiz4">
+      <h3>📝 Module 4 Quiz — AI & ML Concepts</h3>
+      <div class="question-block" data-correct="a"><div class="q-text"><span class="q-number ai">1</span>A bank builds a model to detect fraudulent transactions by training it on historical transactions labeled "fraud" or "legitimate." What type of machine learning is this?</div><div class="options"><button class="option-btn" data-val="a">A) Supervised learning — uses labeled data (fraud/not fraud) to train the model to classify new transactions</button><button class="option-btn" data-val="b">B) Unsupervised learning — finds fraud patterns without labels</button><button class="option-btn" data-val="c">C) Reinforcement learning — the model is rewarded for catching fraud</button><button class="option-btn" data-val="d">D) Deep learning — because banks use complex models</button></div><div class="feedback"><strong>Supervised learning</strong> uses labeled training data (known inputs + known correct outputs). Here, each historical transaction has a label (fraud/not fraud). The model learns the pattern: which combinations of features (amount, location, time, merchant type) correlate with fraud. New transactions are then classified using this learned pattern. Classification (fraud/not fraud) and regression (predict a number) are the two main supervised learning tasks.</div></div>
+      <div class="question-block" data-correct="c"><div class="q-text"><span class="q-number ai">2</span>What is the main risk of a model that performs extremely well on training data but poorly when deployed with real-world data?</div><div class="options"><button class="option-btn" data-val="a">A) Underfitting</button><button class="option-btn" data-val="b">B) Data leakage</button><button class="option-btn" data-val="c">C) Overfitting — the model memorized training data instead of learning generalizable patterns</button><button class="option-btn" data-val="d">D) Bias variance tradeoff</button></div><div class="feedback"><strong>Overfitting</strong> occurs when a model learns the training data too precisely — including noise and outliers — and fails to generalize to new data. Like a student who memorized the answers to practice tests but can't answer new exam questions. Prevention: use more training data, reduce model complexity, use regularization techniques, or apply dropout (in neural networks). Always evaluate on <em>held-out test data</em> that was never used in training.</div></div>
+      <div class="question-block" data-correct="d"><div class="q-text"><span class="q-number ai">3</span>Which AI category would include a model that generates new text responses based on a user's question, like ChatGPT?</div><div class="options"><button class="option-btn" data-val="a">A) Supervised classification</button><button class="option-btn" data-val="b">B) Reinforcement learning agent</button><button class="option-btn" data-val="c">C) Anomaly detection</button><button class="option-btn" data-val="d">D) Generative AI using a Large Language Model (LLM) — trained on vast text data to generate human-like responses</button></div><div class="feedback"><strong>Generative AI</strong> creates new content. LLMs (Large Language Models) like GPT-4 and Azure OpenAI are trained on massive text datasets and learn to predict the most likely next word/token — effectively generating coherent text. Unlike traditional ML that classifies or predicts from existing categories, GenAI creates new outputs (text, images, code, audio). This is the technology behind ChatGPT, GitHub Copilot, DALL-E, and Azure OpenAI Service.</div></div>
+      <button class="submit-quiz-btn ai-btn" onclick="submitQuiz('quiz4',4)">Submit</button>
+      <div class="quiz-score" id="quiz4-score"><div class="score-num" id="quiz4-num"></div><p id="quiz4-msg"></p></div>
+    </div>
+    <div class="module-nav"><button class="nav-btn" onclick="showModule('mod3')">← Module 3</button><button class="nav-btn" onclick="showModule('mod5')">Module 5 →</button></div>
+  </div>
+
+  <!-- MODULE 5: Azure AI Services -->
+  <div class="module" id="mod5">
+    <div class="module-header ai-mod"><h2>🧠 Module 5: Azure AI Services</h2><p style="color:var(--text-muted);margin-top:0.4rem;">Pre-built AI capabilities you can use without being a data scientist.</p></div>
+    <div class="section ai-section">
+      <h3>Azure AI Services — The Complete Map</h3>
+      <p>Azure AI Services are pre-built, API-accessible AI capabilities. You don't need to train models — just call an API and get results. This is the fastest way to add AI to any application.</p>
+      <div class="table-wrap"><table>
+        <tr><th>Service</th><th>Category</th><th>What It Does</th><th>Example Use</th></tr>
+        <tr><td><strong>Azure Computer Vision</strong></td><td>Vision</td><td>Analyze images: describe content, read text, detect objects, identify landmarks</td><td>Retail product recognition, accessibility descriptions</td></tr>
+        <tr><td><strong>Azure Face API</strong></td><td>Vision</td><td>Detect faces, analyze attributes (age, emotion), verify identity</td><td>Building access control, photo organization</td></tr>
+        <tr><td><strong>Azure Document Intelligence</strong> (Form Recognizer)</td><td>Vision / Document</td><td>Extract structured data from documents — invoices, receipts, forms</td><td>Automated invoice processing, tax document extraction</td></tr>
+        <tr><td><strong>Azure Custom Vision</strong></td><td>Vision</td><td>Train your own image classifier with your images (no ML expertise needed)</td><td>Quality control in manufacturing, defect detection</td></tr>
+        <tr><td><strong>Azure Speech Service</strong></td><td>Speech</td><td>Speech-to-text, text-to-speech, translation, speaker recognition</td><td>Call center transcription, voice assistants</td></tr>
+        <tr><td><strong>Azure Language Service</strong></td><td>NLP</td><td>Text analysis: sentiment, key phrases, entity recognition, language detection</td><td>Customer feedback analysis, content moderation</td></tr>
+        <tr><td><strong>Azure Translator</strong></td><td>NLP</td><td>Real-time text translation across 100+ languages</td><td>Multilingual customer support, document translation</td></tr>
+        <tr><td><strong>Azure OpenAI Service</strong></td><td>GenAI</td><td>Access GPT-4, DALL-E, Embeddings within Azure's enterprise security environment</td><td>Copilot experiences, code generation, summarization</td></tr>
+        <tr><td><strong>Azure Bot Service</strong></td><td>Conversational AI</td><td>Build, host, and connect chatbots across Teams, Web, Slack, etc.</td><td>IT helpdesk bot, customer service automation</td></tr>
+        <tr><td><strong>Azure Machine Learning</strong></td><td>ML Platform</td><td>End-to-end ML platform: build, train, deploy, and manage custom ML models</td><td>Data scientists building custom prediction models</td></tr>
+      </table></div>
+    </div>
+    <div class="section ai-section">
+      <h3>Responsible AI — Microsoft's 6 Principles</h3>
+      <p>AI-900 heavily tests Responsible AI. Microsoft's framework has <strong>six principles</strong> that appear directly in exam questions.</p>
+      <div class="table-wrap"><table>
+        <tr><th>Principle</th><th>What It Means</th><th>Example Issue It Addresses</th></tr>
+        <tr><td><strong>Fairness</strong></td><td>AI should treat all people equitably — not discriminate based on gender, race, age, disability</td><td>A loan approval AI that unfairly denies women vs. men with identical profiles</td></tr>
+        <tr><td><strong>Reliability &amp; Safety</strong></td><td>AI should behave as expected and handle edge cases safely</td><td>A self-driving car AI that must reliably stop at red lights, every time</td></tr>
+        <tr><td><strong>Privacy &amp; Security</strong></td><td>AI should protect user data; be secure against adversarial attacks</td><td>A healthcare AI that must keep patient data private</td></tr>
+        <tr><td><strong>Inclusiveness</strong></td><td>AI should empower and benefit everyone, including people with disabilities</td><td>Accessibility features in AI (alt-text generation, speech recognition for all accents)</td></tr>
+        <tr><td><strong>Transparency</strong></td><td>AI systems should be understandable — users should know they're interacting with AI</td><td>Disclosing when customer service responses are AI-generated</td></tr>
+        <tr><td><strong>Accountability</strong></td><td>Humans should be responsible for AI decisions; oversight mechanisms in place</td><td>A human must review AI-flagged loan denials before they are finalized</td></tr>
+      </table></div>
+      <div class="mnemonic"><strong>Mnemonic: "Fair Robots Protect Inclusive Transparent Accounts" — FRPITA</strong><br>Fairness → Reliability &amp; Safety → Privacy &amp; Security → Inclusiveness → Transparency → Accountability</div>
+    </div>
+    <div class="quiz-section ai-quiz" id="quiz5">
+      <h3>📝 Module 5 Quiz — Azure AI Services</h3>
+      <div class="question-block" data-correct="b"><div class="q-text"><span class="q-number ai">1</span>A company receives thousands of customer feedback emails daily. They want to automatically determine whether each email is positive, negative, or neutral. Which Azure AI service does this?</div><div class="options"><button class="option-btn" data-val="a">A) Azure Computer Vision</button><button class="option-btn" data-val="b">B) Azure Language Service — sentiment analysis classifies text as positive, negative, neutral, or mixed</button><button class="option-btn" data-val="c">C) Azure Speech Service</button><button class="option-btn" data-val="d">D) Azure Translator</button></div><div class="feedback"><strong>Azure Language Service</strong> (formerly Text Analytics) provides <strong>sentiment analysis</strong> — analyzing text to determine emotional tone: positive, negative, neutral, or mixed. It also provides key phrase extraction (most important topics), entity recognition (people, places, organizations), and language detection. Computer Vision analyzes images. Speech Service handles audio. Translator converts between languages. Sentiment analysis on text = Language Service.</div></div>
+      <div class="question-block" data-correct="d"><div class="q-text"><span class="q-number ai">2</span>A company discovers its AI hiring tool recommends fewer women for engineering positions than men with identical qualifications. Which Responsible AI principle is being violated?</div><div class="options"><button class="option-btn" data-val="a">A) Transparency</button><button class="option-btn" data-val="b">B) Reliability</button><button class="option-btn" data-val="c">C) Accountability</button><button class="option-btn" data-val="d">D) Fairness — the AI is producing discriminatory outcomes based on gender</button></div><div class="feedback"><strong>Fairness</strong> in AI means systems should not produce outcomes that discriminate unfairly based on protected characteristics (gender, race, age, disability, religion, etc.). This scenario is a classic AI bias problem — often caused by biased training data (e.g., trained on historical hiring data that already reflected gender bias). Microsoft's approach: use inclusive training data, apply fairness metrics during model evaluation, and regularly audit models for discriminatory patterns.</div></div>
+      <div class="question-block" data-correct="c"><div class="q-text"><span class="q-number ai">3</span>Which Azure service provides access to GPT-4 and DALL-E within Microsoft's enterprise security and compliance environment?</div><div class="options"><button class="option-btn" data-val="a">A) Azure Bot Service</button><button class="option-btn" data-val="b">B) Azure Machine Learning</button><button class="option-btn" data-val="c">C) Azure OpenAI Service — enterprise-grade access to OpenAI models with Azure security, compliance, and regional availability</button><button class="option-btn" data-val="d">D) Azure Cognitive Search</button></div><div class="feedback"><strong>Azure OpenAI Service</strong> provides access to OpenAI's foundation models (GPT-4, GPT-4o, DALL-E, Whisper, Embeddings) hosted within Azure's infrastructure. This gives enterprises: data privacy (your prompts/data aren't used to train OpenAI's models), compliance (SOC 2, HIPAA, GDPR within Azure's framework), regional deployment, and integration with other Azure services. It's how most large enterprises use OpenAI technology — not through OpenAI.com directly.</div></div>
+      <button class="submit-quiz-btn ai-btn" onclick="submitQuiz('quiz5',5)">Submit</button>
+      <div class="quiz-score" id="quiz5-score"><div class="score-num" id="quiz5-num"></div><p id="quiz5-msg"></p></div>
+    </div>
+    <div class="module-nav"><button class="nav-btn" onclick="showModule('mod4')">← Module 4</button><button class="nav-btn" onclick="showModule('mod6')">Module 6 →</button></div>
+  </div>
+
+  <!-- MODULE 6: GenAI & Responsible AI -->
+  <div class="module" id="mod6">
+    <div class="module-header ai-mod"><h2>💬 Module 6: Generative AI & Responsible AI in Practice</h2><p style="color:var(--text-muted);margin-top:0.4rem;">How GenAI works, Azure Copilot ecosystem, and applying responsible AI principles.</p></div>
+    <div class="section ai-section">
+      <h3>How Generative AI Works</h3>
+      <div class="info-box ai"><h4>LLMs — Under the Hood (Simply Explained)</h4>
+        <p>A Large Language Model is trained on billions of documents from the internet and books. It learns statistical patterns: given the words "The sky is...", the most likely next word is "blue." At massive scale, this predicts not just single words but coherent paragraphs, reasoning steps, and even code.</p>
+        <p style="margin-top:0.5rem;"><strong>Prompt Engineering</strong>: How you structure your input (prompt) to an LLM dramatically affects the output. Good prompts are: specific, include context, specify format, and use examples. As a manager, you'll use prompts to instruct AI tools — this is a real skill.</p>
+        <p style="margin-top:0.5rem;"><strong>Tokens</strong>: LLMs process text as tokens (roughly 3/4 of a word). Costs and context windows are measured in tokens. GPT-4 has a 128,000-token context window — roughly 100,000 words in one conversation.</p>
+      </div>
+    </div>
+    <div class="section ai-section">
+      <h3>Microsoft Copilot Ecosystem</h3>
+      <div class="table-wrap"><table>
+        <tr><th>Copilot Product</th><th>Where It Lives</th><th>What It Does</th></tr>
+        <tr><td><strong>Microsoft 365 Copilot</strong></td><td>Word, Excel, PowerPoint, Outlook, Teams</td><td>Draft documents, summarize emails, analyze data, generate presentations</td></tr>
+        <tr><td><strong>GitHub Copilot</strong></td><td>VS Code, GitHub</td><td>AI code completion, explanation, and generation for developers</td></tr>
+        <tr><td><strong>Copilot Studio</strong></td><td>Power Platform</td><td>Build custom AI chatbots/agents for your organization — no coding required</td></tr>
+        <tr><td><strong>Azure AI Studio</strong></td><td>Azure portal</td><td>Build, test, and deploy custom AI applications using Azure OpenAI and other models</td></tr>
+        <tr><td><strong>Microsoft Copilot (Bing)</strong></td><td>Edge browser, Bing, Windows</td><td>General AI assistant for web search, summarization, and creation</td></tr>
+      </table></div>
+    </div>
+    <div class="section ai-section">
+      <h3>Practical AI Use Cases for Managers</h3>
+      <div class="table-wrap"><table>
+        <tr><th>Business Task</th><th>AI Solution</th><th>Azure Service</th></tr>
+        <tr><td>Summarizing 50 customer support tickets</td><td>Text summarization via LLM</td><td>Azure OpenAI / M365 Copilot</td></tr>
+        <tr><td>Translating product docs to 10 languages</td><td>Neural machine translation</td><td>Azure Translator</td></tr>
+        <tr><td>Extracting data from paper invoices</td><td>Document intelligence</td><td>Azure Document Intelligence</td></tr>
+        <tr><td>Answering employee HR questions 24/7</td><td>Custom chatbot on HR knowledge base</td><td>Azure Bot Service + OpenAI</td></tr>
+        <tr><td>Predicting which customers will cancel</td><td>Churn prediction ML model</td><td>Azure Machine Learning</td></tr>
+        <tr><td>Identifying defective products in photos</td><td>Custom image classification</td><td>Azure Custom Vision</td></tr>
+      </table></div>
+    </div>
+    <div class="quiz-section ai-quiz" id="quiz6">
+      <h3>📝 Module 6 Quiz — GenAI & Responsible AI</h3>
+      <div class="question-block" data-correct="c"><div class="q-text"><span class="q-number ai">1</span>A manager uses Microsoft 365 Copilot to draft a performance review email based on notes. Which Responsible AI principle requires that the manager review and edit the AI-generated draft before sending it?</div><div class="options"><button class="option-btn" data-val="a">A) Fairness</button><button class="option-btn" data-val="b">B) Inclusiveness</button><button class="option-btn" data-val="c">C) Accountability — humans remain responsible for AI-assisted decisions and communications</button><button class="option-btn" data-val="d">D) Privacy</button></div><div class="feedback"><strong>Accountability</strong>: humans must retain responsibility and oversight for AI outputs — especially in consequential decisions like performance reviews, hiring, or financial decisions. An AI can assist and draft, but a human must review, verify accuracy, and be responsible for the final content. This principle prevents "AI made me do it" as an excuse and ensures meaningful human control over AI-assisted processes.</div></div>
+      <div class="question-block" data-correct="b"><div class="q-text"><span class="q-number ai">2</span>What is "prompt engineering" in the context of Generative AI?</div><div class="options"><button class="option-btn" data-val="a">A) Writing code to train an LLM from scratch</button><button class="option-btn" data-val="b">B) Crafting input text (prompts) effectively to guide an AI model to produce higher-quality, more accurate, or more relevant outputs</button><button class="option-btn" data-val="c">C) Configuring the hardware infrastructure that runs AI models</button><button class="option-btn" data-val="d">D) A specialized degree program for AI engineers</button></div><div class="feedback"><strong>Prompt engineering</strong> is the practice of designing effective inputs for AI language models. Effective techniques: be specific and clear, provide context, specify format ("respond as a bullet list"), use examples (few-shot prompting), set constraints ("in under 100 words"), assign a role ("you are an expert accountant"). As a technology manager, prompt engineering is a practical, immediately applicable skill — it determines how useful AI tools are in your workflow. No coding required.</div></div>
+      <div class="question-block" data-correct="d"><div class="q-text"><span class="q-number ai">3</span>An AI chatbot is designed to answer customer questions on a retailer's website. A customer asks it a medical question about drug interactions. The chatbot answers confidently but incorrectly. Which two Responsible AI principles are most relevant?</div><div class="options"><button class="option-btn" data-val="a">A) Inclusiveness and Fairness</button><button class="option-btn" data-val="b">B) Privacy and Accountability</button><button class="option-btn" data-val="c">C) Transparency and Fairness</button><button class="option-btn" data-val="d">D) Reliability &amp; Safety (AI gave dangerous incorrect medical advice) and Transparency (the chatbot should have disclosed it's AI and not qualified for medical advice, redirecting to a professional)</button></div><div class="feedback">This scenario violates: <strong>Reliability &amp; Safety</strong> (the chatbot answered outside its domain incorrectly — potentially dangerous), and <strong>Transparency</strong> (users should know they're talking to an AI and understand its limitations). Best practice: AI systems should know their scope, decline out-of-scope queries gracefully, disclose AI identity, and redirect users to appropriate human experts for high-stakes decisions (medical, legal, financial). Hallucination — AI confidently stating false information — is the key reliability risk with LLMs.</div></div>
+      <button class="submit-quiz-btn ai-btn" onclick="submitQuiz('quiz6',6)">Submit</button>
+      <div class="quiz-score" id="quiz6-score"><div class="score-num" id="quiz6-num"></div><p id="quiz6-msg"></p></div>
+    </div>
+    <div class="module-nav"><button class="nav-btn" onclick="showModule('mod5')">← Module 5</button><button class="nav-btn" onclick="showModule('final')">🏅 Final Exam →</button></div>
+  </div>
+
+  <!-- FINAL EXAM -->
+  <div class="module" id="final">
+    <div class="module-header"><h2>🏅 AZ-900 + AI-900 Final Exam</h2><p style="color:var(--text-muted);margin-top:0.4rem;">25 questions covering both Azure Fundamentals and Azure AI Fundamentals · Pass target: 70%+</p></div>
+    <div id="final-locked" style="text-align:center;padding:3rem;"><div style="font-size:3.5rem;margin-bottom:1rem;">🔒</div><h3 style="color:var(--text-muted);">Complete All 6 Modules First</h3><p style="color:var(--text-muted);">Finish every module quiz to unlock.</p></div>
+    <div id="final-content" style="display:none;">
+      <div class="question-block" data-correct="b"><div class="q-text"><span class="q-number">1</span>Which cloud deployment model allows resources to move between a company's private infrastructure and a public cloud provider?</div><div class="options"><button class="option-btn" data-val="a">A) Public cloud</button><button class="option-btn" data-val="b">B) Hybrid cloud</button><button class="option-btn" data-val="c">C) Community cloud</button><button class="option-btn" data-val="d">D) Private cloud</button></div><div class="feedback"><strong>Hybrid cloud</strong> combines public and private cloud environments, allowing workloads to move between them. Benefits: keep sensitive data on-premises, burst to public cloud for peak demand, modernize gradually. Azure tools: Azure Arc (manage on-prem resources from Azure), Azure ExpressRoute (private connectivity), Azure Stack (run Azure services on-prem).</div></div>
+      <div class="question-block" data-correct="d"><div class="q-text"><span class="q-number">2</span>What does "high availability" mean in the context of Azure services?</div><div class="options"><button class="option-btn" data-val="a">A) The service processes requests very quickly</button><button class="option-btn" data-val="b">B) The service stores data in multiple geographic regions</button><button class="option-btn" data-val="c">C) The service is available to users in many countries</button><button class="option-btn" data-val="d">D) The service remains accessible and operational for the maximum possible time, minimizing downtime through redundancy</button></div><div class="feedback"><strong>High availability (HA)</strong> = maximizing uptime through redundancy. Azure achieves HA by running multiple instances across Availability Zones. Deploy across 2+ zones → 99.99% SLA. Single instance → 99.9% SLA. Azure Load Balancer and Traffic Manager route traffic away from failed instances automatically. HA is distinct from scalability (handling load) and disaster recovery (recovering from major outage).</div></div>
+      <div class="question-block" data-correct="a"><div class="q-text"><span class="q-number">3</span>An Azure administrator needs to give a new employee read-only access to a specific Azure Storage account. Which feature should they use?</div><div class="options"><button class="option-btn" data-val="a">A) RBAC (Role-Based Access Control) — assign the Storage Blob Data Reader role to the employee for that specific resource</button><button class="option-btn" data-val="b">B) Azure Policy</button><button class="option-btn" data-val="c">C) Azure Monitor</button><button class="option-btn" data-val="d">D) Conditional Access</button></div><div class="feedback"><strong>RBAC</strong> (Role-Based Access Control) assigns permissions to users, groups, or apps for specific Azure resources. Key roles: Owner (full control), Contributor (create/manage but no access assignment), Reader (view only). You can scope RBAC at management group, subscription, resource group, or individual resource level. Always use RBAC at the most granular scope needed — least privilege principle.</div></div>
+      <div class="question-block" data-correct="c"><div class="q-text"><span class="q-number">4</span>Which Azure service continuously monitors your Azure environment for security vulnerabilities and misconfigurations?</div><div class="options"><button class="option-btn" data-val="a">A) Azure Key Vault</button><button class="option-btn" data-val="b">B) Azure Policy</button><button class="option-btn" data-val="c">C) Microsoft Defender for Cloud</button><button class="option-btn" data-val="d">D) Azure Monitor</button></div><div class="feedback"><strong>Microsoft Defender for Cloud</strong> (formerly Azure Security Center) provides: Secure Score (overall security posture rating), vulnerability assessments, threat detection, regulatory compliance checks, and security recommendations. It scans your Azure resources and highlights misconfigurations (e.g., "this storage account is publicly accessible"). Azure Policy enforces rules but doesn't actively detect threats. Key Vault stores secrets securely. Azure Monitor tracks performance metrics.</div></div>
+      <div class="question-block" data-correct="b"><div class="q-text"><span class="q-number">5</span>What is the Azure service that stores and manages sensitive information like API keys, passwords, and certificates?</div><div class="options"><button class="option-btn" data-val="a">A) Azure Blob Storage</button><button class="option-btn" data-val="b">B) Azure Key Vault</button><button class="option-btn" data-val="c">C) Microsoft Entra ID</button><button class="option-btn" data-val="d">D) Azure Security Center</button></div><div class="feedback"><strong>Azure Key Vault</strong> is the secure secret management service. Never hardcode passwords, API keys, or certificates in application code — store them in Key Vault and reference them by name. Features: RBAC-controlled access, audit logging, automatic certificate renewal, HSM-backed encryption. This is a critical security practice: if credentials are in code, one leaked repository exposes all credentials. Key Vault keeps them separate and audited.</div></div>
+      <div class="question-block" data-correct="d"><div class="q-text"><span class="q-number">6</span>Microsoft Entra ID (formerly Azure Active Directory) primarily provides what function?</div><div class="options"><button class="option-btn" data-val="a">A) Virtual machine management</button><button class="option-btn" data-val="b">B) Network firewall protection</button><button class="option-btn" data-val="c">C) Database hosting</button><button class="option-btn" data-val="d">D) Cloud-based identity management — authentication and authorization for Microsoft 365, Azure, and custom applications</button></div><div class="feedback"><strong>Microsoft Entra ID</strong> is Microsoft's cloud identity platform. It manages: user accounts and passwords, group memberships, app registrations, MFA enforcement, Conditional Access policies, SSO (Single Sign-On) across thousands of apps. Every Microsoft 365 and Azure subscription uses Entra ID. It's different from on-premises Active Directory (which manages Windows domain authentication) — though they can be synced via Entra Connect.</div></div>
+      <div class="question-block" data-correct="a"><div class="q-text"><span class="q-number">7</span>Which Azure pricing model offers the largest discount for a workload that runs continuously for 3 years?</div><div class="options"><button class="option-btn" data-val="a">A) 3-year Reserved Instances (up to 72% savings vs. pay-as-you-go)</button><button class="option-btn" data-val="b">B) Spot pricing</button><button class="option-btn" data-val="c">C) Pay-as-you-go</button><button class="option-btn" data-val="d">D) Dev/Test pricing</button></div><div class="feedback">For consistent, long-running workloads: <strong>Reserved Instances</strong> (1 or 3 years) give the best planned discount. 3-year = up to 72% off. 1-year = up to 40% off. Spot pricing gives larger discounts (up to 90%) but can be evicted anytime — only for fault-tolerant, interruptible workloads. Dev/Test pricing gives discounts on non-production environments. Pay-as-you-go is most flexible but most expensive per unit.</div></div>
+      <div class="question-block" data-correct="c"><div class="q-text"><span class="q-number">8</span>What does Azure Availability Zones protect against?</div><div class="options"><button class="option-btn" data-val="a">A) Entire region failure</button><button class="option-btn" data-val="b">B) DDoS attacks</button><button class="option-btn" data-val="c">C) Single data center failure within a region — each zone is a physically separate building with independent power and cooling</button><button class="option-btn" data-val="d">D) Data corruption from software bugs</button></div><div class="feedback"><strong>Availability Zones</strong> protect against <em>single data center</em> failures. Each zone in a region is a physically separate building with independent power, cooling, and networking — connected by low-latency fiber. Deploying across 2+ zones means if one building has a power failure, your app continues running from the others. For <em>entire region</em> failure protection, use Azure Region Pairs (deploy to two different regions).</div></div>
+      <div class="question-block" data-correct="b"><div class="q-text"><span class="q-number">9</span>A company trains an AI model using 10,000 historical sales records where each record has labeled outcomes (sale closed: yes/no). Which type of ML is this?</div><div class="options"><button class="option-btn" data-val="a">A) Unsupervised learning</button><button class="option-btn" data-val="b">B) Supervised learning — using labeled data (yes/no outcome) to train a classification model</button><button class="option-btn" data-val="c">C) Reinforcement learning</button><button class="option-btn" data-val="d">D) Transfer learning</button></div><div class="feedback"><strong>Supervised learning</strong> = labeled training data with known outcomes. Labeled sales records (features: customer size, industry, deal value + label: closed/not closed) train a classification model. This model then predicts likelihood of closing for new leads. Binary classification (yes/no, fraud/not fraud, churn/no churn) is the most common supervised learning task in business applications.</div></div>
+      <div class="question-block" data-correct="d"><div class="q-text"><span class="q-number">10</span>Which Responsible AI principle is most relevant when an AI system makes decisions but the reasoning cannot be explained to affected parties?</div><div class="options"><button class="option-btn" data-val="a">A) Fairness</button><button class="option-btn" data-val="b">B) Inclusiveness</button><button class="option-btn" data-val="c">C) Reliability</button><button class="option-btn" data-val="d">D) Transparency — AI systems should be explainable; users should understand how and why decisions are made</button></div><div class="feedback"><strong>Transparency</strong> means AI systems should be understandable and explainable. Explainability (XAI) is particularly critical in: credit decisions, hiring, medical diagnosis, legal proceedings — anywhere the decision significantly impacts a person. Regulations (EU AI Act, GDPR) increasingly require AI explainability. "Black box" AI that cannot explain its decisions creates legal and ethical risk. Azure provides tools like Responsible AI Dashboard for model explanation.</div></div>
+      <div class="question-block" data-correct="a"><div class="q-text"><span class="q-number">11</span>Which Azure AI service would you use to automatically extract invoice number, total amount, vendor name, and line items from scanned PDF invoices?</div><div class="options"><button class="option-btn" data-val="a">A) Azure Document Intelligence (Form Recognizer) — extracts structured data from documents using pre-trained or custom models</button><button class="option-btn" data-val="b">B) Azure Language Service</button><button class="option-btn" data-val="c">C) Azure Speech Service</button><button class="option-btn" data-val="d">D) Azure Computer Vision basic OCR</button></div><div class="feedback"><strong>Azure Document Intelligence</strong> (formerly Form Recognizer) is the purpose-built service for extracting structured data from documents. Pre-built models for: invoices, receipts, ID documents, tax forms, business cards. Custom models for unique document types. It goes beyond basic OCR (reading text) to understanding document structure and extracting named fields. Automates accounts payable, expense management, and any document-heavy business process.</div></div>
+      <div class="question-block" data-correct="c"><div class="q-text"><span class="q-number">12</span>Azure Resource Groups serve what primary purpose?</div><div class="options"><button class="option-btn" data-val="a">A) Physical grouping of Azure data centers</button><button class="option-btn" data-val="b">B) Billing aggregation only</button><button class="option-btn" data-val="c">C) Logical containers that group related Azure resources together for management, access control, and lifecycle management (deploy/delete as a unit)</button><button class="option-btn" data-val="d">D) Security boundaries that prevent resources from communicating</button></div><div class="feedback"><strong>Resource Groups</strong> are logical containers — like folders for your Azure resources. Best practices: group resources by application or project (all resources for "Project X" in one group), use the same region as the resources, and apply tags for cost tracking. You can deploy, manage, and delete all resources in a group at once. RBAC and Azure Policy can be applied at the resource group level to control access to everything within.</div></div>
+      <div class="question-block" data-correct="b"><div class="q-text"><span class="q-number">13</span>What is a key advantage of serverless computing (like Azure Functions) compared to Azure Virtual Machines?</div><div class="options"><button class="option-btn" data-val="a">A) Serverless provides better performance for all workloads</button><button class="option-btn" data-val="b">B) You only pay when your code is actually running — no idle time cost; no server management required; scales to zero</button><button class="option-btn" data-val="c">C) Serverless has no execution time limits</button><button class="option-btn" data-val="d">D) Serverless is always faster than VMs</button></div><div class="feedback"><strong>Serverless</strong> (Azure Functions, AWS Lambda) means: no server provisioning, no OS management, automatic scaling (including to zero), and <em>pay per execution</em>. If your function runs 10,000 times a month for 1 second each, you pay for ~2.8 hours of compute — not 720 hours (a full month VM). Perfect for: event-driven tasks, APIs with variable traffic, scheduled jobs. VMs are better for: persistent workloads, full OS control, stateful applications running continuously.</div></div>
+      <div class="question-block" data-correct="d"><div class="q-text"><span class="q-number">14</span>A global retailer wants to serve product images to customers worldwide with minimum latency, regardless of where users are located. Which Azure service helps?</div><div class="options"><button class="option-btn" data-val="a">A) Azure Blob Storage alone</button><button class="option-btn" data-val="b">B) Azure ExpressRoute</button><button class="option-btn" data-val="c">C) Azure Virtual Network</button><button class="option-btn" data-val="d">D) Azure CDN (Content Delivery Network) — caches content at edge locations around the world, serving users from the nearest location</button></div><div class="feedback"><strong>Azure CDN</strong> distributes content copies to hundreds of edge locations globally. A user in Singapore gets the image from a nearby CDN node rather than the origin server in the US — reducing latency from 200ms to 10ms. CDNs are essential for: static assets (images, CSS, JS), video streaming, software downloads. CDN also reduces origin server load by serving cached content. Azure CDN integrates directly with Azure Blob Storage and App Service.</div></div>
+      <div class="question-block" data-correct="a"><div class="q-text"><span class="q-number">15</span>Which Azure tool should a business use BEFORE migrating to Azure to understand the total cost difference vs. current on-premises infrastructure?</div><div class="options"><button class="option-btn" data-val="a">A) Total Cost of Ownership (TCO) Calculator</button><button class="option-btn" data-val="b">B) Azure Cost Management</button><button class="option-btn" data-val="c">C) Azure Pricing Calculator</button><button class="option-btn" data-val="d">D) Azure Advisor</button></div><div class="feedback"><strong>TCO Calculator</strong> is for migration business cases — it compares on-premises costs (servers, storage, networking, power, cooling, facilities, IT staff, software licenses) vs. equivalent Azure costs. <em>Azure Pricing Calculator</em>: estimate cost of specific Azure services you're planning to use. <em>Azure Cost Management</em>: track and analyze actual current Azure spending. <em>Azure Advisor</em>: recommendations for cost optimization of existing resources. Know which tool is for which phase: before migration = TCO; designing = Pricing Calculator; managing = Cost Management.</div></div>
+      <div class="question-block" data-correct="c"><div class="q-text"><span class="q-number">16</span>What is "overfitting" in machine learning?</div><div class="options"><button class="option-btn" data-val="a">A) When a model is too simple to capture patterns in training data</button><button class="option-btn" data-val="b">B) When too much training data is used</button><button class="option-btn" data-val="c">C) When a model performs well on training data but poorly on new, unseen data — it memorized training examples rather than learning generalizable patterns</button><button class="option-btn" data-val="d">D) When a model is deployed too quickly</button></div><div class="feedback"><strong>Overfitting</strong>: high training accuracy, low test accuracy. The model "memorized" training data instead of learning patterns. Analogy: a student who memorizes only the practice exam answers but fails on different questions. Prevention: more diverse training data, simpler model architecture, regularization techniques, dropout, cross-validation. The opposite is <em>underfitting</em> (model too simple — performs poorly on both training and test data).</div></div>
+      <div class="question-block" data-correct="b"><div class="q-text"><span class="q-number">17</span>Azure's Zero Trust security model is based on which core principle?</div><div class="options"><button class="option-btn" data-val="a">A) Trust all users inside the corporate network</button><button class="option-btn" data-val="b">B) "Never trust, always verify" — verify every user, device, and request regardless of network location</button><button class="option-btn" data-val="c">C) Trust devices with the latest security patches</button><button class="option-btn" data-val="d">D) Only use private cloud for sensitive data</button></div><div class="feedback"><strong>Zero Trust</strong>: the traditional "castle and moat" security model (trust everything inside the firewall) is obsolete in the cloud era. Zero Trust assumes breach: verify every identity, every time, from every location. Core pillars: verify explicitly (always authenticate/authorize), use least privilege (minimal necessary access), assume breach (monitor, detect, respond). Implemented via: MFA, Conditional Access, Privileged Identity Management, Microsoft Defender for Identity.</div></div>
+      <div class="question-block" data-correct="d"><div class="q-text"><span class="q-number">18</span>Which of Microsoft's Responsible AI principles requires that AI-generated content or AI-assisted decisions be disclosed as such to users?</div><div class="options"><button class="option-btn" data-val="a">A) Fairness</button><button class="option-btn" data-val="b">B) Reliability</button><button class="option-btn" data-val="c">C) Privacy</button><button class="option-btn" data-val="d">D) Transparency — users should know when they're interacting with AI and how AI decisions are made</button></div><div class="feedback"><strong>Transparency</strong> covers AI disclosure. If a chatbot is AI, users should know. If an AI made a decision affecting them (loan denial, content moderation), they should be able to understand why. The EU AI Act requires transparency for certain AI systems. Microsoft's guidelines: clearly label AI-generated content, provide explanations for AI decisions, make AI limitations known. This is increasingly regulated — as a tech manager, transparency in AI deployments protects your organization legally.</div></div>
+      <div class="question-block" data-correct="a"><div class="q-text"><span class="q-number">19</span>Which Azure service enables you to build a custom chatbot that answers questions from your company's own documents and knowledge base?</div><div class="options"><button class="option-btn" data-val="a">A) Azure Bot Service + Azure OpenAI (with Retrieval Augmented Generation) — the bot retrieves relevant documents and generates answers grounded in your specific content</button><button class="option-btn" data-val="b">B) Azure Virtual Machines</button><button class="option-btn" data-val="c">C) Azure Blob Storage</button><button class="option-btn" data-val="d">D) Azure SQL Database</button></div><div class="feedback"><strong>RAG (Retrieval Augmented Generation)</strong> is the architecture: Azure Cognitive Search indexes your documents → when a user asks a question, relevant documents are retrieved → these are included in the prompt to Azure OpenAI → the LLM generates an answer grounded in YOUR documents. This prevents hallucination and limits answers to your approved content. Copilot Studio makes this accessible without coding. This is the most common enterprise AI deployment pattern in 2024–2025.</div></div>
+      <div class="question-block" data-correct="c"><div class="q-text"><span class="q-number">20</span>What is the Azure service that provides the Secure Score — a measure of your overall Azure security posture?</div><div class="options"><button class="option-btn" data-val="a">A) Azure Policy</button><button class="option-btn" data-val="b">B) Microsoft Entra ID</button><button class="option-btn" data-val="c">C) Microsoft Defender for Cloud</button><button class="option-btn" data-val="d">D) Azure Monitor</button></div><div class="feedback"><strong>Microsoft Defender for Cloud</strong> provides the <em>Secure Score</em> — a percentage rating of your Azure environment's security posture. Each recommended action has a score impact. Following recommendations (enable MFA, enable encryption, restrict public access) improves your score. It also provides regulatory compliance views (GDPR, PCI-DSS, ISO 27001 compliance status). As an IT manager, your Secure Score is a KPI for your team's security performance.</div></div>
+      <div class="question-block" data-correct="b"><div class="q-text"><span class="q-number">21</span>An AI model determines a customer's creditworthiness. When audited, it is found to approve loans for identical applications at different rates based on the applicant's zip code (which correlates strongly with race). Which principle is most violated?</div><div class="options"><button class="option-btn" data-val="a">A) Transparency</button><button class="option-btn" data-val="b">B) Fairness — using a proxy for protected characteristics (zip code as a proxy for race) to produce discriminatory outcomes</button><button class="option-btn" data-val="c">C) Reliability</button><button class="option-btn" data-val="d">D) Accountability</button></div><div class="feedback">This is <strong>proxy discrimination</strong> — a classic AI fairness problem. The model wasn't explicitly given race, but zip code is a highly correlated proxy. This violates <strong>Fairness</strong> and potentially fair lending laws (ECOA, Fair Housing Act). Detection requires fairness audits: run the model on identical applications varying only the protected characteristic (or proxy). Azure Responsible AI Dashboard includes fairness assessment tools. This is why "AI is objective because it doesn't use race" is a myth — biased proxies produce biased outcomes.</div></div>
+      <div class="question-block" data-correct="d"><div class="q-text"><span class="q-number">22</span>Azure Cognitive Search combined with Azure OpenAI is most commonly used to build what type of solution?</div><div class="options"><button class="option-btn" data-val="a">A) Real-time streaming analytics</button><button class="option-btn" data-val="b">B) Image classification pipeline</button><button class="option-btn" data-val="c">C) IoT sensor data collection</button><button class="option-btn" data-val="d">D) RAG (Retrieval Augmented Generation) — a chatbot or Q&A system that answers questions grounded in your own document corpus rather than just the LLM's training data</button></div><div class="feedback">RAG architecture: <strong>Azure Cognitive Search</strong> indexes and retrieves relevant documents from your knowledge base → <strong>Azure OpenAI</strong> generates answers using those retrieved documents as context. This grounds the AI's responses in your actual content, preventing hallucination and allowing the AI to answer questions about your specific products, policies, or internal knowledge. This is the #1 most deployed enterprise AI pattern — used for internal help desks, customer service bots, and document Q&A systems.</div></div>
+      <div class="question-block" data-correct="a"><div class="q-text"><span class="q-number">23</span>Which Azure service manages multiple subscriptions under a hierarchy for consistent policy and RBAC application across an entire organization?</div><div class="options"><button class="option-btn" data-val="a">A) Management Groups — sit above subscriptions and allow enterprise-wide policy and RBAC inheritance</button><button class="option-btn" data-val="b">B) Resource Groups</button><button class="option-btn" data-val="c">C) Azure Blueprints</button><button class="option-btn" data-val="d">D) Azure Policy alone</button></div><div class="feedback"><strong>Management Groups</strong> provide a governance hierarchy: Tenant Root Group → Management Groups → Subscriptions → Resource Groups → Resources. Policies and RBAC applied at a Management Group level automatically inherit down to all subscriptions and resources beneath it. Example: a "Production" management group with policy requiring all resources to be encrypted. Essential for large enterprises managing dozens of subscriptions. Azure Policy and RBAC are the tools; Management Groups provide the scope.</div></div>
+      <div class="question-block" data-correct="c"><div class="q-text"><span class="q-number">24</span>What is the primary difference between Azure Monitor and Microsoft Defender for Cloud?</div><div class="options"><button class="option-btn" data-val="a">A) Azure Monitor detects threats; Defender for Cloud monitors performance</button><button class="option-btn" data-val="b">B) They are the same service with different names</button><button class="option-btn" data-val="c">C) Azure Monitor collects performance, availability, and diagnostic data; Defender for Cloud focuses on security posture and threat protection</button><button class="option-btn" data-val="d">D) Defender for Cloud only works with VMs; Azure Monitor works with all services</button></div><div class="feedback"><strong>Azure Monitor</strong>: observability platform — collects metrics (CPU, memory, latency), logs, traces, and enables alerting on performance/availability conditions. <strong>Microsoft Defender for Cloud</strong>: security platform — assesses security posture, detects threats, provides Secure Score, evaluates regulatory compliance. As an IT manager: you use Azure Monitor to ensure your services are running well; Defender for Cloud to ensure they are secure. Both are essential — different concerns.</div></div>
+      <div class="question-block" data-correct="b"><div class="q-text"><span class="q-number">25</span>A user asks an Azure OpenAI-powered chatbot "How do I make a bomb?" The chatbot declines and redirects to safety resources. Which combination of principles does this demonstrate?</div><div class="options"><button class="option-btn" data-val="a">A) Fairness and Inclusiveness</button><button class="option-btn" data-val="b">B) Reliability &amp; Safety (declining harmful requests) and Accountability (Azure's content safety filters implementing organizational responsibility)</button><button class="option-btn" data-val="c">C) Privacy and Transparency</button><button class="option-btn" data-val="d">D) Fairness and Accountability</button></div><div class="feedback"><strong>Azure Content Safety</strong> (built into Azure OpenAI Service) detects and blocks harmful content categories: hate, violence, sexual, self-harm. This demonstrates: <strong>Reliability &amp; Safety</strong> (the AI system behaves safely and refuses harmful requests) and <strong>Accountability</strong> (the organization using the API has configured safety filters and accepts responsibility for outputs). Microsoft's Azure OpenAI content filtering is on by default and required for all deployments — organizations must take accountability for appropriate use.</div></div>
+      <button class="submit-quiz-btn" onclick="submitFinal()">Submit Final Exam</button>
+      <div class="quiz-score" id="final-score"><div class="score-num" id="final-num"></div><p id="final-msg"></p></div>
+    </div>
+    <div class="module-nav"><button class="nav-btn" onclick="showModule('mod6')">← Module 6</button><button class="nav-btn" onclick="window.location.href='tech_roadmap.html'">← Back to Roadmap</button></div>
+  </div>
+</div>
+
+<script>
+const completedModules=new Set();
+function showModule(id){document.querySelectorAll('.module').forEach(m=>m.classList.remove('active'));const el=document.getElementById(id);if(el){el.classList.add('active');window.scrollTo(0,0);}if(id==='final'){const locked=document.getElementById('final-locked');const content=document.getElementById('final-content');if(completedModules.size>=6){if(locked)locked.style.display='none';if(content)content.style.display='block';}else{if(locked)locked.style.display='block';if(content)content.style.display='none';}}}
+function submitQuiz(quizId,modNum){const container=document.getElementById(quizId);if(!container)return;const blocks=container.querySelectorAll('.question-block');let correct=0;blocks.forEach(block=>{const chosen=block.querySelector('.option-btn.selected');if(!chosen)return;const right=block.dataset.correct;block.querySelectorAll('.option-btn').forEach(btn=>{btn.disabled=true;if(btn.dataset.val===right)btn.classList.add('correct');else if(btn===chosen)btn.classList.add('wrong');});if(chosen.dataset.val===right)correct++;const fb=block.querySelector('.feedback');if(fb)fb.style.display='block';});const total=blocks.length;const pct=total>0?Math.round(correct/total*100):0;const scoreEl=document.getElementById(quizId+'-score');const numEl=document.getElementById(quizId+'-num');const msgEl=document.getElementById(quizId+'-msg');if(numEl)numEl.textContent=correct+' / '+total;if(msgEl){if(pct>=75){msgEl.textContent='✅ Excellent! Moving forward.';msgEl.style.color='var(--success)';}else if(pct>=50){msgEl.textContent='📚 Review the feedback and try the final when ready.';msgEl.style.color='#f0a500';}else{msgEl.textContent='🔄 Re-study this module.';msgEl.style.color='var(--danger)';}}if(scoreEl)scoreEl.style.display='block';const btn=container.querySelector('.submit-quiz-btn');if(btn)btn.disabled=true;completedModules.add(modNum);updateProgress();}
+function submitFinal(){const container=document.getElementById('final-content');if(!container)return;const blocks=container.querySelectorAll('.question-block');let correct=0;blocks.forEach(block=>{const chosen=block.querySelector('.option-btn.selected');if(!chosen)return;const right=block.dataset.correct;block.querySelectorAll('.option-btn').forEach(btn=>{btn.disabled=true;if(btn.dataset.val===right)btn.classList.add('correct');else if(btn===chosen)btn.classList.add('wrong');});if(chosen.dataset.val===right)correct++;const fb=block.querySelector('.feedback');if(fb)fb.style.display='block';});const total=blocks.length;const pct=Math.round(correct/total*100);const scoreEl=document.getElementById('final-score');const numEl=document.getElementById('final-num');const msgEl=document.getElementById('final-msg');if(numEl)numEl.textContent=correct+' / '+total+' ('+pct+'%)';if(msgEl){if(pct>=70){msgEl.textContent='🏅 Ready for AZ-900 and AI-900 exams!';msgEl.style.color='var(--gold)';}else if(pct>=55){msgEl.textContent='📖 Close — focused review on missed topics will get you there.';msgEl.style.color='#f0a500';}else{msgEl.textContent='🔄 Review modules and use Microsoft Learn labs before scheduling the exam.';msgEl.style.color='var(--danger)';}}if(scoreEl)scoreEl.style.display='block';const btn=container.querySelector('.submit-quiz-btn');if(btn)btn.disabled=true;}
+function updateProgress(){const bar=document.getElementById('progress-bar');const txt=document.getElementById('progress-text');const done=completedModules.size;const pct=Math.round(done/6*100);if(bar)bar.style.width=pct+'%';if(txt)txt.textContent=done+' / 6 modules complete';}
+document.addEventListener('click',function(e){if(e.target.classList.contains('option-btn')&&!e.target.disabled){const block=e.target.closest('.question-block');if(block){block.querySelectorAll('.option-btn').forEach(b=>b.classList.remove('selected'));e.target.classList.add('selected');}}});
+showModule('landing');
+</script>
+</body>
+</html>

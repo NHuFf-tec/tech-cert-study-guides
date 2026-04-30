@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>IT Foundations — CompTIA ITF+ & Network+ Study Guide</title>
+<style>
+  :root{--bg:#0d1117;--surface:#161b22;--surface2:#21262d;--border:#30363d;--green:#238636;--blue:#1f6feb;--teal:#1abc9c;--text:#c9d1d9;--text-muted:#8b949e;--gold:#f0c040;--success:#238636;--danger:#da3633;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;min-height:100vh;}
+  .hero{background:linear-gradient(135deg,#0d1117 0%,#0a2e1a 50%,#0d1117 100%);padding:3rem 1rem;text-align:center;border-bottom:2px solid var(--green);}
+  .hero h1{font-size:clamp(1.6rem,3.5vw,2.5rem);color:var(--green);font-weight:800;}
+  .hero .sub{color:var(--text-muted);margin-top:0.5rem;}
+  .hero-tags{display:flex;gap:0.6rem;justify-content:center;flex-wrap:wrap;margin-top:1rem;}
+  .htag{padding:0.3rem 0.9rem;border-radius:20px;font-size:0.75rem;font-weight:600;background:rgba(35,134,54,0.15);border:1px solid var(--green);color:var(--green);}
+  .progress-wrap{background:var(--surface);padding:0.75rem 1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:1rem;}
+  .progress-bar-bg{flex:1;background:var(--surface2);border-radius:10px;height:10px;overflow:hidden;}
+  .progress-bar{height:100%;background:linear-gradient(90deg,var(--green),var(--teal));border-radius:10px;width:0%;transition:width 0.5s;}
+  #progress-text{color:var(--text-muted);font-size:0.82rem;white-space:nowrap;}
+  .container{max-width:960px;margin:0 auto;padding:2rem 1rem;}
+  .module{display:none;animation:fadeIn 0.3s ease;}.module.active{display:block;}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+  .module-header{background:linear-gradient(135deg,var(--surface),var(--surface2));border:1px solid var(--border);border-left:4px solid var(--green);border-radius:10px;padding:1.5rem;margin-bottom:1.5rem;}
+  .module-header h2{color:var(--green);font-size:1.4rem;}
+  .section{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.5rem;margin-bottom:1.5rem;}
+  .section h3{color:var(--green);font-size:1.05rem;margin-bottom:0.75rem;border-bottom:1px solid var(--border);padding-bottom:0.4rem;}
+  .section h4{color:var(--teal);font-size:0.95rem;margin:1rem 0 0.4rem;}
+  .section p,.section li{line-height:1.7;color:var(--text);margin-bottom:0.4rem;}
+  .section ul,.section ol{padding-left:1.5rem;}
+  .table-wrap{overflow-x:auto;margin-top:0.75rem;}
+  table{width:100%;border-collapse:collapse;font-size:0.85rem;}
+  th{background:var(--surface2);color:var(--green);padding:0.6rem 0.8rem;text-align:left;border-bottom:2px solid var(--border);}
+  td{padding:0.55rem 0.8rem;border-bottom:1px solid var(--border);vertical-align:top;}
+  tr:nth-child(even) td{background:rgba(255,255,255,0.02);}
+  .info-box{border-radius:8px;padding:1rem 1.2rem;margin:0.75rem 0;font-size:0.88rem;line-height:1.6;}
+  .info-box.tip{background:rgba(26,188,156,0.08);border-left:3px solid var(--teal);}
+  .info-box.tip h4{color:var(--teal);margin-bottom:0.3rem;}
+  .mnemonic{background:rgba(35,134,54,0.08);border:1px dashed var(--green);border-radius:8px;padding:1rem;margin:0.75rem 0;font-size:0.88rem;}
+  .mnemonic strong{color:var(--green);}
+  .flashcard-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:1rem;margin-top:0.75rem;}
+  .flashcard{perspective:700px;height:150px;cursor:pointer;}
+  .flashcard-inner{position:relative;width:100%;height:100%;transition:transform 0.5s;transform-style:preserve-3d;}
+  .flashcard:hover .flashcard-inner,.flashcard.flipped .flashcard-inner{transform:rotateY(180deg);}
+  .fc-front,.fc-back{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:8px;padding:0.85rem;display:flex;align-items:center;justify-content:center;text-align:center;font-size:0.82rem;}
+  .fc-front{background:var(--surface2);border:1px solid var(--border);}
+  .fc-back{background:linear-gradient(135deg,#0a2e1a,#0d1f2e);border:1px solid var(--green);color:var(--text);transform:rotateY(180deg);}
+  .fc-label{position:absolute;top:5px;right:7px;font-size:0.6rem;color:var(--text-muted);text-transform:uppercase;}
+  .nav-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:0.75rem;margin-top:1.5rem;}
+  .nav-card{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:1rem;cursor:pointer;text-align:center;transition:all 0.2s;}
+  .nav-card:hover{border-color:var(--green);transform:translateY(-2px);}
+  .nav-card .icon{font-size:1.8rem;margin-bottom:0.4rem;}
+  .nav-card h4{color:var(--green);font-size:0.88rem;}
+  .nav-card p{color:var(--text-muted);font-size:0.72rem;margin-top:0.2rem;}
+  .quiz-section{background:var(--surface);border:2px solid var(--green);border-radius:12px;padding:1.5rem;margin-top:2rem;}
+  .quiz-section h3{color:var(--green);margin-bottom:1rem;}
+  .question-block{margin-bottom:1.5rem;padding:1rem;background:var(--surface2);border-radius:8px;border:1px solid var(--border);}
+  .q-text{font-weight:600;margin-bottom:0.7rem;}
+  .q-number{display:inline-block;background:var(--green);color:#fff;font-weight:700;font-size:0.72rem;padding:0.1rem 0.4rem;border-radius:4px;margin-right:0.4rem;}
+  .options{display:flex;flex-direction:column;gap:0.4rem;}
+  .option-btn{background:var(--surface);border:1px solid var(--border);color:var(--text);padding:0.55rem 0.9rem;border-radius:6px;cursor:pointer;text-align:left;font-size:0.85rem;transition:all 0.15s;}
+  .option-btn:hover:not(:disabled){border-color:var(--green);}
+  .option-btn.selected{border-color:var(--green);background:rgba(35,134,54,0.1);color:var(--green);}
+  .option-btn.correct{background:rgba(35,134,54,0.2)!important;border-color:var(--success)!important;color:var(--success)!important;}
+  .option-btn.wrong{background:rgba(218,54,51,0.2)!important;border-color:var(--danger)!important;color:var(--danger)!important;}
+  .feedback{display:none;background:rgba(255,255,255,0.03);border-left:3px solid var(--green);padding:0.7rem 1rem;border-radius:0 6px 6px 0;margin-top:0.7rem;font-size:0.83rem;line-height:1.6;color:var(--text-muted);}
+  .submit-quiz-btn{display:block;width:100%;padding:0.8rem;background:var(--green);color:#fff;font-weight:700;border:none;border-radius:8px;cursor:pointer;margin-top:1rem;font-size:0.95rem;transition:opacity 0.2s;}
+  .submit-quiz-btn:hover:not(:disabled){opacity:0.85;}
+  .submit-quiz-btn:disabled{opacity:0.45;cursor:default;}
+  .quiz-score{display:none;text-align:center;padding:1.25rem;background:var(--surface2);border-radius:8px;margin-top:1rem;}
+  .score-num{font-size:2.2rem;font-weight:700;color:var(--gold);}
+  .module-nav{display:flex;justify-content:space-between;margin-top:2rem;flex-wrap:wrap;gap:0.75rem;}
+  .nav-btn{background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:0.55rem 1.2rem;border-radius:8px;cursor:pointer;font-size:0.88rem;transition:all 0.2s;}
+  .nav-btn:hover{border-color:var(--green);color:var(--green);}
+  .exam-tip{background:rgba(240,192,64,0.06);border:1px solid var(--gold);border-radius:8px;padding:1rem;margin:0.75rem 0;font-size:0.85rem;}
+  .exam-tip h4{color:var(--gold);margin-bottom:0.3rem;}
+</style>
+</head>
+<body>
+<div class="hero">
+  <h1>🖥️ IT Foundations Study Guide</h1>
+  <p class="sub">CompTIA ITF+ · CompTIA Network+ · Weeks 1–8 &amp; 25–32</p>
+  <div class="hero-tags"><span class="htag">CompTIA ITF+</span><span class="htag">CompTIA Network+</span><span class="htag">Hardware Basics</span><span class="htag">Networking</span><span class="htag">Security</span></div>
+</div>
+<div class="progress-wrap">
+  <span style="color:var(--text-muted);font-size:0.82rem;">Progress:</span>
+  <div class="progress-bar-bg"><div class="progress-bar" id="progress-bar"></div></div>
+  <span id="progress-text">0 / 6 modules complete</span>
+</div>
+<div class="container">
+
+  <!-- LANDING -->
+  <div class="module active" id="landing">
+    <div class="module-header">
+      <h2>🖥️ IT Foundations — Your Starting Point</h2>
+      <p style="color:var(--text-muted);margin-top:0.5rem;">No prior technical knowledge required. This guide takes you from zero to CompTIA certified. Every concept is explained in plain English first, then technical language.</p>
+    </div>
+    <div class="section">
+      <h3>What You'll Learn & Earn</h3>
+      <p>By completing this guide you'll be able to confidently answer: <em>How does a computer actually work? What is a network? How does the internet function? What do IT professionals do every day?</em> You'll be prepared to pass <strong>CompTIA ITF+</strong> (Month 2) and <strong>CompTIA Network+</strong> (Month 8).</p>
+      <div class="info-box tip"><h4>💡 How to Use This Guide</h4><p>Work through one module per week. Each module takes roughly 4–6 hours total across the week. Read the content, flip the flashcards until you know them, then take the quiz. Don't move to the next module until you score 75%+ on the quiz.</p></div>
+    </div>
+    <div class="nav-grid">
+      <div class="nav-card" onclick="showModule('mod1')"><div class="icon">💻</div><h4>Module 1</h4><p>How Computers Work</p></div>
+      <div class="nav-card" onclick="showModule('mod2')"><div class="icon">🪟</div><h4>Module 2</h4><p>Operating Systems</p></div>
+      <div class="nav-card" onclick="showModule('mod3')"><div class="icon">🌐</div><h4>Module 3</h4><p>Networking Fundamentals</p></div>
+      <div class="nav-card" onclick="showModule('mod4')"><div class="icon">🔒</div><h4>Module 4</h4><p>Security Basics</p></div>
+      <div class="nav-card" onclick="showModule('mod5')"><div class="icon">🌐</div><h4>Module 5</h4><p>TCP/IP &amp; Advanced Networking</p></div>
+      <div class="nav-card" onclick="showModule('mod6')"><div class="icon">🔧</div><h4>Module 6</h4><p>Troubleshooting &amp; Support</p></div>
+      <div class="nav-card" onclick="showModule('final')" style="border-color:var(--gold);"><div class="icon">🏅</div><h4>Final Exam</h4><p>Unlocks after all modules</p></div>
+    </div>
+  </div>
+
+  <!-- MODULE 1 -->
+  <div class="module" id="mod1">
+    <div class="module-header"><h2>💻 Module 1: How Computers Work</h2><p style="color:var(--text-muted);margin-top:0.4rem;">Hardware components, storage, and how data moves inside a computer.</p></div>
+
+    <div class="section">
+      <h3>The Core Components</h3>
+      <p>Every computer — whether a laptop, server, or smartphone — has the same fundamental building blocks. Think of a computer as an office: the CPU is the worker, RAM is the desk space, storage is the filing cabinet, and the motherboard is the office building connecting everything.</p>
+      <div class="table-wrap"><table>
+        <tr><th>Component</th><th>Full Name</th><th>What It Does</th><th>Analogy</th></tr>
+        <tr><td><strong>CPU</strong></td><td>Central Processing Unit</td><td>Executes instructions; the "brain" of the computer</td><td>The worker doing all the tasks</td></tr>
+        <tr><td><strong>RAM</strong></td><td>Random Access Memory</td><td>Temporary, fast storage for currently running programs</td><td>Your desk — only what you're working on right now</td></tr>
+        <tr><td><strong>HDD/SSD</strong></td><td>Hard Disk Drive / Solid State Drive</td><td>Long-term storage for files, OS, and programs</td><td>Filing cabinet — stores everything even when off</td></tr>
+        <tr><td><strong>Motherboard</strong></td><td>System Board</td><td>Connects all components; contains the bus and chipset</td><td>The office building connecting all departments</td></tr>
+        <tr><td><strong>GPU</strong></td><td>Graphics Processing Unit</td><td>Renders images/video; also used for AI/ML workloads</td><td>A specialized artist department for visual work</td></tr>
+        <tr><td><strong>PSU</strong></td><td>Power Supply Unit</td><td>Converts AC wall power to DC for components</td><td>The building's electrical system</td></tr>
+      </table></div>
+    </div>
+
+    <div class="section">
+      <h3>Storage: Understanding the Hierarchy</h3>
+      <p>Data storage exists on a speed/size spectrum. The closer to the CPU, the faster (and smaller/more expensive). This matters because it explains why computers need both RAM and a hard drive.</p>
+      <div class="table-wrap"><table>
+        <tr><th>Type</th><th>Speed</th><th>Capacity</th><th>Volatile?</th><th>Use</th></tr>
+        <tr><td>CPU Cache (L1/L2/L3)</td><td>Fastest (~1ns)</td><td>KB–MB</td><td>Yes (loses on power off)</td><td>Immediate CPU instructions</td></tr>
+        <tr><td>RAM</td><td>Very fast (~10ns)</td><td>4–128+ GB</td><td>Yes</td><td>Running programs</td></tr>
+        <tr><td>SSD</td><td>Fast (~100µs)</td><td>256GB–4TB</td><td>No (persists)</td><td>OS, apps, files</td></tr>
+        <tr><td>HDD</td><td>Slow (~10ms)</td><td>500GB–20TB</td><td>No</td><td>Bulk storage, backups</td></tr>
+        <tr><td>Cloud Storage</td><td>Depends on internet</td><td>Unlimited</td><td>No</td><td>Backup, sharing, archiving</td></tr>
+      </table></div>
+      <div class="mnemonic"><strong>Memory tip — "Can Real Students Stay Home?"</strong><br>Cache → RAM → SSD → (spinning) HDD → Home (cloud) = order from fastest to slowest storage access.</div>
+    </div>
+
+    <div class="section">
+      <h3>Binary & Data Units — The Basics</h3>
+      <p>Computers only understand two states: on (1) and off (0). Everything — text, images, video — is represented in binary. Understanding data units helps you discuss storage and bandwidth professionally.</p>
+      <div class="table-wrap"><table>
+        <tr><th>Unit</th><th>Size</th><th>Real-World Equivalent</th></tr>
+        <tr><td>1 Bit</td><td>Single 0 or 1</td><td>One light switch (on/off)</td></tr>
+        <tr><td>1 Byte (8 bits)</td><td>8 bits</td><td>One character (e.g., the letter "A")</td></tr>
+        <tr><td>1 Kilobyte (KB)</td><td>~1,000 bytes</td><td>A short text email</td></tr>
+        <tr><td>1 Megabyte (MB)</td><td>~1 million bytes</td><td>One MP3 song minute; a photo</td></tr>
+        <tr><td>1 Gigabyte (GB)</td><td>~1 billion bytes</td><td>A movie (compressed); 1,000 songs</td></tr>
+        <tr><td>1 Terabyte (TB)</td><td>~1 trillion bytes</td><td>A large hard drive; 500 hours of video</td></tr>
+      </table></div>
+    </div>
+
+    <div class="section">
+      <h3>Key Flashcards — Module 1</h3>
+      <div class="flashcard-grid">
+        <div class="flashcard" onclick="this.classList.toggle('flipped')"><div class="flashcard-inner"><div class="fc-front"><span class="fc-label">Term</span>What is RAM, and why does it matter?</div><div class="fc-back">RAM (Random Access Memory) is fast, <strong>temporary</strong> storage for active programs. More RAM = more programs can run simultaneously without slowdown. It is <em>volatile</em> — data is lost when power is off.</div></div></div>
+        <div class="flashcard" onclick="this.classList.toggle('flipped')"><div class="flashcard-inner"><div class="fc-front"><span class="fc-label">Term</span>SSD vs. HDD — key difference?</div><div class="fc-back">SSD (Solid State Drive) has no moving parts — uses flash memory chips. Much faster, more durable, less noise. HDD (Hard Disk Drive) uses spinning magnetic platters — slower but cheaper per GB for bulk storage.</div></div></div>
+        <div class="flashcard" onclick="this.classList.toggle('flipped')"><div class="flashcard-inner"><div class="fc-front"><span class="fc-label">Term</span>What makes a CPU "faster"?</div><div class="fc-back">Clock speed (GHz — cycles per second), number of cores (parallel processing), cache size, and architecture generation. Modern CPUs have 4–16+ cores, each handling separate tasks simultaneously.</div></div></div>
+        <div class="flashcard" onclick="this.classList.toggle('flipped')"><div class="flashcard-inner"><div class="fc-front"><span class="fc-label">Concept</span>What is a "bit" vs. a "byte"?</div><div class="fc-back">A <strong>bit</strong> is the smallest data unit: a single 0 or 1. A <strong>byte</strong> = 8 bits. Network speeds are measured in <em>bits</em> per second (Mbps); storage is measured in <em>bytes</em> (GB, TB). Watch the lowercase "b" (bits) vs. uppercase "B" (bytes).</div></div></div>
+        <div class="flashcard" onclick="this.classList.toggle('flipped')"><div class="flashcard-inner"><div class="fc-front"><span class="fc-label">Concept</span>What is the BIOS/UEFI?</div><div class="fc-back">Basic Input/Output System (BIOS) or its modern replacement UEFI is firmware stored on the motherboard. It runs first when a computer boots — checks hardware (POST) and then hands off to the operating system.</div></div></div>
+        <div class="flashcard" onclick="this.classList.toggle('flipped')"><div class="flashcard-inner"><div class="fc-front"><span class="fc-label">Concept</span>What is a "driver"?</div><div class="fc-back">A driver is software that allows the OS to communicate with hardware. Without a driver, the OS doesn't know how to use a printer, GPU, or network card. Outdated or corrupt drivers are a common source of PC problems.</div></div></div>
+      </div>
+    </div>
+
+    <div class="quiz-section" id="quiz1">
+      <h3>📝 Module 1 Quiz</h3>
+      <div class="question-block" data-correct="b"><div class="q-text"><span class="q-number">1</span>Which component stores data temporarily while a computer is running and loses all data when powered off?</div><div class="options"><button class="option-btn" data-val="a">A) SSD</button><button class="option-btn" data-val="b">B) RAM</button><button class="option-btn" data-val="c">C) HDD</button><button class="option-btn" data-val="d">D) ROM</button></div><div class="feedback">RAM (Random Access Memory) is <strong>volatile</strong> — it requires power to maintain data. When the computer shuts down, RAM contents are erased. This is why you save documents to a drive (non-volatile storage) before closing your computer. SSDs and HDDs retain data without power.</div></div>
+      <div class="question-block" data-correct="c"><div class="q-text"><span class="q-number">2</span>A user wants to store 500 hours of video footage for long-term backup. Which is the most appropriate storage choice?</div><div class="options"><button class="option-btn" data-val="a">A) More RAM</button><button class="option-btn" data-val="b">B) CPU cache upgrade</button><button class="option-btn" data-val="c">C) A high-capacity HDD or cloud storage</button><button class="option-btn" data-val="d">D) A faster GPU</button></div><div class="feedback">For bulk, long-term storage, HDD (spinning hard disk drive) offers the lowest cost per GB — perfect for video archiving. Cloud storage is also an excellent answer for redundancy. RAM and CPU cache are NOT for long-term storage — they are volatile and small. A GPU handles rendering, not storage.</div></div>
+      <div class="question-block" data-correct="d"><div class="q-text"><span class="q-number">3</span>An internet plan offers "100 Mbps download." How long does it take to download a 100 MB file?</div><div class="options"><button class="option-btn" data-val="a">A) 1 second</button><button class="option-btn" data-val="b">B) 100 seconds</button><button class="option-btn" data-val="c">C) 10 minutes</button><button class="option-btn" data-val="d">D) About 8 seconds — because 100 Mbps is megabits, and 100 MB = 800 megabits; 800÷100 = 8 seconds</button></div><div class="feedback">Critical distinction: <strong>Mbps = megabits per second</strong>; <strong>MB = megabytes</strong>. 1 byte = 8 bits. So 100 MB = 800 megabits. At 100 Mbps: 800 Mb ÷ 100 Mbps = 8 seconds. ISPs advertise in bits (bigger number); storage is measured in bytes. Always watch for lowercase "b" (bits) vs. uppercase "B" (bytes) in CompTIA exam questions.</div></div>
+      <div class="question-block" data-correct="a"><div class="q-text"><span class="q-number">4</span>What does the BIOS/UEFI do when a computer first powers on?</div><div class="options"><button class="option-btn" data-val="a">A) Runs the POST (Power-On Self Test) to check hardware, then boots the operating system</button><button class="option-btn" data-val="b">B) Loads Microsoft Windows into RAM</button><button class="option-btn" data-val="c">C) Connects to the internet to check for updates</button><button class="option-btn" data-val="d">D) Formats the hard drive</button></div><div class="feedback">BIOS/UEFI is firmware on the motherboard that runs before the OS. It performs <strong>POST (Power-On Self Test)</strong> — checks that CPU, RAM, and storage are present and functional. Then it finds and boots the operating system from the designated boot device. If POST fails (e.g., no RAM), the computer beeps and stops before the OS ever loads.</div></div>
+      <button class="submit-quiz-btn" onclick="submitQuiz('quiz1',1)">Submit</button>
+      <div class="quiz-score" id="quiz1-score"><div class="score-num" id="quiz1-num"></div><p id="quiz1-msg"></p></div>
+    </div>
+    <div class="module-nav"><button class="nav-btn" onclick="showModule('landing')">← Overview</button><button class="nav-btn" onclick="showModule('mod2')">Module 2 →</button></div>
+  </div>
+
+
+  <!-- MODULE 2 -->
+  <div class="module" id="mod2">
+    <div class="module-header"><h2>🪟 Module 2: Operating Systems</h2><p style="color:var(--text-muted);margin-top:0.4rem;">Windows, macOS, Linux — what they do, how they differ, and what IT professionals need to know.</p></div>
+    <div class="section">
+      <h3>What Is an Operating System?</h3>
+      <p>An Operating System (OS) is the software layer that manages hardware and lets applications run. Without it, programs like Chrome or Word would have to communicate directly with your CPU and memory — impossible chaos. The OS is the translator between applications and hardware.</p>
+      <div class="table-wrap"><table>
+        <tr><th>OS</th><th>Primary Use</th><th>Market Share</th><th>Key IT Facts</th></tr>
+        <tr><td><strong>Windows 10/11</strong></td><td>Business desktops, enterprise</td><td>~72% desktop</td><td>Most common in corporate IT; Active Directory; domain-joined</td></tr>
+        <tr><td><strong>macOS</strong></td><td>Creative professionals, Apple ecosystem</td><td>~15% desktop</td><td>BSD Unix base; popular in design/media; harder to manage at scale</td></tr>
+        <tr><td><strong>Linux</strong></td><td>Servers, cloud, developers</td><td>&gt;90% web servers</td><td>Open-source; Ubuntu, Red Hat, CentOS variants; powers AWS/Azure servers</td></tr>
+        <tr><td><strong>iOS / Android</strong></td><td>Mobile devices</td><td>~99% smartphone</td><td>MDM (Mobile Device Management) key for enterprise; BYOD policies</td></tr>
+        <tr><td><strong>Windows Server</strong></td><td>Enterprise servers</td><td>~70% server OS market</td><td>Active Directory, DNS, DHCP, file sharing; backbone of corporate IT</td></tr>
+      </table></div>
+    </div>
+    <div class="section">
+      <h3>Key OS Concepts</h3>
+      <h4>File Systems</h4>
+      <p>A file system is how an OS organizes data on a drive. Think of it as the library's cataloging system.</p>
+      <div class="table-wrap"><table>
+        <tr><th>File System</th><th>OS</th><th>Key Feature</th></tr>
+        <tr><td>NTFS</td><td>Windows</td><td>Supports permissions, encryption, large files; default for Windows</td></tr>
+        <tr><td>FAT32</td><td>USB drives, legacy</td><td>Universal compatibility but max 4GB file size — a key exam fact</td></tr>
+        <tr><td>exFAT</td><td>Flash drives</td><td>FAT32 upgrade: no 4GB limit; no permissions. Good for USB/SD cards</td></tr>
+        <tr><td>ext4</td><td>Linux</td><td>Most common Linux file system; journaling, permissions</td></tr>
+        <tr><td>APFS</td><td>macOS</td><td>Apple's modern file system; optimized for SSDs; encryption built-in</td></tr>
+      </table></div>
+      <h4>User Accounts & Permissions</h4>
+      <p>Operating systems control what users can do through accounts and permissions. This is foundational to security.</p>
+      <ul>
+        <li><strong>Administrator/Root</strong>: Full system control. Can install software, modify system files, manage other accounts. High risk — should not be used for daily work.</li>
+        <li><strong>Standard User</strong>: Can use applications and change personal settings only. Cannot install system software or change security settings. Best practice for daily use.</li>
+        <li><strong>Guest</strong>: Temporary, minimal access. Settings don't persist after session.</li>
+      </ul>
+      <div class="exam-tip"><h4>🏅 CompTIA ITF+ Exam Tip</h4><p>The exam loves questions about the <strong>principle of least privilege</strong>: always give users the minimum access they need to do their job. An accountant doesn't need administrator rights. An intern doesn't need access to HR files. This concept appears in both ITF+ and Network+.</p></div>
+    </div>
+    <div class="section">
+      <h3>Virtualization — The Cloud Foundation</h3>
+      <p>Virtualization is one of the most important concepts in modern IT. It's the technology that makes cloud computing possible.</p>
+      <p>A <strong>hypervisor</strong> is software that allows one physical machine to run multiple virtual machines (VMs) simultaneously. Each VM behaves like a completely separate computer with its own OS, applications, and resources — but they all share the underlying hardware.</p>
+      <div class="table-wrap"><table>
+        <tr><th>Concept</th><th>What It Is</th><th>Example</th></tr>
+        <tr><td>Virtual Machine (VM)</td><td>Software-simulated computer running on real hardware</td><td>A Windows VM running on a Linux server</td></tr>
+        <tr><td>Hypervisor (Type 1)</td><td>Runs directly on hardware; no underlying OS</td><td>VMware ESXi, Microsoft Hyper-V, AWS Nitro</td></tr>
+        <tr><td>Hypervisor (Type 2)</td><td>Runs on top of a host OS</td><td>VirtualBox, VMware Workstation on your laptop</td></tr>
+        <tr><td>Container</td><td>Lightweight package of app + dependencies (shares OS kernel)</td><td>Docker containers; used in cloud deployments</td></tr>
+        <tr><td>Cloud</td><td>Virtualized computing resources delivered over the internet</td><td>AWS EC2 instances, Azure Virtual Machines</td></tr>
+      </table></div>
+    </div>
+    <div class="quiz-section" id="quiz2">
+      <h3>📝 Module 2 Quiz</h3>
+      <div class="question-block" data-correct="c"><div class="q-text"><span class="q-number">1</span>A user needs to copy a 6GB video file to a USB drive but keeps getting an error. The USB drive has 32GB free space. What is the most likely cause?</div><div class="options"><button class="option-btn" data-val="a">A) The video file is corrupted</button><button class="option-btn" data-val="b">B) The USB port is broken</button><button class="option-btn" data-val="c">C) The USB drive is formatted as FAT32, which has a maximum single-file size of 4GB</button><button class="option-btn" data-val="d">D) The computer's RAM is too low</button></div><div class="feedback"><strong>FAT32 has a 4GB maximum file size limit</strong> — regardless of available space. A 6GB file will fail to copy even if 30GB is free. The fix: reformat the drive to exFAT (for USB drives — no permissions needed) or NTFS (if only used with Windows). This is a classic CompTIA exam scenario.</div></div>
+      <div class="question-block" data-correct="a"><div class="q-text"><span class="q-number">2</span>A company wants to run 10 separate server environments on one physical machine to save hardware costs. Which technology makes this possible?</div><div class="options"><button class="option-btn" data-val="a">A) Virtualization using a Type 1 hypervisor (e.g., VMware ESXi)</button><button class="option-btn" data-val="b">B) Buying a faster CPU</button><button class="option-btn" data-val="c">C) Installing Windows Server 10 times</button><button class="option-btn" data-val="d">D) Using FAT32 file system</button></div><div class="feedback">Virtualization with a <strong>Type 1 (bare-metal) hypervisor</strong> allows one physical server to host multiple independent VMs. Each VM has its own OS, apps, and isolated resources. This is the foundation of cloud computing — AWS, Azure, and Google Cloud are all massive virtualization infrastructures. VMware ESXi, Microsoft Hyper-V, and the AWS Nitro hypervisor are Type 1 examples.</div></div>
+      <div class="question-block" data-correct="d"><div class="q-text"><span class="q-number">3</span>Following the principle of least privilege, which account type should a standard office employee use for daily work?</div><div class="options"><button class="option-btn" data-val="a">A) Administrator account for maximum productivity</button><button class="option-btn" data-val="b">B) Root account on Linux</button><button class="option-btn" data-val="c">C) Guest account</button><button class="option-btn" data-val="d">D) Standard user account — with administrator credentials available separately for IT tasks only</button></div><div class="feedback"><strong>Principle of Least Privilege</strong>: users should have only the minimum permissions needed for their job. A standard employee using an administrator account daily is a massive security risk — if they click a malicious link, malware gains full system access. Standard accounts limit damage. This principle is core to CompTIA ITF+, Security+, and every security certification.</div></div>
+      <button class="submit-quiz-btn" onclick="submitQuiz('quiz2',2)">Submit</button>
+      <div class="quiz-score" id="quiz2-score"><div class="score-num" id="quiz2-num"></div><p id="quiz2-msg"></p></div>
+    </div>
+    <div class="module-nav"><button class="nav-btn" onclick="showModule('mod1')">← Module 1</button><button class="nav-btn" onclick="showModule('mod3')">Module 3 →</button></div>
+  </div>
+
+  <!-- MODULE 3 -->
+  <div class="module" id="mod3">
+    <div class="module-header"><h2>🌐 Module 3: Networking Fundamentals</h2><p style="color:var(--text-muted);margin-top:0.4rem;">How computers talk to each other — the foundation of the internet, cloud, and everything in IT.</p></div>
+    <div class="section">
+      <h3>The OSI Model — The 7-Layer Framework</h3>
+      <p>The <strong>OSI Model</strong> (Open Systems Interconnection) is a conceptual framework that describes how data travels from one computer to another. Every network professional uses it to diagnose problems and design systems. Think of it as a postal system — letters go through many stages before delivery.</p>
+      <div class="mnemonic"><strong>Mnemonic — "Please Do Not Throw Sausage Pizza Away"</strong><br>Physical → Data Link → Network → Transport → Session → Presentation → Application<br><em>(Bottom to top: layers 1 → 7)</em></div>
+      <div class="table-wrap"><table>
+        <tr><th>Layer</th><th>Name</th><th>What Happens Here</th><th>Real-World Example</th></tr>
+        <tr><td>7</td><td>Application</td><td>User-facing protocols; what apps use</td><td>HTTP, HTTPS, DNS, FTP, SMTP</td></tr>
+        <tr><td>6</td><td>Presentation</td><td>Data formatting, encryption, compression</td><td>SSL/TLS encryption; JPEG format</td></tr>
+        <tr><td>5</td><td>Session</td><td>Opens/maintains/closes communication sessions</td><td>NetBIOS, RPC, SIP (VoIP calls)</td></tr>
+        <tr><td>4</td><td>Transport</td><td>End-to-end delivery; error checking; TCP vs. UDP</td><td>TCP (reliable), UDP (fast), port numbers</td></tr>
+        <tr><td>3</td><td>Network</td><td>Logical addressing and routing between networks</td><td>IP addresses, routers, ICMP (ping)</td></tr>
+        <tr><td>2</td><td>Data Link</td><td>Physical addressing within a local network</td><td>MAC addresses, switches, Ethernet frames</td></tr>
+        <tr><td>1</td><td>Physical</td><td>Actual bits transmitted over cables/wireless</td><td>Cat6 cables, fiber optic, Wi-Fi signals, hubs</td></tr>
+      </table></div>
+    </div>
+    <div class="section">
+      <h3>IP Addresses — The Internet's Phone Book</h3>
+      <p>Every device on a network has an <strong>IP address</strong> — a unique identifier. Like a postal address, it tells data where to go.</p>
+      <div class="table-wrap"><table>
+        <tr><th>Type</th><th>Format</th><th>Example</th><th>Key Fact</th></tr>
+        <tr><td>IPv4</td><td>4 octets, 0–255 each</td><td>192.168.1.100</td><td>~4.3 billion addresses — running out! Needs NAT.</td></tr>
+        <tr><td>IPv6</td><td>8 groups of hexadecimal</td><td>2001:0db8::1</td><td>340 undecillion addresses — effectively unlimited</td></tr>
+        <tr><td>Private IPv4</td><td>192.168.x.x, 10.x.x.x, 172.16–31.x.x</td><td>192.168.1.1</td><td>Used inside homes/offices; NOT routable on internet</td></tr>
+        <tr><td>Public IPv4</td><td>Everything else</td><td>8.8.8.8 (Google DNS)</td><td>Routable on internet; assigned by ISPs</td></tr>
+        <tr><td>Loopback</td><td>127.0.0.1</td><td>localhost</td><td>Always refers to the local machine — "am I working?"</td></tr>
+      </table></div>
+      <h4>Key Protocols to Know</h4>
+      <div class="table-wrap"><table>
+        <tr><th>Protocol</th><th>Port</th><th>Purpose</th><th>TCP or UDP?</th></tr>
+        <tr><td>HTTP</td><td>80</td><td>Web traffic (unsecured)</td><td>TCP</td></tr>
+        <tr><td>HTTPS</td><td>443</td><td>Secure web traffic (SSL/TLS encrypted)</td><td>TCP</td></tr>
+        <tr><td>DNS</td><td>53</td><td>Translates domain names to IP addresses</td><td>UDP (queries), TCP (zone transfers)</td></tr>
+        <tr><td>DHCP</td><td>67/68</td><td>Automatically assigns IP addresses</td><td>UDP</td></tr>
+        <tr><td>SSH</td><td>22</td><td>Secure remote command-line access</td><td>TCP</td></tr>
+        <tr><td>FTP</td><td>20/21</td><td>File transfer (unencrypted)</td><td>TCP</td></tr>
+        <tr><td>SMTP</td><td>25</td><td>Email sending</td><td>TCP</td></tr>
+        <tr><td>RDP</td><td>3389</td><td>Remote Desktop (Windows)</td><td>TCP</td></tr>
+      </table></div>
+      <div class="exam-tip"><h4>🏅 CompTIA Exam Tip — Port Numbers</h4><p>The most-tested ports are: <strong>HTTP=80, HTTPS=443, DNS=53, DHCP=67/68, SSH=22, RDP=3389, SMTP=25</strong>. Memorize these cold — they appear in both ITF+ and Network+ exams.</p></div>
+    </div>
+    <div class="section">
+      <h3>Network Hardware</h3>
+      <div class="table-wrap"><table>
+        <tr><th>Device</th><th>OSI Layer</th><th>Function</th><th>Key Point</th></tr>
+        <tr><td>Hub</td><td>Layer 1</td><td>Broadcasts to ALL ports — dumb repeater</td><td>Obsolete; replaced by switches</td></tr>
+        <tr><td>Switch</td><td>Layer 2</td><td>Directs traffic to specific device using MAC address</td><td>Most common LAN device; creates VLANs</td></tr>
+        <tr><td>Router</td><td>Layer 3</td><td>Routes traffic between different networks using IP</td><td>Connects your LAN to the internet</td></tr>
+        <tr><td>Firewall</td><td>Layer 3–7</td><td>Controls traffic based on rules — allows/blocks</td><td>First line of network defense</td></tr>
+        <tr><td>Access Point (WAP)</td><td>Layer 2</td><td>Provides wireless (Wi-Fi) connectivity</td><td>Connects wireless devices to wired network</td></tr>
+        <tr><td>Modem</td><td>Layer 1</td><td>Converts ISP signal to Ethernet</td><td>Stands between ISP line and your router</td></tr>
+      </table></div>
+    </div>
+    <div class="quiz-section" id="quiz3">
+      <h3>📝 Module 3 Quiz</h3>
+      <div class="question-block" data-correct="b"><div class="q-text"><span class="q-number">1</span>A user types "google.com" in their browser. Which protocol translates this domain name into an IP address?</div><div class="options"><button class="option-btn" data-val="a">A) DHCP</button><button class="option-btn" data-val="b">B) DNS (Domain Name System) on port 53</button><button class="option-btn" data-val="c">C) HTTP on port 80</button><button class="option-btn" data-val="d">D) SMTP on port 25</button></div><div class="feedback"><strong>DNS (Domain Name System)</strong> is the internet's phone book — it converts human-readable domain names (google.com) into IP addresses (142.250.x.x) that computers use to route traffic. Without DNS, you'd need to memorize IP addresses for every website. DNS runs on <strong>port 53</strong>. DHCP assigns IP addresses to devices; HTTP sends web content; SMTP sends email.</div></div>
+      <div class="question-block" data-correct="c"><div class="q-text"><span class="q-number">2</span>Which network device operates at Layer 2 and forwards traffic based on MAC addresses within a local network?</div><div class="options"><button class="option-btn" data-val="a">A) Router</button><button class="option-btn" data-val="b">B) Hub</button><button class="option-btn" data-val="c">C) Switch</button><button class="option-btn" data-val="d">D) Modem</button></div><div class="feedback">A <strong>switch</strong> operates at <strong>Layer 2 (Data Link)</strong> and uses <strong>MAC addresses</strong> to intelligently direct traffic only to the intended device — much more efficient than a hub (which broadcasts to everyone). A router operates at Layer 3 and routes between networks using IP addresses. For the exam: switch = MAC = Layer 2; router = IP = Layer 3.</div></div>
+      <div class="question-block" data-correct="d"><div class="q-text"><span class="q-number">3</span>A home computer has the IP address 192.168.1.105. Can someone on the internet directly connect to this IP address?</div><div class="options"><button class="option-btn" data-val="a">A) Yes — all IP addresses are reachable from the internet</button><button class="option-btn" data-val="b">B) Yes — if the computer is turned on</button><button class="option-btn" data-val="c">C) No — only if a firewall allows it</button><button class="option-btn" data-val="d">D) No — 192.168.x.x is a private IP address range; it is not routable on the public internet without NAT</button></div><div class="feedback"><strong>192.168.x.x</strong> is a <strong>private address range</strong> — it exists only inside your home/office network and is not routable on the public internet. Home routers use <strong>NAT (Network Address Translation)</strong> to share one public IP address among many private addresses. The private ranges are: 10.0.0.0/8, 172.16.0.0/12, and 192.168.0.0/16. This is a very common Network+ exam topic.</div></div>
+      <button class="submit-quiz-btn" onclick="submitQuiz('quiz3',3)">Submit</button>
+      <div class="quiz-score" id="quiz3-score"><div class="score-num" id="quiz3-num"></div><p id="quiz3-msg"></p></div>
+    </div>
+    <div class="module-nav"><button class="nav-btn" onclick="showModule('mod2')">← Module 2</button><button class="nav-btn" onclick="showModule('mod4')">Module 4 →</button></div>
+  </div>
+
+
+  <!-- MODULE 4 -->
+  <div class="module" id="mod4">
+    <div class="module-header"><h2>🔒 Module 4: Security Basics</h2><p style="color:var(--text-muted);margin-top:0.4rem;">Threats, defenses, and best practices — essential for every IT professional and manager.</p></div>
+    <div class="section">
+      <h3>The CIA Triad — Security's Three Pillars</h3>
+      <p>Every security decision in IT comes back to the <strong>CIA Triad</strong>: three core properties that any secure system must protect.</p>
+      <div class="table-wrap"><table>
+        <tr><th>Pillar</th><th>Meaning</th><th>Example Threat</th><th>Example Defense</th></tr>
+        <tr><td><strong>C — Confidentiality</strong></td><td>Data only accessible to authorized parties</td><td>Unauthorized employee reads HR files</td><td>Encryption, access controls, MFA</td></tr>
+        <tr><td><strong>I — Integrity</strong></td><td>Data is accurate and unmodified</td><td>Attacker changes a payment amount</td><td>Hashing, digital signatures, audit logs</td></tr>
+        <tr><td><strong>A — Availability</strong></td><td>Systems and data accessible when needed</td><td>DDoS attack takes down a website</td><td>Redundancy, failover, DDoS protection</td></tr>
+      </table></div>
+    </div>
+    <div class="section">
+      <h3>Common Threats — What IT Managers Must Know</h3>
+      <div class="table-wrap"><table>
+        <tr><th>Threat</th><th>What It Is</th><th>How to Defend</th></tr>
+        <tr><td><strong>Phishing</strong></td><td>Deceptive email/message tricks users into revealing credentials or clicking malware links</td><td>Security awareness training, email filtering, MFA</td></tr>
+        <tr><td><strong>Malware</strong></td><td>Malicious software: viruses, worms, ransomware, spyware, trojans</td><td>Antivirus, EDR, software updates, user training</td></tr>
+        <tr><td><strong>Ransomware</strong></td><td>Encrypts victim's data; demands payment for decryption key</td><td>Offline backups, endpoint protection, patch management</td></tr>
+        <tr><td><strong>DDoS</strong></td><td>Distributed Denial of Service — flood of traffic overwhelms a server</td><td>DDoS protection services (Cloudflare, AWS Shield)</td></tr>
+        <tr><td><strong>Man-in-the-Middle (MitM)</strong></td><td>Attacker intercepts communication between two parties</td><td>HTTPS/TLS encryption, VPNs, certificate validation</td></tr>
+        <tr><td><strong>Social Engineering</strong></td><td>Manipulating humans to reveal information or grant access</td><td>Training, verification procedures, "zero trust" mindset</td></tr>
+        <tr><td><strong>SQL Injection</strong></td><td>Malicious database commands injected via web forms</td><td>Input validation, parameterized queries, WAF</td></tr>
+        <tr><td><strong>Zero-Day</strong></td><td>Exploit targeting unknown vulnerability before patch exists</td><td>Defense-in-depth; behavior-based detection; rapid patching</td></tr>
+      </table></div>
+    </div>
+    <div class="section">
+      <h3>Authentication & Access Control</h3>
+      <h4>Authentication Factors</h4>
+      <p>Authentication proves you are who you claim to be. There are three factor types:</p>
+      <ul>
+        <li><strong>Something you know</strong>: Password, PIN, security question</li>
+        <li><strong>Something you have</strong>: Hardware token, authenticator app, smart card, SMS code</li>
+        <li><strong>Something you are</strong>: Biometrics — fingerprint, face ID, iris scan</li>
+      </ul>
+      <p><strong>MFA (Multi-Factor Authentication)</strong> = using two or more factor types. A password + SMS code is MFA. Two passwords is NOT (same factor type).</p>
+      <h4>Encryption</h4>
+      <div class="table-wrap"><table>
+        <tr><th>Type</th><th>How It Works</th><th>Use Case</th></tr>
+        <tr><td>Symmetric</td><td>Same key encrypts and decrypts</td><td>Fast; used for bulk data (AES-256)</td></tr>
+        <tr><td>Asymmetric</td><td>Public key encrypts; private key decrypts</td><td>HTTPS, digital signatures, email (RSA, ECC)</td></tr>
+        <tr><td>Hashing</td><td>One-way transformation; cannot be reversed</td><td>Password storage (bcrypt, SHA-256) — stores hash, not password</td></tr>
+      </table></div>
+    </div>
+    <div class="quiz-section" id="quiz4">
+      <h3>📝 Module 4 Quiz</h3>
+      <div class="question-block" data-correct="c"><div class="q-text"><span class="q-number">1</span>A company's website is flooded with millions of fake requests from thousands of different computers, making it inaccessible. What type of attack is this?</div><div class="options"><button class="option-btn" data-val="a">A) Phishing</button><button class="option-btn" data-val="b">B) SQL Injection</button><button class="option-btn" data-val="c">C) Distributed Denial of Service (DDoS)</button><button class="option-btn" data-val="d">D) Man-in-the-Middle</button></div><div class="feedback">A <strong>DDoS (Distributed Denial of Service)</strong> attack uses many compromised computers (a botnet) to flood a target with traffic, overwhelming it and making it unavailable — attacking <strong>Availability</strong> from the CIA Triad. Defenses include DDoS protection services (AWS Shield, Cloudflare), rate limiting, and traffic scrubbing. A regular DoS comes from one source; DDoS comes from many — much harder to block.</div></div>
+      <div class="question-block" data-correct="b"><div class="q-text"><span class="q-number">2</span>A user logs in with their password and then receives a 6-digit code via an authenticator app that they must also enter. This is an example of:</div><div class="options"><button class="option-btn" data-val="a">A) Two-step password authentication</button><button class="option-btn" data-val="b">B) Multi-Factor Authentication (MFA) using "something you know" + "something you have"</button><button class="option-btn" data-val="c">C) Single Sign-On (SSO)</button><button class="option-btn" data-val="d">D) Biometric authentication</button></div><div class="feedback"><strong>MFA</strong> requires two or more <em>different factor types</em>. Password = "something you know." Authenticator app = "something you have." Together = MFA. If both were passwords, it's still just single-factor (both are "something you know"). MFA is the single most effective defense against account compromise — even if a password is stolen, the attacker still needs the second factor.</div></div>
+      <div class="question-block" data-correct="d"><div class="q-text"><span class="q-number">3</span>A database stores user passwords. Which is the best practice for how passwords should be stored?</div><div class="options"><button class="option-btn" data-val="a">A) In plain text for easy reset</button><button class="option-btn" data-val="b">B) Encrypted with AES-256 so IT can decrypt them if needed</button><button class="option-btn" data-val="c">C) In a spreadsheet locked with a password</button><button class="option-btn" data-val="d">D) As a salted hash (bcrypt/SHA-256 + random salt) — one-way transformation; even the database admin cannot see the actual password</button></div><div class="feedback">Passwords should <strong>never</strong> be stored in plain text or in reversible encrypted form. Best practice: use a <strong>one-way cryptographic hash</strong> with a <strong>salt</strong> (random data added before hashing to prevent rainbow table attacks). bcrypt is the gold standard. When a user logs in, their input is hashed the same way and the hashes are compared — the original password is never stored. Major breaches (LinkedIn, Adobe) exposed millions of accounts because of poor password storage practices.</div></div>
+      <button class="submit-quiz-btn" onclick="submitQuiz('quiz4',4)">Submit</button>
+      <div class="quiz-score" id="quiz4-score"><div class="score-num" id="quiz4-num"></div><p id="quiz4-msg"></p></div>
+    </div>
+    <div class="module-nav"><button class="nav-btn" onclick="showModule('mod3')">← Module 3</button><button class="nav-btn" onclick="showModule('mod5')">Module 5 →</button></div>
+  </div>
+
+  <!-- MODULE 5 -->
+  <div class="module" id="mod5">
+    <div class="module-header"><h2>🌐 Module 5: TCP/IP & Advanced Networking</h2><p style="color:var(--text-muted);margin-top:0.4rem;">CompTIA Network+ depth — subnetting, TCP vs UDP, VPNs, wireless, and cloud networking.</p></div>
+    <div class="section">
+      <h3>TCP vs. UDP — The Two Transport Protocols</h3>
+      <div class="table-wrap"><table>
+        <tr><th></th><th>TCP</th><th>UDP</th></tr>
+        <tr><td><strong>Full Name</strong></td><td>Transmission Control Protocol</td><td>User Datagram Protocol</td></tr>
+        <tr><td><strong>Connection</strong></td><td>Connection-oriented (3-way handshake)</td><td>Connectionless — just sends</td></tr>
+        <tr><td><strong>Reliability</strong></td><td>Guaranteed delivery; retransmits lost packets</td><td>No guarantee; packets may be lost</td></tr>
+        <tr><td><strong>Speed</strong></td><td>Slower (overhead for reliability)</td><td>Faster (no overhead)</td></tr>
+        <tr><td><strong>Use Cases</strong></td><td>Web (HTTP/S), email, file transfer — where accuracy matters</td><td>Video streaming, VoIP, DNS queries, gaming — where speed matters</td></tr>
+      </table></div>
+      <div class="mnemonic"><strong>Memory: "TCP = Telephone (guaranteed); UDP = Shouting in a crowd (fast but unreliable)"</strong><br>A phone call waits for you to answer. Shouting in a crowd — some people hear it, some don't, you don't know.</div>
+    </div>
+    <div class="section">
+      <h3>Subnetting — Breaking Networks into Pieces</h3>
+      <p>Subnetting divides a large network into smaller, more manageable sub-networks. It improves security (different departments on different subnets) and reduces broadcast traffic.</p>
+      <div class="table-wrap"><table>
+        <tr><th>CIDR Notation</th><th>Subnet Mask</th><th>Usable Hosts</th><th>Common Use</th></tr>
+        <tr><td>/24</td><td>255.255.255.0</td><td>254</td><td>Small office LAN</td></tr>
+        <tr><td>/25</td><td>255.255.255.128</td><td>126</td><td>Half a /24 — two departments on one floor</td></tr>
+        <tr><td>/16</td><td>255.255.0.0</td><td>65,534</td><td>Large enterprise campus network</td></tr>
+        <tr><td>/8</td><td>255.0.0.0</td><td>16 million+</td><td>ISP-level allocations</td></tr>
+        <tr><td>/32</td><td>255.255.255.255</td><td>1 (single host)</td><td>Point-to-point or host routing rules</td></tr>
+      </table></div>
+      <div class="exam-tip"><h4>🏅 Network+ Exam Tip — CIDR Basics</h4><p>The Network+ exam requires you to understand that the <strong>/number after the IP</strong> indicates how many bits are the "network" portion. A /24 means 24 bits are network, 8 bits are hosts — giving 2⁸ = 256 addresses (254 usable, minus network and broadcast addresses). You don't need advanced subnetting math for manager-level roles, but you need to understand the concept for the exam.</p></div>
+    </div>
+    <div class="section">
+      <h3>VPNs, Firewalls & Wireless</h3>
+      <h4>VPN (Virtual Private Network)</h4>
+      <p>A VPN creates an encrypted "tunnel" over the public internet, making remote users appear to be on the corporate network. Essential for remote work security.</p>
+      <ul>
+        <li><strong>Site-to-Site VPN</strong>: Connects two office locations permanently (branch office → HQ)</li>
+        <li><strong>Remote Access VPN</strong>: Individual employee connects to corporate network from home</li>
+        <li><strong>SSL VPN</strong>: Works through a browser — no client software needed</li>
+      </ul>
+      <h4>Wireless Security Standards</h4>
+      <div class="table-wrap"><table>
+        <tr><th>Standard</th><th>Security</th><th>Status</th></tr>
+        <tr><td>WEP</td><td>Very weak — crackable in minutes</td><td>❌ Obsolete — never use</td></tr>
+        <tr><td>WPA</td><td>Better but has known vulnerabilities</td><td>⚠️ Outdated</td></tr>
+        <tr><td>WPA2</td><td>Strong (AES-CCMP); most common today</td><td>✅ Still acceptable</td></tr>
+        <tr><td>WPA3</td><td>Strongest; resists offline dictionary attacks</td><td>✅ Best — use when available</td></tr>
+      </table></div>
+    </div>
+    <div class="quiz-section" id="quiz5">
+      <h3>📝 Module 5 Quiz</h3>
+      <div class="question-block" data-correct="b"><div class="q-text"><span class="q-number">1</span>A video conferencing app experiences occasional choppy audio but stays connected. Which transport protocol is it most likely using, and why?</div><div class="options"><button class="option-btn" data-val="a">A) TCP — because it guarantees delivery of all audio packets</button><button class="option-btn" data-val="b">B) UDP — because low latency is more important than guaranteed delivery for real-time audio; a slightly dropped packet is better than the delay of retransmission</button><button class="option-btn" data-val="c">C) HTTPS — because the call is encrypted</button><button class="option-btn" data-val="d">D) FTP — because audio is a file being transferred</button></div><div class="feedback">Real-time audio/video uses <strong>UDP</strong> because retransmitting a late packet is worse than losing it — in live conversation, getting old audio late is useless. UDP prioritizes speed and low latency. TCP's retransmission guarantee would cause audible delays whenever a packet is lost. VoIP and video conferencing protocols (RTP, WebRTC) use UDP underneath for this reason. The "choppy audio" is UDP's trade-off.</div></div>
+      <div class="question-block" data-correct="c"><div class="q-text"><span class="q-number">2</span>A remote employee needs to securely access the company's internal file server from home. Which solution is most appropriate?</div><div class="options"><button class="option-btn" data-val="a">A) Give them the server's internal IP address to type in a browser</button><button class="option-btn" data-val="b">B) Open port 80 on the company firewall</button><button class="option-btn" data-val="c">C) Remote Access VPN — creates an encrypted tunnel so the home computer appears to be on the corporate network</button><button class="option-btn" data-val="d">D) Have them use WEP-secured Wi-Fi</button></div><div class="feedback">A <strong>Remote Access VPN</strong> is the standard solution for secure remote work. It creates an encrypted connection from the employee's home device to the corporate network, as if they were physically in the office. Internal file servers use private IP addresses (not accessible from internet); the VPN solves this by routing their traffic through the corporate network. Opening port 80 would expose the server to public internet — a security risk.</div></div>
+      <div class="question-block" data-correct="d"><div class="q-text"><span class="q-number">3</span>A network is configured with the address 192.168.10.0/24. How many usable host addresses does this subnet support?</div><div class="options"><button class="option-btn" data-val="a">A) 256</button><button class="option-btn" data-val="b">B) 16</button><button class="option-btn" data-val="c">C) 512</button><button class="option-btn" data-val="d">D) 254 — /24 means 8 host bits (2⁸ = 256 total), minus 2 reserved (network address .0 and broadcast address .255)</button></div><div class="feedback">A <strong>/24</strong> subnet has 8 host bits: 2⁸ = 256 total addresses. However, <strong>2 are always reserved</strong>: the network address (first — e.g., 192.168.10.0) and the broadcast address (last — 192.168.10.255). So usable hosts = 256 - 2 = <strong>254</strong>. This is one of the most common exam questions. Remember: always subtract 2 from the total for usable addresses.</div></div>
+      <button class="submit-quiz-btn" onclick="submitQuiz('quiz5',5)">Submit</button>
+      <div class="quiz-score" id="quiz5-score"><div class="score-num" id="quiz5-num"></div><p id="quiz5-msg"></p></div>
+    </div>
+    <div class="module-nav"><button class="nav-btn" onclick="showModule('mod4')">← Module 4</button><button class="nav-btn" onclick="showModule('mod6')">Module 6 →</button></div>
+  </div>
+
+  <!-- MODULE 6 -->
+  <div class="module" id="mod6">
+    <div class="module-header"><h2>🔧 Module 6: Troubleshooting & IT Support</h2><p style="color:var(--text-muted);margin-top:0.4rem;">The structured approach to diagnosing and fixing problems — and the soft skills that make great IT leaders.</p></div>
+    <div class="section">
+      <h3>CompTIA's 7-Step Troubleshooting Methodology</h3>
+      <p>CompTIA exams always test this specific troubleshooting model. Memorize the order — it appears in questions as "what is the FIRST/NEXT step?"</p>
+      <ol style="padding-left:1.5rem;">
+        <li><strong>Identify the problem</strong> — Gather information; ask the user what happened; check error messages</li>
+        <li><strong>Establish a theory of probable cause</strong> — Form a hypothesis; consider the obvious first</li>
+        <li><strong>Test the theory</strong> — Verify your theory; if wrong, go back to step 2</li>
+        <li><strong>Establish a plan of action and implement the solution</strong> — Plan first; then fix</li>
+        <li><strong>Verify full system functionality</strong> — Confirm the fix worked; check related systems</li>
+        <li><strong>Document findings</strong> — Record what happened, what caused it, and what fixed it</li>
+        <li><strong>Implement preventive measures</strong> — How do we stop this from happening again?</li>
+      </ol>
+      <div class="exam-tip"><h4>🏅 Exam Tip</h4><p>When a question asks "what should a technician do FIRST?" — the answer is almost always <strong>"Identify the problem / ask the user questions"</strong>. Before touching anything, understand what's happening. Rushing to solutions before understanding the problem is the classic amateur mistake.</p></div>
+    </div>
+    <div class="section">
+      <h3>ITIL & Service Management Concepts</h3>
+      <p>ITIL (IT Infrastructure Library) is the global framework for IT service management. As a tech manager, you'll manage teams that follow these processes.</p>
+      <div class="table-wrap"><table>
+        <tr><th>Concept</th><th>What It Means</th><th>Example</th></tr>
+        <tr><td><strong>Incident</strong></td><td>Unplanned interruption to a service</td><td>"Email is down for all users"</td></tr>
+        <tr><td><strong>Problem</strong></td><td>Root cause of one or more incidents</td><td>"Email keeps going down due to a buggy update"</td></tr>
+        <tr><td><strong>Change</strong></td><td>Addition, modification, or removal of anything that could affect IT services</td><td>Deploying a software update after CAB approval</td></tr>
+        <tr><td><strong>SLA</strong></td><td>Service Level Agreement — contractual uptime/response commitments</td><td>"Email system will be restored within 4 hours of any outage"</td></tr>
+        <tr><td><strong>Ticket</strong></td><td>Formal record of an issue or request in an ITSM tool</td><td>ServiceNow, Jira Service Desk, Zendesk ticket</td></tr>
+        <tr><td><strong>CAB</strong></td><td>Change Advisory Board — approves major changes before implementation</td><td>Reviewing a plan to upgrade all servers before execution</td></tr>
+      </table></div>
+    </div>
+    <div class="section">
+      <h3>Manager-Level: What IT Leadership Looks Like</h3>
+      <ul>
+        <li><strong>Vendor management</strong>: Negotiating SLAs, renewals, and escalations with Microsoft, AWS, Cisco, etc.</li>
+        <li><strong>Budget planning</strong>: CapEx (hardware purchases) vs. OpEx (cloud subscriptions); TCO analysis</li>
+        <li><strong>Team management</strong>: Hiring IT staff, setting KPIs, managing on-call rotations</li>
+        <li><strong>Risk management</strong>: Identifying and mitigating IT risks before they become incidents</li>
+        <li><strong>Stakeholder communication</strong>: Translating technical issues into business impact for executives</li>
+        <li><strong>Compliance</strong>: Ensuring systems meet HIPAA, SOC2, GDPR, or industry-specific regulations</li>
+      </ul>
+    </div>
+    <div class="quiz-section" id="quiz6">
+      <h3>📝 Module 6 Quiz</h3>
+      <div class="question-block" data-correct="a"><div class="q-text"><span class="q-number">1</span>A user reports their computer won't connect to the internet. Using CompTIA's troubleshooting methodology, what is the FIRST step?</div><div class="options"><button class="option-btn" data-val="a">A) Identify the problem — ask the user questions: when did it start, what changed, what error messages appear, does it affect other devices?</button><button class="option-btn" data-val="b">B) Immediately reinstall the network adapter driver</button><button class="option-btn" data-val="c">C) Replace the network cable</button><button class="option-btn" data-val="d">D) Run a full antivirus scan</button></div><div class="feedback">The CompTIA troubleshooting model's <strong>first step is always to identify and understand the problem</strong> before doing anything. Jumping to solutions without understanding the problem leads to wasted time and potentially making things worse. Ask: Is it just this computer or all computers? Did anything change recently? What error message shows? Can you ping the router? Gather information FIRST.</div></div>
+      <div class="question-block" data-correct="b"><div class="q-text"><span class="q-number">2</span>A company's cloud hosting contract states: "The vendor guarantees 99.9% uptime per month." This is an example of:</div><div class="options"><button class="option-btn" data-val="a">A) An incident response plan</button><button class="option-btn" data-val="b">B) A Service Level Agreement (SLA)</button><button class="option-btn" data-val="c">C) A Change Advisory Board (CAB) decision</button><button class="option-btn" data-val="d">D) A standard IT policy</button></div><div class="feedback">An <strong>SLA (Service Level Agreement)</strong> is a formal contract that defines expected service levels between a provider and customer. 99.9% uptime = roughly 8.7 hours of allowed downtime per year. As an IT manager, you'll negotiate and enforce SLAs with vendors. Understanding SLA terms — response time, resolution time, uptime percentage, penalties for breach — is essential for vendor management and protecting your organization.</div></div>
+      <div class="question-block" data-correct="c"><div class="q-text"><span class="q-number">3</span>After resolving a network outage, what is the FINAL step in CompTIA's troubleshooting methodology?</div><div class="options"><button class="option-btn" data-val="a">A) Immediately close the ticket</button><button class="option-btn" data-val="b">B) Reboot all servers as a precaution</button><button class="option-btn" data-val="c">C) Document findings AND implement preventive measures — record what happened, root cause, solution, and how to prevent recurrence</button><button class="option-btn" data-val="d">D) Email the user and forget about it</button></div><div class="feedback">CompTIA's final two steps are <strong>Document findings</strong> (step 6) and <strong>Implement preventive measures</strong> (step 7). Documentation is critical in professional IT: it builds a knowledge base, satisfies compliance requirements, helps the next technician, and supports post-incident reviews. Preventive measures stop the same problem from happening again. Many technicians skip documentation — great IT managers ensure it never gets skipped.</div></div>
+      <button class="submit-quiz-btn" onclick="submitQuiz('quiz6',6)">Submit</button>
+      <div class="quiz-score" id="quiz6-score"><div class="score-num" id="quiz6-num"></div><p id="quiz6-msg"></p></div>
+    </div>
+    <div class="module-nav"><button class="nav-btn" onclick="showModule('mod5')">← Module 5</button><button class="nav-btn" onclick="showModule('final')">🏅 Final Exam →</button></div>
+  </div>
+
+  <!-- FINAL EXAM -->
+  <div class="module" id="final">
+    <div class="module-header"><h2>🏅 IT Foundations Final Exam</h2><p style="color:var(--text-muted);margin-top:0.4rem;">25 questions covering CompTIA ITF+ and Network+ objectives · Unlocks after all 6 modules</p></div>
+    <div id="final-locked" style="text-align:center;padding:3rem;"><div style="font-size:3.5rem;margin-bottom:1rem;">🔒</div><h3 style="color:var(--text-muted);">Complete All 6 Modules First</h3><p style="color:var(--text-muted);">Finish every module quiz to unlock.</p></div>
+    <div id="final-content" style="display:none;">
+      <div class="question-block" data-correct="b"><div class="q-text"><span class="q-number">1</span>Which storage type is fastest for a CPU to access?</div><div class="options"><button class="option-btn" data-val="a">A) SSD</button><button class="option-btn" data-val="b">B) CPU Cache (L1)</button><button class="option-btn" data-val="c">C) RAM</button><button class="option-btn" data-val="d">D) Cloud storage</button></div><div class="feedback">CPU Cache (L1, L2, L3) is the fastest storage — measured in nanoseconds, located on the CPU chip itself. Hierarchy: Cache → RAM → SSD → HDD → Cloud (fastest to slowest). The cache stores the most frequently needed instructions to avoid fetching from slower memory.</div></div>
+      <div class="question-block" data-correct="d"><div class="q-text"><span class="q-number">2</span>What is the maximum single file size supported by FAT32?</div><div class="options"><button class="option-btn" data-val="a">A) 2 GB</button><button class="option-btn" data-val="b">B) 16 GB</button><button class="option-btn" data-val="c">C) 1 TB</button><button class="option-btn" data-val="d">D) 4 GB</button></div><div class="feedback">FAT32 has a <strong>4 GB maximum file size limit</strong> — a famous limitation you must know for CompTIA exams. If you need to store files larger than 4GB on a USB drive, reformat to exFAT (cross-platform, no size limit) or NTFS (Windows-optimized).</div></div>
+      <div class="question-block" data-correct="a"><div class="q-text"><span class="q-number">3</span>Which OSI layer is responsible for logical IP addressing and routing between networks?</div><div class="options"><button class="option-btn" data-val="a">A) Layer 3 — Network</button><button class="option-btn" data-val="b">B) Layer 2 — Data Link</button><button class="option-btn" data-val="c">C) Layer 4 — Transport</button><button class="option-btn" data-val="d">D) Layer 7 — Application</button></div><div class="feedback"><strong>Layer 3 (Network)</strong> handles IP addressing and routing. Devices: routers. Protocols: IP, ICMP, OSPF. Layer 2 (Data Link) handles MAC addressing within a LAN — devices: switches. Layer 4 (Transport) handles end-to-end delivery — protocols: TCP, UDP. Layer 7 (Application) is what users interact with — protocols: HTTP, DNS, FTP.</div></div>
+      <div class="question-block" data-correct="c"><div class="q-text"><span class="q-number">4</span>Port 443 is associated with which protocol?</div><div class="options"><button class="option-btn" data-val="a">A) HTTP (unsecured web)</button><button class="option-btn" data-val="b">B) DNS</button><button class="option-btn" data-val="c">C) HTTPS (secured web with TLS)</button><button class="option-btn" data-val="d">D) SSH</button></div><div class="feedback"><strong>HTTPS uses port 443</strong>. HTTP uses port 80. The "S" in HTTPS stands for Secure — it wraps HTTP in TLS (Transport Layer Security) encryption. Any website with a padlock icon in the browser is using HTTPS on port 443. SSH (remote access) uses port 22. DNS uses port 53.</div></div>
+      <div class="question-block" data-correct="b"><div class="q-text"><span class="q-number">5</span>Which of the following is a private IP address?</div><div class="options"><button class="option-btn" data-val="a">A) 8.8.8.8</button><button class="option-btn" data-val="b">B) 10.0.0.50</button><button class="option-btn" data-val="c">C) 216.58.194.100</button><button class="option-btn" data-val="d">D) 142.250.80.46</button></div><div class="feedback"><strong>10.0.0.50</strong> is private — the 10.x.x.x range is one of three private ranges (10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16). Private addresses are not routable on the internet. 8.8.8.8 is Google's public DNS. The others are public IP addresses belonging to Google.</div></div>
+      <div class="question-block" data-correct="d"><div class="q-text"><span class="q-number">6</span>Which CIA Triad component is violated when a ransomware attack encrypts all files and makes them inaccessible?</div><div class="options"><button class="option-btn" data-val="a">A) Confidentiality</button><button class="option-btn" data-val="b">B) Integrity</button><button class="option-btn" data-val="c">C) Authentication</button><button class="option-btn" data-val="d">D) Availability — the data exists but cannot be accessed by authorized users</button></div><div class="feedback">Ransomware primarily attacks <strong>Availability</strong> — data exists but is encrypted and inaccessible. Note: it may also violate Confidentiality (attackers often steal data before encrypting it — "double extortion"). The best defenses: offline backups (restore without paying), endpoint detection/response, and user awareness training to prevent the initial infection.</div></div>
+      <div class="question-block" data-correct="a"><div class="q-text"><span class="q-number">7</span>What does DHCP automatically provide to devices joining a network?</div><div class="options"><button class="option-btn" data-val="a">A) IP address, subnet mask, default gateway, and DNS server addresses</button><button class="option-btn" data-val="b">B) Username and password</button><button class="option-btn" data-val="c">C) MAC address assignment</button><button class="option-btn" data-val="d">D) Wireless encryption key</button></div><div class="feedback"><strong>DHCP (Dynamic Host Configuration Protocol)</strong> automatically assigns the four things every device needs to communicate on a network: IP address, subnet mask, default gateway, and DNS server. Without DHCP, every device would need to be manually configured. It runs on UDP ports 67 (server) and 68 (client). Most home routers include a DHCP server.</div></div>
+      <div class="question-block" data-correct="c"><div class="q-text"><span class="q-number">8</span>A /25 subnet mask gives how many usable host addresses?</div><div class="options"><button class="option-btn" data-val="a">A) 256</button><button class="option-btn" data-val="b">B) 64</button><button class="option-btn" data-val="c">C) 126</button><button class="option-btn" data-val="d">D) 254</button></div><div class="feedback">/25 = 7 host bits. 2⁷ = 128 total addresses. Subtract 2 (network + broadcast) = <strong>126 usable hosts</strong>. A /25 effectively splits a /24 in half. Remember: each time you add one to the prefix (/24 → /25 → /26), you halve the number of hosts.</div></div>
+      <div class="question-block" data-correct="b"><div class="q-text"><span class="q-number">9</span>Which wireless encryption standard should be used on a modern corporate network?</div><div class="options"><button class="option-btn" data-val="a">A) WEP</button><button class="option-btn" data-val="b">B) WPA3 (or WPA2 where WPA3 is unavailable)</button><button class="option-btn" data-val="c">C) WPA (original)</button><button class="option-btn" data-val="d">D) Open (no encryption)</button></div><div class="feedback"><strong>WPA3</strong> is the current gold standard for wireless security. WEP is completely broken (cracked in seconds with free tools) and should never be used. WPA (original) has known vulnerabilities. WPA2 with AES is still acceptable on older hardware. WPA3 uses Simultaneous Authentication of Equals (SAE) to resist offline dictionary attacks. Always upgrade to WPA3 when hardware supports it.</div></div>
+      <div class="question-block" data-correct="d"><div class="q-text"><span class="q-number">10</span>What is the loopback address and what is it used for?</div><div class="options"><button class="option-btn" data-val="a">A) 192.168.0.1 — used for router admin access</button><button class="option-btn" data-val="b">B) 10.0.0.1 — used for DHCP server</button><button class="option-btn" data-val="c">C) 0.0.0.0 — used for default routing</button><button class="option-btn" data-val="d">D) 127.0.0.1 (localhost) — used to test the local network stack without sending traffic on the network</button></div><div class="feedback"><strong>127.0.0.1</strong> (also known as "localhost") is the loopback address — it refers to the local machine itself. Pinging 127.0.0.1 tests whether your network software is working without sending any actual network traffic. If ping 127.0.0.1 fails, your TCP/IP stack is broken. If it succeeds but you still can't reach the internet, the problem is elsewhere (router, ISP, cable).</div></div>
+      <div class="question-block" data-correct="a"><div class="q-text"><span class="q-number">11</span>A technician is told: "Users can browse the web but cannot log into any company applications." Which DNS-related issue is the most likely cause?</div><div class="options"><button class="option-btn" data-val="a">A) The internal DNS server is down or misconfigured — external DNS still resolves public websites, but internal DNS (for company.internal domains) is failing</button><button class="option-btn" data-val="b">B) The internet connection is down</button><button class="option-btn" data-val="c">C) The switch is failing</button><button class="option-btn" data-val="d">D) The firewall is blocking all traffic</button></div><div class="feedback">This classic "split DNS" scenario: external DNS (for google.com etc.) works, but internal DNS (for company.internal, app.corp.local) is broken. Users can browse public sites because public DNS (8.8.8.8 etc.) still works. But internal applications use private hostnames that only your internal DNS knows — if that server is down, apps fail. The diagnostic step: try typing the application's IP address directly — if it works, it's definitely DNS.</div></div>
+      <div class="question-block" data-correct="c"><div class="q-text"><span class="q-number">12</span>Which authentication method provides the highest security for remote VPN access?</div><div class="options"><button class="option-btn" data-val="a">A) Username and password only</button><button class="option-btn" data-val="b">B) Username only with a long password</button><button class="option-btn" data-val="c">C) Certificate-based authentication with MFA (something you have + something you know/are)</button><button class="option-btn" data-val="d">D) IP address filtering only</button></div><div class="feedback">Certificate-based authentication + MFA provides the strongest VPN security: the device must have a valid certificate (something you have — registered/approved device) AND the user provides credentials + MFA. This means even a stolen password cannot be used without both the approved device certificate AND the MFA factor. IP filtering alone is easily bypassed (IP spoofing). Username/password alone was responsible for most major VPN breaches.</div></div>
+      <div class="question-block" data-correct="b"><div class="q-text"><span class="q-number">13</span>What is the key difference between a virus and a worm?</div><div class="options"><button class="option-btn" data-val="a">A) Viruses are more dangerous; worms are harmless</button><button class="option-btn" data-val="b">B) A virus requires a host file and human action to spread; a worm self-replicates and spreads automatically across networks without user interaction</button><button class="option-btn" data-val="c">C) Worms only affect macOS; viruses only affect Windows</button><button class="option-btn" data-val="d">D) They are the same thing with different names</button></div><div class="feedback"><strong>Virus</strong>: attaches to a file; needs a user to execute or share the file to spread (infected email attachment). <strong>Worm</strong>: self-replicating; exploits network vulnerabilities to spread automatically — no human interaction needed. Famous worms: WannaCry (2017) infected 200,000+ computers in hours by self-spreading. The WannaCry worm spread far faster than any virus because no human action was needed.</div></div>
+      <div class="question-block" data-correct="d"><div class="q-text"><span class="q-number">14</span>An employee receives an email appearing to be from their CEO asking them to urgently wire $50,000 to a vendor. The email address is "ceo@company-corp.net" instead of "ceo@company.com." This is an example of:</div><div class="options"><button class="option-btn" data-val="a">A) A legitimate urgent business request</button><button class="option-btn" data-val="b">B) A DDoS attack</button><button class="option-btn" data-val="c">C) Ransomware</button><button class="option-btn" data-val="d">D) Phishing / Business Email Compromise (BEC) — a social engineering attack using a spoofed/lookalike email domain</button></div><div class="feedback">This is <strong>Business Email Compromise (BEC)</strong> — a form of phishing targeting financial fraud. Attackers register lookalike domains (company-corp.net vs. company.com) to impersonate executives and request urgent wire transfers. Defense: call the CEO directly to verify. Train staff: legitimate executives never ask for wire transfers via email alone. BEC caused $2.7 billion in losses in 2022 (FBI IC3 report). Always verify financial requests through a separate communication channel.</div></div>
+      <div class="question-block" data-correct="a"><div class="q-text"><span class="q-number">15</span>Which type 1 hypervisor runs directly on hardware and is commonly used in enterprise data centers and cloud providers?</div><div class="options"><button class="option-btn" data-val="a">A) VMware ESXi or Microsoft Hyper-V (bare-metal hypervisors)</button><button class="option-btn" data-val="b">B) VirtualBox running on Windows</button><button class="option-btn" data-val="c">C) Docker containers</button><button class="option-btn" data-val="d">D) VMware Workstation on a laptop</button></div><div class="feedback"><strong>Type 1 (bare-metal) hypervisors</strong> run directly on hardware — no host OS underneath. Examples: VMware ESXi, Microsoft Hyper-V (when used as Windows Server feature for enterprise), KVM on Linux. These power AWS, Azure, and Google Cloud. <strong>Type 2 hypervisors</strong> (VirtualBox, VMware Workstation) run on top of a host OS — for desktop development/testing. Docker containers are not hypervisors — they share the host OS kernel, making them lighter but less isolated.</div></div>
+      <div class="question-block" data-correct="c"><div class="q-text"><span class="q-number">16</span>What does "99.9% uptime" mean in a SLA, in terms of allowed downtime per year?</div><div class="options"><button class="option-btn" data-val="a">A) Zero downtime</button><button class="option-btn" data-val="b">B) About 1 hour per year</button><button class="option-btn" data-val="c">C) About 8.7 hours per year</button><button class="option-btn" data-val="d">D) About 87 hours per year</button></div><div class="feedback">99.9% uptime (the "three nines") = 0.1% downtime. 0.1% of 8,760 hours/year = <strong>8.76 hours allowed downtime</strong>. "Five nines" (99.999%) = ~5.26 minutes/year. AWS, Azure, and most enterprise SLAs offer 99.9%–99.99% for different services. Understanding these numbers is critical for manager-level contract negotiations — the difference between 99.9% and 99.99% is the difference between ~9 hours and ~52 minutes of allowed downtime annually.</div></div>
+      <div class="question-block" data-correct="b"><div class="q-text"><span class="q-number">17</span>What protocol does a computer use to automatically obtain an IP address when joining a network?</div><div class="options"><button class="option-btn" data-val="a">A) DNS</button><button class="option-btn" data-val="b">B) DHCP on ports 67/68</button><button class="option-btn" data-val="c">C) HTTP</button><button class="option-btn" data-val="d">D) ARP</button></div><div class="feedback"><strong>DHCP (Dynamic Host Configuration Protocol)</strong> automatically assigns network configuration when a device joins. The process: client broadcasts DHCP Discover → server replies with DHCP Offer → client requests the offered IP → server confirms with DHCP Acknowledgment (DORA: Discover, Offer, Request, Acknowledge). Without DHCP, IT staff would manually configure IP on every device — impractical at scale.</div></div>
+      <div class="question-block" data-correct="d"><div class="q-text"><span class="q-number">18</span>A company wants to separate its guest Wi-Fi from its corporate network so guests cannot access internal systems. What networking feature enables this?</div><div class="options"><button class="option-btn" data-val="a">A) Adding more RAM to the router</button><button class="option-btn" data-val="b">B) Using WEP encryption on the guest network</button><button class="option-btn" data-val="c">C) Installing a second physical switch</button><button class="option-btn" data-val="d">D) VLANs (Virtual Local Area Networks) — logically separate network segments on the same physical switch/router infrastructure</button></div><div class="feedback"><strong>VLANs (Virtual LANs)</strong> allow network administrators to logically segment a network on the same physical infrastructure. Guest VLAN traffic never touches the corporate VLAN — even though they share the same switches and access points. VLANs are a core Network+ and security concept. They're used to separate: guests from employees, voice traffic (VoIP) from data, finance from HR, IoT devices from corporate systems.</div></div>
+      <div class="question-block" data-correct="a"><div class="q-text"><span class="q-number">19</span>SSH (Secure Shell) replaced which older, insecure remote access protocol?</div><div class="options"><button class="option-btn" data-val="a">A) Telnet — which transmitted all data including passwords in plain text</button><button class="option-btn" data-val="b">B) FTP</button><button class="option-btn" data-val="c">C) HTTP</button><button class="option-btn" data-val="d">D) SMTP</button></div><div class="feedback"><strong>SSH (port 22)</strong> replaced <strong>Telnet (port 23)</strong>. Telnet transmitted everything — including username, password, and all commands — in plain text. Anyone monitoring the network could see all credentials. SSH provides encrypted remote command-line access. Similarly: SFTP/SCP replaced FTP; HTTPS replaced HTTP; SNMP v3 replaced earlier SNMP versions. The pattern: any protocol that sends credentials in plain text has been (or should be) replaced by an encrypted equivalent.</div></div>
+      <div class="question-block" data-correct="c"><div class="q-text"><span class="q-number">20</span>When documenting a resolved IT incident, which information is MOST important to record?</div><div class="options"><button class="option-btn" data-val="a">A) The technician's personal opinion of the user who reported it</button><button class="option-btn" data-val="b">B) How long the technician took to eat lunch during the incident</button><button class="option-btn" data-val="c">C) Root cause, steps taken to resolve, business impact, time to resolution, and preventive measures implemented</button><button class="option-btn" data-val="d">D) Only the final fix — the rest is irrelevant</button></div><div class="feedback">Professional incident documentation includes: what happened (symptoms), root cause, resolution steps, timeline, business impact, and prevention. This creates institutional knowledge — the next time this happens, anyone on the team can reference the documentation and resolve it faster. Compliance requirements (SOC 2, HIPAA, ISO 27001) often require incident documentation. As an IT manager, you'll review these documents during post-incident reviews (PIRs) to improve your team's processes.</div></div>
+      <div class="question-block" data-correct="b"><div class="q-text"><span class="q-number">21</span>What is the purpose of NAT (Network Address Translation)?</div><div class="options"><button class="option-btn" data-val="a">A) To encrypt internet traffic</button><button class="option-btn" data-val="b">B) To allow multiple devices with private IP addresses to share a single public IP address for internet access</button><button class="option-btn" data-val="c">C) To assign MAC addresses to devices</button><button class="option-btn" data-val="d">D) To filter malicious traffic</button></div><div class="feedback"><strong>NAT</strong> allows an entire office or home (with private IPs like 192.168.x.x) to share one public IP address. The router keeps a translation table: when device 192.168.1.50 sends traffic to the internet, NAT rewrites the source address to the public IP and tracks the connection so return traffic reaches the right device. This conserves IPv4 addresses and also provides a layer of security (external hosts can't directly initiate connections to private devices).</div></div>
+      <div class="question-block" data-correct="d"><div class="q-text"><span class="q-number">22</span>What is the difference between symmetric and asymmetric encryption?</div><div class="options"><button class="option-btn" data-val="a">A) Symmetric is stronger; asymmetric is weaker</button><button class="option-btn" data-val="b">B) Symmetric uses no keys; asymmetric uses one key</button><button class="option-btn" data-val="c">C) Symmetric is only used for wireless; asymmetric for wired</button><button class="option-btn" data-val="d">D) Symmetric uses the same key to encrypt and decrypt (fast, used for bulk data); asymmetric uses a public/private key pair (slower, used for key exchange and digital signatures in HTTPS)</button></div><div class="feedback">HTTPS actually uses BOTH: <strong>asymmetric encryption</strong> (RSA or ECC) is used during the handshake to securely exchange a <strong>symmetric session key</strong> (AES), which then encrypts all actual data. Why? Asymmetric is computationally expensive — impractical for encrypting gigabytes of data. Symmetric is fast but needs a secure way to share the key first. HTTPS solves this by using asymmetric for key exchange and symmetric for data — best of both worlds.</div></div>
+      <div class="question-block" data-correct="a"><div class="q-text"><span class="q-number">23</span>A Linux server is the primary OS for which type of workload?</div><div class="options"><button class="option-btn" data-val="a">A) Web servers and cloud infrastructure — over 90% of web servers and AWS/Azure underlying infrastructure runs Linux</button><button class="option-btn" data-val="b">B) Office desktop computers at most enterprises</button><button class="option-btn" data-val="c">C) Consumer gaming PCs</button><button class="option-btn" data-val="d">D) Video editing workstations</button></div><div class="feedback"><strong>Linux dominates server and cloud workloads</strong>: 90%+ of web servers (Apache, Nginx), all of AWS's underlying infrastructure, Android phones, supercomputers, network devices (routers/firewalls). Why? Open source (free), stable, lightweight, excellent security model, scriptable/automatable. Windows dominates corporate desktops. macOS dominates creative workstations. But in cloud/server environments, Linux is king — knowing basic Linux commands is essential for any IT manager role.</div></div>
+      <div class="question-block" data-correct="c"><div class="q-text"><span class="q-number">24</span>What is the function of a firewall in a network?</div><div class="options"><button class="option-btn" data-val="a">A) To speed up internet traffic</button><button class="option-btn" data-val="b">B) To provide Wi-Fi connectivity</button><button class="option-btn" data-val="c">C) To inspect and filter network traffic based on rules — allowing authorized traffic and blocking unauthorized connections</button><button class="option-btn" data-val="d">D) To assign IP addresses to devices</button></div><div class="feedback">A <strong>firewall</strong> is the primary network security boundary device. It examines traffic (based on IP, port, protocol, state, and in next-gen firewalls — application and user identity) and allows or blocks based on rules. Types: Packet-filter (basic), Stateful (tracks connections), Next-Generation (deep packet inspection, application awareness). Cloud equivalents: AWS Security Groups, Azure Network Security Groups, AWS WAF (for web applications). As an IT manager, you'll set firewall policies and review firewall logs.</div></div>
+      <div class="question-block" data-correct="b"><div class="q-text"><span class="q-number">25</span>A network technician types "ping 8.8.8.8" and gets a response, but "ping google.com" fails. What is the most likely issue?</div><div class="options"><button class="option-btn" data-val="a">A) The internet connection is down</button><button class="option-btn" data-val="b">B) DNS is failing — the device can reach the internet (ping to IP works) but cannot resolve domain names to IP addresses</button><button class="option-btn" data-val="c">C) The network cable is unplugged</button><button class="option-btn" data-val="d">D) Google's servers are down</button></div><div class="feedback">Classic DNS diagnostic: if you can ping an IP address (8.8.8.8) but not a domain name (google.com), <strong>DNS resolution is broken</strong>. The internet connection works fine — you can reach Google's servers by IP. But the translation from "google.com" → IP address is failing. Check: is the DNS server configured correctly? Is the DNS server reachable? Run "nslookup google.com" to see what DNS server is being queried and what it returns. This is one of the most common real-world network troubleshooting scenarios.</div></div>
+      <button class="submit-quiz-btn" onclick="submitFinal()">Submit Final Exam</button>
+      <div class="quiz-score" id="final-score"><div class="score-num" id="final-num"></div><p id="final-msg"></p></div>
+    </div>
+    <div class="module-nav"><button class="nav-btn" onclick="showModule('mod6')">← Module 6</button><button class="nav-btn" onclick="window.location.href='tech_roadmap.html'">← Back to Roadmap</button></div>
+  </div>
+</div><!-- .container -->
+
+<script>
+const completedModules = new Set();
+function showModule(id){document.querySelectorAll('.module').forEach(m=>m.classList.remove('active'));const el=document.getElementById(id);if(el){el.classList.add('active');window.scrollTo(0,0);}if(id==='final'){const locked=document.getElementById('final-locked');const content=document.getElementById('final-content');if(completedModules.size>=6){if(locked)locked.style.display='none';if(content)content.style.display='block';}else{if(locked)locked.style.display='block';if(content)content.style.display='none';}}}
+function submitQuiz(quizId,modNum){const container=document.getElementById(quizId);if(!container)return;const blocks=container.querySelectorAll('.question-block');let correct=0;blocks.forEach(block=>{const chosen=block.querySelector('.option-btn.selected');if(!chosen)return;const right=block.dataset.correct;block.querySelectorAll('.option-btn').forEach(btn=>{btn.disabled=true;if(btn.dataset.val===right)btn.classList.add('correct');else if(btn===chosen)btn.classList.add('wrong');});if(chosen.dataset.val===right)correct++;const fb=block.querySelector('.feedback');if(fb)fb.style.display='block';});const total=blocks.length;const pct=total>0?Math.round(correct/total*100):0;const scoreEl=document.getElementById(quizId+'-score');const numEl=document.getElementById(quizId+'-num');const msgEl=document.getElementById(quizId+'-msg');if(numEl)numEl.textContent=correct+' / '+total;if(msgEl){if(pct>=75){msgEl.textContent='✅ Great job! Ready to move on.';msgEl.style.color='var(--success)';}else if(pct>=50){msgEl.textContent='📚 Review the material and retry.';msgEl.style.color='#f0a500';}else{msgEl.textContent='🔄 Re-read this module before continuing.';msgEl.style.color='var(--danger)';}}if(scoreEl)scoreEl.style.display='block';const btn=container.querySelector('.submit-quiz-btn');if(btn)btn.disabled=true;completedModules.add(modNum);updateProgress();}
+function submitFinal(){const container=document.getElementById('final-content');if(!container)return;const blocks=container.querySelectorAll('.question-block');let correct=0;blocks.forEach(block=>{const chosen=block.querySelector('.option-btn.selected');if(!chosen)return;const right=block.dataset.correct;block.querySelectorAll('.option-btn').forEach(btn=>{btn.disabled=true;if(btn.dataset.val===right)btn.classList.add('correct');else if(btn===chosen)btn.classList.add('wrong');});if(chosen.dataset.val===right)correct++;const fb=block.querySelector('.feedback');if(fb)fb.style.display='block';});const total=blocks.length;const pct=Math.round(correct/total*100);const scoreEl=document.getElementById('final-score');const numEl=document.getElementById('final-num');const msgEl=document.getElementById('final-msg');if(numEl)numEl.textContent=correct+' / '+total+' ('+pct+'%)';if(msgEl){if(pct>=75){msgEl.textContent='🏅 Excellent! You are ready for the CompTIA exams.';msgEl.style.color='var(--gold)';}else if(pct>=60){msgEl.textContent='📖 Good effort — review the flagged areas and try again.';msgEl.style.color='#f0a500';}else{msgEl.textContent='🔄 Review the modules and retake. Aim for 75%+ before exam day.';msgEl.style.color='var(--danger)';}}if(scoreEl)scoreEl.style.display='block';const btn=container.querySelector('.submit-quiz-btn');if(btn)btn.disabled=true;}
+function updateProgress(){const bar=document.getElementById('progress-bar');const txt=document.getElementById('progress-text');const done=completedModules.size;const pct=Math.round(done/6*100);if(bar)bar.style.width=pct+'%';if(txt)txt.textContent=done+' / 6 modules complete';}
+document.addEventListener('click',function(e){if(e.target.classList.contains('option-btn')&&!e.target.disabled){const block=e.target.closest('.question-block');if(block){block.querySelectorAll('.option-btn').forEach(b=>b.classList.remove('selected'));e.target.classList.add('selected');}}});
+showModule('landing');
+</script>
+</body>
+</html>
